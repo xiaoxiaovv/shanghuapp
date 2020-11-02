@@ -1,0 +1,123 @@
+$distance-map: (
+  pd: padding,
+  pt: padding-top,
+  pr: padding-right,
+  pb: padding-bottom,
+  pl: padding-left,
+  mg: margin,
+  mt: margin-top,
+  mr: margin-right,
+  mb: margin-bottom,
+  ml: margin-left
+);
+
+@each $key, $propety in $distance-map {
+  @for $i from 0 through 5 {
+    $v: $i * 10;
+    $v2: $v + 2;
+    $v3: $v + 4;
+    $v4: $v + 5;
+    $v5: $v + 6;
+    $v6: $v + 8;
+
+    .#{$key}-#{$v} {
+      #{$propety}: #{$v + upx} !important;
+    }
+    .#{$key}-#{$v2} {
+      #{$propety}: #{$v2 + upx} !important;
+    }
+    .#{$key}-#{$v3} {
+      #{$propety}: #{$v3 + upx} !important;
+    }
+    .#{$key}-#{$v4} {
+      #{$propety}: #{$v4 + upx} !important;
+    }
+    .#{$key}-#{$v5} {
+      #{$propety}: #{$v5 + upx} !important;
+    }
+    .#{$key}-#{$v6} {
+      #{$propety}: #{$v6 + upx} !important;
+    }
+  }
+}
+
+// font-size
+@for $i from 0 through 20 {
+  $v: ($i * 2) + 12;
+  .fs-#{$v} {
+    font-size: $v + upx !important;
+  }
+}
+
+// font-weight
+@for $i from 1 through 9 {
+  $v: $i * 100;
+  .fw-#{$v} {
+    font-weight: $v;
+  }
+}
+
+// width percent
+@for $i from 0 through 10 {
+  $percent1: $i * 5;
+  $percent2: $i * 5 + 50;
+  .wp-#{$percent1} {
+    width: percentage($percent1 / 100) !important;
+  }
+  .wp-#{$percent2} {
+    width: percentage($percent2 / 100) !important;
+  }
+}
+
+// abbr
+$abbr: (plr, ptb, mlr, mtb);
+
+@each $value in $abbr {
+  @for $step from 0 through 6 {
+    $tmp: $step * 10;
+    @if $value == 'plr' {
+      .#{$value}-#{$tmp} {
+        padding-left: #{$tmp + upx !important};
+        padding-right: #{$tmp + upx !important};
+      }
+    } @else if $value == 'ptb' {
+      .#{$value}-#{$tmp} {
+        padding-top: #{$tmp + upx !important};
+        padding-bottom: #{$tmp + upx !important};
+      }
+    } @else if $value == 'mlr' {
+      .#{$value}-#{$tmp} {
+        margin-left: #{$tmp + upx !important};
+        margin-right: #{$tmp + upx !important};
+      }
+    } @else if $value == 'mtb' {
+      .#{$value}-#{$tmp} {
+        margin-top: #{$tmp + upx !important};
+        margin-bottom: #{$tmp + upx !important};
+      }
+    }
+  }
+}
+
+// t, b, l, r
+$tblr: (
+  t: top,
+  b: bottom,
+  l: left,
+  r: right
+);
+
+@each $key, $value in $tblr {
+  @for $step from 0 through 5 {
+    $tmp: $step * 10;
+    @if $step != 0 {
+      .#{$key}-#{$tmp} {
+        #{$value}: #{$tmp + upx !important};
+      }
+    } @else {
+      .#{$key}-#{$tmp} {
+        #{$value}: #{$tmp !important};
+      }
+    }
+  }
+}

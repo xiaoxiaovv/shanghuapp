@@ -1,0 +1,21 @@
+{
+  "name": "lianfuapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@dcloudio/uni-ui": "0.0.7",
+    "@red-bean/red-bean": "^0.1.7",
+    "flyio": "^0.6.14",
+    "js-base64": "^2.5.1",
+    "mescroll-uni": "1.0.3",
+    "qs": "^6.7.0",
+    "rsa-js-java": "^1.0.4",
+    "tki-qrcode": "^0.1.6"
+  }
+}

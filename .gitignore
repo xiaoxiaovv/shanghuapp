@@ -1,0 +1,12 @@
+﻿src.rar
+.vscode/**/*.*
+.vscode
+*的副本
+.vscode/settings.json
+npm-debug.log
+dist/
+*.docx
+*.doc
+.idea/
+unpackage/
+node_modules/

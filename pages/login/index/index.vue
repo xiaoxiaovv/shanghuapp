@@ -35,10 +35,15 @@
 							记住密码
 						</view>
 					</view>
+					<view
+						@click="register">
+						注册
+					</view>
 					<view 
 						@click="forgetPassword">
 						忘记密码
 					</view>
+					
 					<!-- <navigator :url="'/pages/login/forgetPassword/forgetPassword?username=' + username"><text>忘记密码</text></navigator> -->
 				</view>
 			</view>
@@ -208,6 +213,12 @@
 				uni.showToast({
 					title: '请联系管理员',
 					icon: 'none'
+				})
+			},
+			// 注册
+			register(){
+				uni.navigateTo({
+					url: '/pages/login/register/register'
 				})
 			},
 			// 获取站点信息

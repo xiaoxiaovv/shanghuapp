@@ -18,6 +18,8 @@
 	/*每个页面公共css */
     @import "./common/colorui/main.css";
     @import "./common/colorui/icon.css";
+	/* 2.8.11 */
+	@import "./static/assets/iconfont/iconfont.css"
     /* @import "./common/uni.css"; */
 	/* 
 	 * 羊肉串居中法
@@ -33,4 +35,8 @@
 		display: inline-block;
 		vertical-align: middle;
 	}
+</style>
+<!-- 2.8.11 -->
+<style lang="scss">
+	@import "./static/assets/css/index.scss";
 </style>

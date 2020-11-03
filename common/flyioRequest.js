@@ -9,7 +9,7 @@ const fly = new Fly;
 // const URL = getDomain() || "http://pay-adm.vmajy.com"	//全局总URL
  // const URL = getDomain() || "http://pay.ydcyd.cn"	//全局总URL
  // const URL = getDomain() || "http://pay-adm.h5h5h5.cn"	//全局总URL
- const URL = getDomain() || "https://pay.oem.51hbpay.com"	//全局总URL
+ const URL = getDomain() || "http://pay.test.mamipay.com:41000/"	//全局总URL
  // const URL = getDomain() || "http://pay.glaimb.com"	//全局总URL
  // const URL = getDomain() || "http://pay.yyvvv.net"	//全局总URL
  // const URL = getDomain() || "http://pay.shempay.com"	//全局总URL
@@ -29,7 +29,6 @@ fly.config.timeout = 10000;
 // fly.config.baseURL = "https://test.pay.lingyundata.com";
 // fly.config.baseURL = "http://www.yunqufu.com";
 fly.config.baseURL = URL;
-fly.config.registerURL = 'https://hbpay.vip'
 //添加请求拦截器
 fly.interceptors.request.use((request)=>{
     //给所有请求添加自定义header
@@ -59,14 +58,10 @@ fly.interceptors.response.use(
 			uni.setStorageSync('token', token);
 		}
         //只将请求结果的data字段返回
-		console.log('ccccccccccccccccccccccccccccccccc========',response)
 		let data = response.data
-		
 		if (data.code === 200) {
-			console.log('1111111111111',data.code)
 			 return data
 		} else {
-			console.log('2222222222222222',data.code)
 			if (data.code === 401 || data.code === 422) {	/* 未登录/token错误失效 */
 				uni.removeStorageSync('token');
 				uni.removeStorageSync('userId');

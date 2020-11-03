@@ -10,16 +10,6 @@
 				}
 			}
 		}
-		,{
-		    "path" : "pages/login/register/register",
-		    "style" : {
-				"navigationBarTitleText": "注册",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": false
-				}
-			}
-		}
 	    ,{
             "path" : "pages/tabBar/home/home",
             "style" : {

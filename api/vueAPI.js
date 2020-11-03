@@ -19,18 +19,6 @@ export const baseURL = URL.config.baseURL;
  * 端口走10002，通过网关监测
  */
 
-/*注册*/
-export function register(phone){
-	return fly.request( {
-		baseURL:URL.config.registerURL,
-		url : '/add', 
-		method: 'get',
-		params: {
-			phone,
-			channel:'zhangGui'
-		}
-	})
-}
 /* 登录 */
 export function login (username, password) {
 	let deviceId = getDeviceId()

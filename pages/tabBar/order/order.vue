@@ -159,7 +159,7 @@
 							<text>{{
 								order.payTime[11]+order.payTime[12]+order.payTime[13]+order.payTime[14]+order.payTime[15]+order.payTime[16]+order.payTime[17]+order.payTime[18]
 							}}</text>
-							<text class=""><text class="text-sm">订单号：</text>{{order.orderNumber}}</text>
+							<!-- <text class=""><text class="text-sm">订单号：</text>{{order.orderNumber}}</text> -->
 						</view>
 					</view>
 				</view>

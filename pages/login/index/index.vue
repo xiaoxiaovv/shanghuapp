@@ -86,7 +86,8 @@
 <script>
 	import { login, getAccountInfo, getSiteInfo } from '@/api/vueAPI.js'
 	import { LoginCache } from '../../../utils/cache/index.js'
-	var posModule = uni.requireNativePlugin("DCloud-PosMoudle")
+	// var posModule = uni.requireNativePlugin("DCloud-PosMoudle")
+	// console.log('posmoduleobj=============',posModule)
 	export default {
 		data() {
 			return {
@@ -98,7 +99,23 @@
 				remember: 'remember',
 				phone: '',
 				privacy: '',
-				agreement: ''
+				agreement: '',
+				posData:{
+					memberCode:'C070820113023698',//商户编号
+					systrace:'0012171',//流水号
+					// busCode:'',
+					tranAmount:'2000',//交易金额(分为单位)
+					txnDate:'20201201',//交易日期(上送格式)
+					txnTime:'212400',//交易时间
+					orderCode:'20201201142329248005',//订单编号
+					netCode:'7',//路由编号
+					manufacturer:'小米',//设备厂商
+					deviceType:'MI 9',//设备型号
+					serialNum:'52882189691967929917',//设备序列号
+					ip:'125.33.28.50',//外网ip
+					cardList:'',
+					additionalInfo:'TUK9z3tXUT6kkbPHYpiKaVenhPkyAVirTAVv8ImGTe5JjJNAwcuB7L8jrWxvk8DF/2Xju5wzBUE='//服务端返回的附加信息字段
+				}
 			};
 		},
 		onReady() {
@@ -226,10 +243,15 @@
 					url: '/pages/login/register/register'
 				})
 			},
+			posCallFn(a,b){
+				console.log('posCall>>>>>>>>>>>>>>>>>')
+			},
 			// pos测试
 			pos() {
 				// testModule.gotoNativePage()
-				posModule.toast()
+				// var posDataStr = JSON.stringify(this.posData)
+				// posModule.pay(posDataStr,this.posCallFn)
+				// posModule.toast()
 				// testModule.pay('{"a":1}',this.posCallFn);
 			},
 			// 获取站点信息

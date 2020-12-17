@@ -16,11 +16,11 @@
 
 <style>
 	/*每个页面公共css */
-    @import "./common/colorui/main.css";
-    @import "./common/colorui/icon.css";
+    /* @import "./common/colorui/main.css"; */
+    /* @import "./common/colorui/icon.css"; */
 	/* 2.8.11 */
-	/* @import "./static/assets/iconfont/iconfont.css" */
-    /* @import "./common/uni.css"; */
+	@import "./static/assets/iconfont/iconfont.css"
+    @import "./common/uni.css";
 	/* 
 	 * 羊肉串居中法
 	 *	 使用情况：用于图文处于一排出现的上下不对齐情况
@@ -37,6 +37,6 @@
 	}
 </style>
 <!-- 2.8.11 -->
-<!-- <style lang="scss">
+<style lang="scss">
 	@import "./static/assets/css/index.scss";
-</style> -->
+</style>

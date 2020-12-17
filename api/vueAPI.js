@@ -834,7 +834,7 @@ export function frogJump(url) {
 }
 
 /* 随行付支付 */
-export function webPay(userId, merchantId, storeId, totalPrice, payWay) {
+export function webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId) {
 	return fly.request({
 		url : '/order/app/web_pay', 
 		method: 'POST',
@@ -843,7 +843,11 @@ export function webPay(userId, merchantId, storeId, totalPrice, payWay) {
 			merchantId,
 			storeId,
 			totalPrice ,
-			payWay
+			payWay,
+			//pos支付新增的字段
+			payChannel,
+			//pos支付新增的字段
+			serviceId
 		}
 	})
 }

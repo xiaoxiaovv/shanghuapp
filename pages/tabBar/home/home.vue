@@ -40,6 +40,7 @@
 							<view class='match-left-space align-left ml-50'>
 								新增会员<view class='mlr-10 darker'>{{realOrder && realOrder.memberTotalToday? realOrder.memberTotalToday : 0}}</view>人
 							</view>
+							<view @click="posTest">手机pos</view>
 						</view>
 					</view>
 					<!-- 收银栏 -->
@@ -539,6 +540,20 @@
 			}
 		},
 		methods:{
+			posTest(){
+				let userId = uni.getStorageSync('userId') || ''
+				// let merchantId = uni.getStorageSync('merchantId') || ''
+				let merchantId = '123213123213'
+				let storeId = uni.getStorageSync('storeId') || ''
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				// console.log('customerInfo==============',customerInfo)
+				let totalPrice = '11' //this.paymentMoney || '0.01'
+				let payWay = 8
+				let payChannel = 17
+				
+				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId).then(function(data){console.log('sucess==========',JSON.stringify(data))},function(data){console.log('fail==========',JSON.stringify(data))})
+			},
 			// 获取当前时间
 			getCurrentTime() {
 				let date = new Date()
@@ -1074,7 +1089,7 @@
 						return
 					}
 					
-					console.log('语音播放', count)
+					// console.log('语音播放', count)
 				
 					let beginTime = uni.getStorageSync("beginTime") || ''
 					let storeId = '';
@@ -1544,7 +1559,7 @@
 						return
 					}
 					
-					console.log('实时收入', count)
+					// console.log('实时收入', count)
 					
 					this.getStatistics()
 					this.getStatisticsDate()

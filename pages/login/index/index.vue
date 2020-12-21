@@ -151,14 +151,16 @@
 			/* 登录 */
 			login() {
 				/* 接口 */
+				// console.log('用户名==========',this.username,'密码=========',this.password)
 				if( this.username.trim() === '' || this.password.trim() === '' ) {
+					
 					uni.showToast({
 						title: '用户名或密码不能为空',
 						icon: 'none'
 					})
 					return
 				}
-				console.log(this.username, typeof this.username)
+				// console.log(this.username, typeof this.username)
 				if (!/^\d{5,15}$/.test(this.username)) {
 					return uni.showToast({
 						title: '用户名仅限5-15位数字',
@@ -168,7 +170,8 @@
 				this.btnLoading = true;
 				login( this.username.trim() , this.password.trim() ).then(res => {
 					// console.log(777, res)
-					// console.log(JSON.stringify(res.obj))
+					console.log(JSON.stringify(res.obj))
+					// return
 					/* 记住账户/密码 */
 					if(this.isRememberPassword){
 						uni.setStorageSync('password', this.password);

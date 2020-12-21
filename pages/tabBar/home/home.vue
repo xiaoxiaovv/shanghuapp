@@ -40,6 +40,8 @@
 							<view class='match-left-space align-left ml-50'>
 								新增会员<view class='mlr-10 darker'>{{realOrder && realOrder.memberTotalToday? realOrder.memberTotalToday : 0}}</view>人
 							</view>
+							<view @click="posTest">手机pos</view>
+							<view @click="gotoNativePage">刷脸</view>
 						</view>
 					</view>
 					<!-- 收银栏 -->
@@ -68,6 +70,10 @@
 						class="ml-30"
 						src="../../../static/home/btn_shouyin_click.png" 
 						@click="cashierScan"/>
+						<image
+							class="ml-30"
+							src="../../../static/home/btn_shoujipos_click.png" 
+							@click="cashierScan"/>
 				</view>
 				
 				<view
@@ -452,6 +458,7 @@
 			// }			
 			// 富有平台判断
 			this.isRich = isFuiouPlatform()
+			// console.log('this.isRich============',this.isRich)
 			this.isShow = true
 			
 			
@@ -539,6 +546,42 @@
 			}
 		},
 		methods:{
+			gotoNativePage() {
+				var obj = {
+					"memberCode": "C070820120351304",
+					"tranAmount": "1100",
+					"txnDate": "20201215",
+					"txnTime": "134857",
+					"systrace": "023920",
+					"orderCode": "202012151348574454",
+					"netCode": "9",
+					"manufacturer": "小米",
+					"deviceType": "MI 9",
+					"serialNum": "52882189691967929917",
+					"location": "116.455746,39.954022",
+					"ip": "125.33.28.50",										
+					"additionalInfo": "TUK9z3tXUT5A176QygmTPR5intwPMmHrYh2nl9z/8xRja2t17+zeWlJde2HMQuqvp1NGUJ8HVxI="					
+				}
+				var objStr = JSON.stringify(obj)
+				// testModule.gotoNativePage()
+				// testModule.toast()
+				testModule.pay(objStr);
+				// testModule.gotoNativePage();
+			},
+			posTest(){
+				let userId = uni.getStorageSync('userId') || ''
+				// let merchantId = uni.getStorageSync('merchantId') || ''
+				let merchantId = '123213123213'
+				let storeId = uni.getStorageSync('storeId') || ''
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				// console.log('customerInfo==============',customerInfo)
+				let totalPrice = '11' //this.paymentMoney || '0.01'
+				let payWay = 8
+				let payChannel = 17
+				
+				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId).then(function(data){console.log('sucess==========',JSON.stringify(data))},function(data){console.log('fail==========',JSON.stringify(data))})
+			},
 			// 获取当前时间
 			getCurrentTime() {
 				let date = new Date()
@@ -1074,7 +1117,7 @@
 						return
 					}
 					
-					console.log('语音播放', count)
+					// console.log('语音播放', count)
 				
 					let beginTime = uni.getStorageSync("beginTime") || ''
 					let storeId = '';
@@ -1544,7 +1587,7 @@
 						return
 					}
 					
-					console.log('实时收入', count)
+					// console.log('实时收入', count)
 					
 					this.getStatistics()
 					this.getStatisticsDate()
@@ -1706,8 +1749,8 @@
 		margin-bottom: -194upx;
 		
 		image {
-			width: 320upx;
-			height: 130upx;
+			width: 200upx;
+			height: 90upx;
 		}
 		
 		.image {

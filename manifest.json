@@ -143,5 +143,9 @@
         "setting" : {
             "minified" : true
         }
+    },
+    "h5" : {
+        "title" : "银通掌柜",
+        "domain" : "yt.com"
     }
 }

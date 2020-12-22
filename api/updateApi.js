@@ -12,9 +12,9 @@ const VERSION = getVersion() || '1.0.0'
 
 // const API_TOKEN = getFirToken() || 'bf6322d6ccc3a74c123c1b61c31dc96e'
 
-const API_TOKEN = getFirToken() || '0871cfa2c1e5ecdbde8a64c53a0bf21d'
+const API_TOKEN = getFirToken() || '--0871cfa2c1e5ecdbde8a64c53a0bf21d'
 
-const ID = getFirID() || '5d35ac7ef945481a89aefaf5'
+const ID = getFirID() || '--5d35ac7ef945481a89aefaf5'
 
 const bundle_id = ''
 

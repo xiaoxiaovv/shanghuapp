@@ -65,7 +65,7 @@
             },
             "icons" : {
                 "ios" : {
-                    "appstore" : "static/logo/ios/1024_1024.png",
+                    "appstore" : "static/logo/android/1024_1024.png",
                     "ipad" : {
                         "app" : "",
                         "app@2x" : "",

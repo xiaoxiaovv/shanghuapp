@@ -40,8 +40,8 @@
 							<view class='match-left-space align-left ml-50'>
 								新增会员<view class='mlr-10 darker'>{{realOrder && realOrder.memberTotalToday? realOrder.memberTotalToday : 0}}</view>人
 							</view>
-							<view @click="posTest">手机pos</view>
-							<view @click="gotoNativePage">刷脸</view>
+							<!-- <view @click="posTest">手机pos</view> -->
+							<view @click="gotoNativePage">跳到原生1</view>
 						</view>
 					</view>
 					<!-- 收银栏 -->
@@ -283,6 +283,7 @@
 	import { setInterval, setTimeout } from '../../../utils/adapter/index.js'
 	import { LoginCache } from '../../../utils/cache/index.js'
 	
+	var testModule = uni.requireNativePlugin('DCloud-PosMoudle')
 	export default {
 		components: { tkiFloatKeyboard },
 		data() {
@@ -547,7 +548,7 @@
 		},
 		methods:{
 			gotoNativePage() {
-				var obj = {
+				/* var obj = {
 					"memberCode": "C070820120351304",
 					"tranAmount": "1100",
 					"txnDate": "20201215",
@@ -561,10 +562,13 @@
 					"location": "116.455746,39.954022",
 					"ip": "125.33.28.50",										
 					"additionalInfo": "TUK9z3tXUT5A176QygmTPR5intwPMmHrYh2nl9z/8xRja2t17+zeWlJde2HMQuqvp1NGUJ8HVxI="					
-				}
+				} */
+				var obj = {userName:'15803196620',password:'123456',merchantId:'111'}
 				var objStr = JSON.stringify(obj)
 				// testModule.gotoNativePage()
 				// testModule.toast()
+				// console.log('testModule=========',testModule)
+				// console.log('testModulePay=========',testModule.pay)
 				testModule.pay(objStr);
 				// testModule.gotoNativePage();
 			},

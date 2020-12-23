@@ -126,7 +126,22 @@
             "mode" : "adjustPan" //软键盘弹出模式，
         },
         "usingComponents" : true,
-        "nativePlugins" : {}
+        "nativePlugins" : {
+            "DCloud-PosMoudle" : {
+                "__plugin_info__" : {
+                    "name" : "DCloudPosMoudle",
+                    "description" : "示例插件",
+                    "platforms" : "Android",
+                    "url" : "",
+                    "android_package_name" : "",
+                    "ios_bundle_id" : "",
+                    "isCloud" : false,
+                    "bought" : -1,
+                    "pid" : "",
+                    "parameters" : {}
+                }
+            }
+        }
     },
     /* SDK配置 */
     "quickapp" : {},

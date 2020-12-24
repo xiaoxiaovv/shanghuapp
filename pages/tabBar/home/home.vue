@@ -41,7 +41,11 @@
 								新增会员<view class='mlr-10 darker'>{{realOrder && realOrder.memberTotalToday? realOrder.memberTotalToday : 0}}</view>人
 							</view>
 							<!-- <view @click="posTest">手机pos</view> -->
-							<view @click="gotoNativePage">跳到原生1</view>
+							<view @click="gotoNativePage">跳到原生1；</view>
+							<view @click="addOrEditBankCark">加卡；</view>
+							<view @click="bankCarkList">卡表；</view>
+							<view @click="bankCardInfo">查卡；</view>
+							<view @click="delBankCard">删卡；</view>
 						</view>
 					</view>
 					<!-- 收银栏 -->
@@ -268,7 +272,7 @@
 <script>
 	import tkiFloatKeyboard from '@/components/tki-float-keyboard/tki-float-keyboard.vue'
 	// 后台接口
-	import {scanPay, refund, queryNewOrder, baseURL, getStoreDetails, getAdvertises, clickAdvertise, getAccountInfo, checkCoupon, frogJump, webPay, getStatistics, getOrderList, getOrderDetails, createOrder, updateOrder, invalidOrderDel, adClick } from '../../../api/vueAPI.js'
+	import {scanPay, refund, queryNewOrder, baseURL, getStoreDetails, getAdvertises, clickAdvertise, getAccountInfo, checkCoupon, frogJump, webPay, getStatistics, getOrderList, getOrderDetails, createOrder, updateOrder, invalidOrderDel, adClick, addOrEditBankCark, bankCarkList, bankCardInfo, delBankCard } from '../../../api/vueAPI.js'
 	// 检查更新
 	import { checkApp, VERSION, compareAppVersion } from '../../../api/updateApi.js'
 	// 客流统计
@@ -547,6 +551,36 @@
 			}
 		},
 		methods:{
+			/**
+			 * addOrEditBankCark  添加和编辑银行卡
+			 * @param {Object} merchantId 商户ID
+			 * @param {Object} realName 开户人名称
+			 * @param {Object} idCard  身份证号
+			 * @param {Object} accNo  支付卡号
+			 * @param {Object} mobile  手机号
+			 * @param {Object} cvv2 银行卡背面 后三位
+			 * @param {Object} validity 有效期 格式： MMYY
+			 */
+			addOrEditBankCark(){
+				let merchantId = uni.getStorageSync('merchantId')
+				let realName = '张国军'
+				let idCard = '130533198309185913'
+				let accNo = '6259699916289238'
+				let mobile = '15803196620'
+				let cvv2 = '184'
+				let validity = '0423'
+				addOrEditBankCark(merchantId, realName, idCard, accNo, mobile, cvv2, validity)
+			},
+			bankCarkList(){
+				let merchantId = uni.getStorageSync('merchantId')
+				bankCarkList(merchantId)
+			},
+			bankCardInfo(bankCardId){
+				bankCardInfo('1341672729136508928')
+			},
+			delBankCard(bankCardId){
+				delBankCard('1341672729136508928')
+			},
 			gotoNativePage() {
 				/* var obj = {
 					"memberCode": "C070820120351304",

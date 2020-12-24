@@ -1235,3 +1235,57 @@ export function queryOrderSummary(createTime, storeId, status, payWay, endCreate
 	}
 	return fly.get('/order/app/query_order/summary', qs.stringify(data))
 }
+// 手机pos-网联卡管理
+
+/**
+ * addOrEditBankCark  添加和编辑银行卡
+ * @param {Object} merchantId 商户ID
+ * @param {Object} realName 开户人名称
+ * @param {Object} idCard  身份证号
+ * @param {Object} accNo  支付卡号
+ * @param {Object} mobile  手机号
+ * @param {Object} cvv2 银行卡背面 后三位
+ * @param {Object} validity 有效期 格式： MMYY
+ */
+export function addOrEditBankCark(merchantId, realName, idCard, accNo, mobile, cvv2, validity) {
+	let data = {
+		merchantId,
+		realName,
+		idCard,
+		accNo,
+		mobile,
+		cvv2,
+		validity
+	}
+	return fly.post('/order/bank/saveAndFlush', data)
+}
+/**
+ * bankCarkList  查询商户的银行卡列表
+ * @param {Object} merchantId 商户ID
+ */
+export function bankCarkList(merchantId) {
+	let data = {
+		merchantId
+	}
+	return fly.post('/order/bank/getBankList', data)
+}
+/**
+ * bankCarkList  查询银行卡信息
+ * @param {Object} id 银行卡id
+ */
+export function bankCardInfo(id) {
+	let data = {
+		id
+	}
+	return fly.post('/order/bank/getOne', data)
+}		
+/**
+ * bankCarkList  删除银行卡
+ * @param {Object} id 银行卡id
+ */
+export function delBankCard(id) {
+	let data = {
+		id
+	}
+	return fly.post('/order/bank/delete', data)
+}					

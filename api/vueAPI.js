@@ -1257,7 +1257,7 @@ export function addOrEditBankCark(merchantId, realName, idCard, accNo, mobile, c
 		cvv2,
 		validity
 	}
-	return fly.post('/order/bank/saveAndFlush', data)
+	return fly.post('/order/bank/saveAndFlush', qs.stringify(data))
 }
 /**
  * bankCarkList  查询商户的银行卡列表
@@ -1267,7 +1267,7 @@ export function bankCarkList(merchantId) {
 	let data = {
 		merchantId
 	}
-	return fly.post('/order/bank/getBankList', data)
+	return fly.post('/order/bank/getBankList', qs.stringify(data))
 }
 /**
  * bankCarkList  查询银行卡信息
@@ -1277,7 +1277,7 @@ export function bankCardInfo(id) {
 	let data = {
 		id
 	}
-	return fly.post('/order/bank/getOne', data)
+	return fly.post('/order/bank/getOne', qs.stringify(data))
 }		
 /**
  * bankCarkList  删除银行卡
@@ -1287,5 +1287,5 @@ export function delBankCard(id) {
 	let data = {
 		id
 	}
-	return fly.post('/order/bank/delete', data)
+	return fly.post('/order/bank/delete', qs.stringify(data))
 }					

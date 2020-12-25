@@ -576,10 +576,10 @@
 				bankCarkList(merchantId)
 			},
 			bankCardInfo(bankCardId){
-				bankCardInfo('1341672729136508928')
+				bankCardInfo('1342280412233465856')
 			},
 			delBankCard(bankCardId){
-				delBankCard('1341672729136508928')
+				delBankCard('1342280412233465856')
 			},
 			gotoNativePage() {
 				/* var obj = {

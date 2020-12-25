@@ -12,6 +12,7 @@ const fly = new Fly;
  // const URL = getDomain() || "https://pay.oem.51hbpay.com"	//全局总URL
  // const URL = getDomain() || "http://pay.ytpay.vip"	//全局总URL
  const URL = getDomain() || "http://pay.oem.test.mamipay.com:41000"	//全局总URL
+ // const URL = getDomain() || "http://pay.oem.test.mamipay.com:41000"	//全局总URL
  // const URL = getDomain() || "http://pay.glaimb.com"	//全局总URL
  // const URL = getDomain() || "http://pay.yyvvv.net"	//全局总URL
  // const URL = getDomain() || "http://pay.shempay.com"	//全局总URL

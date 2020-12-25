@@ -39,10 +39,10 @@
 						@click="register">
 						注册
 					</view>
-					<view
+					<!-- <view
 						@click="pos">
 						pos
-					</view>
+					</view> -->
 					<view 
 						@click="forgetPassword">
 						忘记密码

@@ -40,12 +40,13 @@
 							<view class='match-left-space align-left ml-50'>
 								新增会员<view class='mlr-10 darker'>{{realOrder && realOrder.memberTotalToday? realOrder.memberTotalToday : 0}}</view>人
 							</view>
-							<!-- <view @click="posTest">手机pos</view> -->
-							<view @click="gotoNativePage">跳到原生1；</view>
+							<view @click="posTest">手机pos下单；</view>
+							<view @click="orderSure">网联下单确认</view>													
+							<!-- <view @click="gotoNativePage">跳到原生1；</view>
 							<view @click="addOrEditBankCark">加卡；</view>
 							<view @click="bankCarkList">卡表；</view>
 							<view @click="bankCardInfo">查卡；</view>
-							<view @click="delBankCard">删卡；</view>
+							<view @click="delBankCard">删卡；</view> -->
 						</view>
 					</view>
 					<!-- 收银栏 -->
@@ -272,7 +273,7 @@
 <script>
 	import tkiFloatKeyboard from '@/components/tki-float-keyboard/tki-float-keyboard.vue'
 	// 后台接口
-	import {scanPay, refund, queryNewOrder, baseURL, getStoreDetails, getAdvertises, clickAdvertise, getAccountInfo, checkCoupon, frogJump, webPay, getStatistics, getOrderList, getOrderDetails, createOrder, updateOrder, invalidOrderDel, adClick, addOrEditBankCark, bankCarkList, bankCardInfo, delBankCard } from '../../../api/vueAPI.js'
+	import {scanPay, refund, queryNewOrder, baseURL, getStoreDetails, getAdvertises, clickAdvertise, getAccountInfo, checkCoupon, frogJump, webPay, getStatistics, getOrderList, getOrderDetails, createOrder, updateOrder, invalidOrderDel, adClick, addOrEditBankCark, bankCarkList, bankCardInfo, delBankCard, orderSure } from '../../../api/vueAPI.js'
 	// 检查更新
 	import { checkApp, VERSION, compareAppVersion } from '../../../api/updateApi.js'
 	// 客流统计
@@ -523,7 +524,7 @@
 			
 			// this.getRealInterval.pauseInterval()
 			// this.getRealInterval.restartInterval()
-			// this.interval.restartInterval()
+			// this.interval.restartInterval()sss
 		},
 		
 		onHide() {
@@ -581,6 +582,11 @@
 			delBankCard(bankCardId){
 				delBankCard('1342280412233465856')
 			},
+			orderSure(bankCardId){
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				orderSure('20201225152000517215','253247',serviceId,'C070820113023698')
+			},
 			gotoNativePage() {
 				/* var obj = {
 					"memberCode": "C070820120351304",
@@ -616,9 +622,9 @@
 				// console.log('customerInfo==============',customerInfo)
 				let totalPrice = '11' //this.paymentMoney || '0.01'
 				let payWay = 8
-				let payChannel = 17
-				
-				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId).then(function(data){console.log('sucess==========',JSON.stringify(data))},function(data){console.log('fail==========',JSON.stringify(data))})
+				let payChannel = 18
+				let bankCardId = '1342280548032446464'
+				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, bankCardId).then(function(data){console.log('sucess==========',JSON.stringify(data))},function(data){console.log('fail==========',JSON.stringify(data))})
 			},
 			// 获取当前时间
 			getCurrentTime() {

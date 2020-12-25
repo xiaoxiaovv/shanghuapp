@@ -834,7 +834,8 @@ export function frogJump(url) {
 }
 
 /* 随行付支付 */
-export function webPay(userId, merchantId, storeId, totalPrice, payWay) {
+export function webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, bankCardId) {
+	// payChannel, serviceId, bankCardId  手机pos用的字段，其他业务可不加
 	return fly.request({
 		url : '/order/app/web_pay', 
 		method: 'POST',
@@ -843,7 +844,28 @@ export function webPay(userId, merchantId, storeId, totalPrice, payWay) {
 			merchantId,
 			storeId,
 			totalPrice ,
-			payWay
+			payWay,
+			payChannel, 
+			serviceId, 
+			bankId:bankCardId
+		}
+	})
+}
+
+/* 下单确认 */
+export function orderSure(chSerialNo, checkCode, serviceId, chMerCode) {
+	// chSerialNo第三方下单返回的交易流水号
+	// checkCode短信验证码
+	// serviceId服务商id
+	// chMerCode通道商户编号
+	return fly.request({
+		url : '/order/app/quickPayConfirmApi', 
+		method: 'POST',
+		params: {
+			chSerialNo,
+			checkCode,
+			serviceId, 
+			chMerCode
 		}
 	})
 }

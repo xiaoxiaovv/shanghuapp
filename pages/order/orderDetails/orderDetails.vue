@@ -507,7 +507,8 @@
 			/* 订单详情 */
 			getOrderDetail(){
 				getOrderDetails(this.orderNumber).then(res => {
-					// console.log('xxxxxxxxxxxxxxx', res)
+					console.log('xxxxxxxxxxxxxxx', res)
+					console.log('xxxxxxxxxxxxxxxaaaaaaaaaaaaaaaaaaaaa', JSON.stringify(res.obj))
 					this.orderDetails = res.obj
 				}).catch(err => {
 					console.log(err)

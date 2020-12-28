@@ -19,7 +19,7 @@
     @import "./common/colorui/main.css";
     @import "./common/colorui/icon.css";
 	/* 2.8.11 */
-	/* @import "./static/assets/iconfont/iconfont.css" */
+	@import "./static/assets/iconfont/iconfont.css"
     /* @import "./common/uni.css"; */
 	/* 
 	 * 羊肉串居中法
@@ -37,6 +37,6 @@
 	}
 </style>
 <!-- 2.8.11 -->
-<!-- <style lang="scss">
+<style lang="scss">
 	@import "./static/assets/css/index.scss";
-</style> -->
+</style>

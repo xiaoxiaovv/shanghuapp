@@ -40,7 +40,7 @@
 							<view class='match-left-space align-left ml-50'>
 								新增会员<view class='mlr-10 darker'>{{realOrder && realOrder.memberTotalToday? realOrder.memberTotalToday : 0}}</view>人
 							</view>
-							<view @click="posTest">手机pos下单；</view>
+							<view @click="sjPosJump">手机pos下单；</view>
 							<view @click="orderSure">网联下单确认</view>													
 							<!-- <view @click="gotoNativePage">跳到原生1；</view>
 							<view @click="addOrEditBankCark">加卡；</view>
@@ -78,7 +78,7 @@
 					<image
 							class="ml-30"
 							src="../../../static/home/btn_shoujipos_click.png" 
-							@click="shouJiPosPay"/>
+							@click="gotoNativePage"/>
 				</view>
 				
 				<view
@@ -390,6 +390,15 @@
 						iconWidth: 44,
 						iconHeight: 38
 					},
+					"depositManage":{
+						src: '../../../static/homev2/dm.png',
+						name: '手机pos',
+						url: 'sjPosJump',
+						status: 1,
+						isShow: 1,
+						iconWidth: 44,
+						iconHeight: 38
+					}
 				},
 				menuListTwo: {		//菜单 2
 				},
@@ -587,7 +596,7 @@
 				let serviceId = customerInfo.serviceId
 				orderSure('20201228112242356950','923019',serviceId,'C070820113023698','202112281122416768')
 			},
-			gotoNativePage() {
+			sjPosJump() {
 				/* var obj = {
 					"memberCode": "C070820120351304",
 					"tranAmount": "1100",
@@ -815,6 +824,11 @@
 				/* 扫码核销卡券 */
 				if(url === 'couponCancel'){
 					this.checkCoupon();
+					return
+				}
+				// 手机pos调取原生页面
+				if(url === 'sjPosJump'){
+					this.sjPosJump();
 					return
 				}
 				// console.log('跳转页面：'+url)

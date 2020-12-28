@@ -804,6 +804,24 @@
 					}
 				}
 			}
+		},
+		{
+		    "path" : "pages/home/depositManage/index/index",
+		    "style" : {
+				"navigationBarTitleText": "手机pos",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [
+							{
+								"text": "\ue601",
+								"fontSrc": "/static/assets/iconfont/iconfont.ttf",
+								"fontSize": "22px"
+							}
+						]
+					}
+				}
+			}
 		}
 		,{
 		    "path" : "pages/user/newPrinter/index/index",

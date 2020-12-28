@@ -75,10 +75,10 @@
 						class="ml-30"
 						src="../../../static/home/btn_shouyin_click.png" 
 						@click="cashierScan"/>
-						<image
+					<image
 							class="ml-30"
 							src="../../../static/home/btn_shoujipos_click.png" 
-							@click="cashierScan"/>
+							@click="shouJiPosPay"/>
 				</view>
 				
 				<view
@@ -585,7 +585,7 @@
 			orderSure(bankCardId){
 				let customerInfo = uni.getStorageSync('customerCount')
 				let serviceId = customerInfo.serviceId
-				orderSure('20201225152000517215','253247',serviceId,'C070820113023698')
+				orderSure('20201228112242356950','923019',serviceId,'C070820113023698','202112281122416768')
 			},
 			gotoNativePage() {
 				/* var obj = {
@@ -1098,6 +1098,48 @@
 					}
 				});
 			},
+			// 手机pos付款
+			
+			shouJiPosPay(){
+				if(parseFloat(this.paymentMoney) === 0){
+					uni.showToast({
+						title: '请输入正确金额',
+						icon: 'none'
+					})
+					return
+				}
+				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
+				if (!nowStoreDetail.storeId) {
+					uni.showToast({
+						title: '请选择门店',
+						icon: 'none'
+					})
+					return
+				}
+				
+				let userId = uni.getStorageSync('userId') || ''
+				let merchantId = uni.getStorageSync('merchantId') || ''
+				// let merchantId = '123213123213'
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				// console.log('customerInfo==============',customerInfo)
+				let totalPrice = this.paymentMoney //this.paymentMoney || '0.01'
+				let payWay = 8
+				let payChannel = 17
+				let bankCardId = '1342280548032446464'
+				
+				
+				
+				let storeId = '';
+				
+				let equipmentId = uni.getStorageSync('equipmentId') || ''
+				let token = uni.getStorageSync('token');
+				// console.log('token===============',token)
+				if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail){
+					storeId = nowStoreDetail.storeId
+				}
+				android. pos(userId, merchantId,  storeId, serviceId, totalPrice)
+			},
 			/* 扫码收款 */
 			cashierScan() {
 				if(parseFloat(this.paymentMoney) === 0){
@@ -1120,7 +1162,27 @@
 				// console.log('哈哈哈哈', that.scanPayMoney, that.paymentMoney)
 				that.scanPayMoney = that.paymentMoney
 				// 聚合通道
-				uni.scanCode({
+				if(android != null){
+					let storeId = '';
+					let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
+					let equipmentId = uni.getStorageSync('equipmentId') || ''
+					let token = uni.getStorageSync('token');
+					// console.log('token===============',token)
+					if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail){
+						storeId = nowStoreDetail.storeId
+					}
+					android.saoMaShouKuan(that.scanPayMoney, 0,storeId, equipmentId, token)
+					// 金额初始化
+					that.paymentMoney = '0'
+					that.scanPayMoney = '0'
+					// 关闭键盘
+					that.$refs.keyb._keyHide()
+					that.isNumberKeyboard = false
+					that.closeNumbeKeyboard()
+				}else{
+					console.log('没有扫码设备')
+				}
+				/* uni.scanCode({
 					onlyFromCamera: true,
 					success: (res) => {
 						this.codeResult = res.result
@@ -1133,12 +1195,13 @@
 						if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail){
 							storeId = nowStoreDetail.storeId
 						}
-						scanPay(that.scanPayMoney, 0, res.result, storeId).then(res => {
-							// console.log(666, res)
+						let equipmentId = uni.getStorageSync('equipmentId') || ''
+						scanPay(that.scanPayMoney, 0, res.result, storeId, equipmentId).then(res => {
+							console.log(6666666666666666666666666666, res)
 							uni.navigateTo({
 								url:'../../home/paySuccess/paySuccess?orderNumber='+ res.obj.orderNumber
 							})
-							/* 金额初始化 */
+							金额初始化
 							that.paymentMoney = '0'
 							that.scanPayMoney = '0'
 							// 关闭键盘
@@ -1149,7 +1212,7 @@
 							console.log(err)
 						})
 					}
-				})
+				}) */
 			},
 			/* 轮询查询新订单 */
 			queryNewOrder() {

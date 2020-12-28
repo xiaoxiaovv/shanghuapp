@@ -102,10 +102,10 @@ export function getAccountInfo ( ) {
 }
 
 /* 付款码支付 */
-export function scanPay (totalPrice, disCountPrice, authCode, storeId='') {
+export function scanPay (totalPrice, disCountPrice, authCode, storeId='', equipmentId) {
 	// console.log("totalPrice="+totalPrice)
 	// console.log('scanPay xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-	let equipmentId = uni.getStorageSync('equipmentId') || ''
+	// let equipmentId = uni.getStorageSync('equipmentId') || ''
 	return fly.request('/order/app/scan_pay', qs.stringify({
 		totalPrice,
 		disCountPrice,
@@ -853,7 +853,7 @@ export function webPay(userId, merchantId, storeId, totalPrice, payWay, payChann
 }
 
 /* 下单确认 */
-export function orderSure(chSerialNo, checkCode, serviceId, chMerCode) {
+export function orderSure(chSerialNo, checkCode, serviceId, chMerCode, orderCode) {
 	// chSerialNo第三方下单返回的交易流水号
 	// checkCode短信验证码
 	// serviceId服务商id
@@ -865,7 +865,8 @@ export function orderSure(chSerialNo, checkCode, serviceId, chMerCode) {
 			chSerialNo,
 			checkCode,
 			serviceId, 
-			chMerCode
+			chMerCode,
+			orderCode
 		}
 	})
 }

@@ -60,14 +60,14 @@ fly.interceptors.response.use(
 			uni.setStorageSync('token', token);
 		}
         //只将请求结果的data字段返回
-		console.log('ccccccccccccccccccccccccccccccccc========',response)
+		// console.log('ccccccccccccccccccccccccccccccccc========',response)
 		let data = response.data
 		
 		if (data.code === 200) {
-			console.log('1111111111111',data.code)
+			// console.log('1111111111111',data.code)
 			 return data
 		} else {
-			console.log('2222222222222222',data.code)
+			// console.log('2222222222222222',data.code)
 			if (data.code === 401 || data.code === 422) {	/* 未登录/token错误失效 */
 				uni.removeStorageSync('token');
 				uni.removeStorageSync('userId');

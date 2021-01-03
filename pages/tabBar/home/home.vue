@@ -40,7 +40,7 @@
 							<view class='match-left-space align-left ml-50'>
 								新增会员<view class='mlr-10 darker'>{{realOrder && realOrder.memberTotalToday? realOrder.memberTotalToday : 0}}</view>人
 							</view>
-							<view @click="posTest">手机pos下单；</view>
+							<!-- <view @click="posTest">手机pos下单；</view> -->
 							<!-- <view @click="orderSure">网联下单确认</view>													 -->
 							<!-- <view @click="gotoNativePage">跳到原生1；</view>
 							<view @click="addOrEditBankCark">加卡；</view>

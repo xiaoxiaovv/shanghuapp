@@ -41,6 +41,17 @@
 				}
 			}
         }
+		,{
+		    "path" : "pages/tabBar/shop/shop",
+		    "style" : {
+				"navigationBarTitleText": "商城",
+				"onReachBottomDistance" : 100,		//mescroll
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": true
+				}
+			}
+		}
         ,{
             "path" : "pages/tabBar/user/user",
             "style" : {
@@ -885,6 +896,12 @@
 		        "iconPath" : "static/tabBar/btn_the_order.png",
 		        "selectedIconPath" : "static/tabBar/btn_the_order_click.png",
 		        "text" : "订单"
+		    },
+		    {
+		        "pagePath" : "pages/tabBar/shop/shop",
+		        "iconPath" : "static/tabBar/btn_the_order.png",
+		        "selectedIconPath" : "static/tabBar/btn_the_order_click.png",
+		        "text" : "商城"
 		    },
 		    {
 		        "pagePath" : "pages/tabBar/user/user",

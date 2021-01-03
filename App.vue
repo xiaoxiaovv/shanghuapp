@@ -18,8 +18,9 @@
 	/*每个页面公共css */
     @import "./common/colorui/main.css";
     @import "./common/colorui/icon.css";
+	@import url("./static/assets/iconfont/iconfont.css");
 	/* 2.8.11 */
-	@import "./static/assets/iconfont/iconfont.css"
+	/* @import "./static/assets/iconfont/iconfont.css" */
     /* @import "./common/uni.css"; */
 	/* 
 	 * 羊肉串居中法

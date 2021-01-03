@@ -30,6 +30,8 @@
 								class="iconfont icon-gou" 
 								v-if="isRememberPassword">
 							</view>
+							<!-- <i class="iconfont icon-gou" 
+								v-if="isRememberPassword"></i> -->
 						</view>
 						<view class="ml-20">
 							记住密码

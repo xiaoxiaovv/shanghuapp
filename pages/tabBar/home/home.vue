@@ -40,8 +40,8 @@
 							<view class='match-left-space align-left ml-50'>
 								新增会员<view class='mlr-10 darker'>{{realOrder && realOrder.memberTotalToday? realOrder.memberTotalToday : 0}}</view>人
 							</view>
-							<view @click="sjPosJump">手机pos下单；</view>
-							<view @click="orderSure">网联下单确认</view>													
+							<view @click="posTest">手机pos下单；</view>
+							<!-- <view @click="orderSure">网联下单确认</view>													 -->
 							<!-- <view @click="gotoNativePage">跳到原生1；</view>
 							<view @click="addOrEditBankCark">加卡；</view>
 							<view @click="bankCarkList">卡表；</view>
@@ -78,7 +78,7 @@
 					<image
 							class="ml-30"
 							src="../../../static/home/btn_shoujipos_click.png" 
-							@click="gotoNativePage"/>
+							@click="shouJiPosPay"/>
 				</view>
 				
 				<view
@@ -182,6 +182,13 @@
 							</image>
 							<text>{{menu.name}}</text>
 						</view>
+						<!-- <web-view class="item align-ver-bet box" src="https://alitong.vip/ydh5/index.html?i=1#/yidu_tc/pages/tabbar/index">
+							<image
+								class="img_3"
+								mode='scaleToFill'
+								src="static/homev2/shop.png" >
+							</image>
+						</web-view> -->
 					</view>
 				<!-- </swiper-item>
 				<swiper-item> -->
@@ -391,6 +398,15 @@
 						iconHeight: 38
 					},
 					"depositManage":{
+						src: '../../../static/homev2/shop.png',
+						name: '商城',
+						url: 'shop',
+						status: 1,
+						isShow: 1,
+						iconWidth: 200,
+						iconHeight: 200
+					}/* ,
+					"depositManage":{
 						src: '../../../static/homev2/dm.png',
 						name: '手机pos',
 						url: 'sjPosJump',
@@ -398,7 +414,7 @@
 						isShow: 1,
 						iconWidth: 44,
 						iconHeight: 38
-					}
+					} */
 				},
 				menuListTwo: {		//菜单 2
 				},
@@ -458,7 +474,7 @@
 				this.paddingTop = systemInfo['pixelRatio'] * systemInfo['statusBarHeight'] + 'px'
 			}
 			// 版本更新检测
-			this.checkUpdate()
+			// this.checkUpdate()
 			// 获取当前时间
 			// this.getCurrentTime()
 			// 登录者身份验证
@@ -595,45 +611,6 @@
 				let customerInfo = uni.getStorageSync('customerCount')
 				let serviceId = customerInfo.serviceId
 				orderSure('20201228112242356950','923019',serviceId,'C070820113023698','202112281122416768')
-			},
-			sjPosJump() {
-				/* var obj = {
-					"memberCode": "C070820120351304",
-					"tranAmount": "1100",
-					"txnDate": "20201215",
-					"txnTime": "134857",
-					"systrace": "023920",
-					"orderCode": "202012151348574454",
-					"netCode": "9",
-					"manufacturer": "小米",
-					"deviceType": "MI 9",
-					"serialNum": "52882189691967929917",
-					"location": "116.455746,39.954022",
-					"ip": "125.33.28.50",										
-					"additionalInfo": "TUK9z3tXUT5A176QygmTPR5intwPMmHrYh2nl9z/8xRja2t17+zeWlJde2HMQuqvp1NGUJ8HVxI="					
-				} */
-				var obj = {userName:'15803196620',password:'123456',merchantId:'111'}
-				var objStr = JSON.stringify(obj)
-				// testModule.gotoNativePage()
-				// testModule.toast()
-				// console.log('testModule=========',testModule)
-				// console.log('testModulePay=========',testModule.pay)
-				testModule.pay(objStr);
-				// testModule.gotoNativePage();
-			},
-			posTest(){
-				let userId = uni.getStorageSync('userId') || ''
-				// let merchantId = uni.getStorageSync('merchantId') || ''
-				let merchantId = '123213123213'
-				let storeId = uni.getStorageSync('storeId') || ''
-				let customerInfo = uni.getStorageSync('customerCount')
-				let serviceId = customerInfo.serviceId
-				// console.log('customerInfo==============',customerInfo)
-				let totalPrice = '11' //this.paymentMoney || '0.01'
-				let payWay = 8
-				let payChannel = 18
-				let bankCardId = '1342280548032446464'
-				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, bankCardId).then(function(data){console.log('sucess==========',JSON.stringify(data))},function(data){console.log('fail==========',JSON.stringify(data))})
 			},
 			// 获取当前时间
 			getCurrentTime() {
@@ -826,11 +803,15 @@
 					this.checkCoupon();
 					return
 				}
-				// 手机pos调取原生页面
+				// 商城
+				if(url === 'shop'){
+					this.shopJump();
+				}
+				/* // 手机pos调取原生页面
 				if(url === 'sjPosJump'){
 					this.sjPosJump();
 					return
-				}
+				} */
 				// console.log('跳转页面：'+url)
 				/* 保留页面栈进行跳转 */
 				uni.navigateTo({
@@ -1115,6 +1096,7 @@
 			// 手机pos付款
 			
 			shouJiPosPay(){
+				// console.log('ssssssssssssssssssssssssssssssssss')
 				if(parseFloat(this.paymentMoney) === 0){
 					uni.showToast({
 						title: '请输入正确金额',
@@ -1152,11 +1134,59 @@
 				if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail){
 					storeId = nowStoreDetail.storeId
 				}
-				android. pos(userId, merchantId,  storeId, serviceId, totalPrice)
+				let posDataObj = {userId, merchantId,  storeId, serviceId, totalPrice}
+				let posDataObjStr = JSON.stringify(posDataObj);
+				// console.log('posDataObjStr=========================',posDataObjStr)
+				testModule.pos(posDataObjStr)
+			},
+			shopJump(){
+				location.href = 'https://alitong.vip/ydh5/index.html?i=1#/yidu_tc/pages/tabbar/index'
+			},
+			sjPosJump() {
+				
+				// 调取摄像头传给sdk的,暂时没用
+				/* var obj = {
+					"memberCode": "C070820120351304",
+					"tranAmount": "1100",
+					"txnDate": "20201231",
+					"txnTime": "104857",
+					"systrace": "023920",
+					"orderCode": "202012151348574454",
+					"netCode": "9",
+					"manufacturer": "小米",
+					"deviceType": "MI 9",
+					"serialNum": "52882189691967929917",
+					"location": "116.455746,39.954022",
+					"ip": "125.33.28.50",										
+					"additionalInfo": "TUK9z3tXUT5A176QygmTPR5intwPMmHrYh2nl9z/8xRja2t17+zeWlJde2HMQuqvp1NGUJ8HVxI="					
+				} */
+				var obj = {userName:'15803196620',password:'123456',merchantId:'111'}
+				var objStr = JSON.stringify(obj)
+				// testModule.gotoNativePage()
+				// testModule.toast()
+				// console.log('testModule=========',testModule)
+				// console.log('testModulePay=========',testModule.pay)
+				testModule.pay(objStr);
+				// testModule.gotoNativePage();
+			},
+			posTest(){
+				// 下单
+				let userId = uni.getStorageSync('userId') || ''
+				// let merchantId = uni.getStorageSync('merchantId') || ''
+				let merchantId = '123213123213'
+				let storeId = uni.getStorageSync('storeId') || ''
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				// console.log('customerInfo==============',customerInfo)
+				let totalPrice = '11' //this.paymentMoney || '0.01'
+				let payWay = 8
+				let payChannel = 17 //17 pos  18 网联
+				let bankCardId = '1342280548032446464'
+				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, bankCardId).then(function(data){console.log('sucess==========',JSON.stringify(data))},function(data){console.log('fail==========',JSON.stringify(data))})
 			},
 			/* 扫码收款 */
 			cashierScan() {
-				if(parseFloat(this.paymentMoney) === 0){
+				/* if(parseFloat(this.paymentMoney) === 0){
 					uni.showToast({
 						title: '请输入正确金额',
 						icon: 'none'
@@ -1195,8 +1225,8 @@
 					that.closeNumbeKeyboard()
 				}else{
 					console.log('没有扫码设备')
-				}
-				/* uni.scanCode({
+				} */
+				uni.scanCode({
 					onlyFromCamera: true,
 					success: (res) => {
 						this.codeResult = res.result
@@ -1211,7 +1241,7 @@
 						}
 						let equipmentId = uni.getStorageSync('equipmentId') || ''
 						scanPay(that.scanPayMoney, 0, res.result, storeId, equipmentId).then(res => {
-							console.log(6666666666666666666666666666, res)
+							// console.log(6666666666666666666666666666, res)
 							uni.navigateTo({
 								url:'../../home/paySuccess/paySuccess?orderNumber='+ res.obj.orderNumber
 							})
@@ -1226,7 +1256,7 @@
 							console.log(err)
 						})
 					}
-				}) */
+				})
 			},
 			/* 轮询查询新订单 */
 			queryNewOrder() {

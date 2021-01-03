@@ -7,7 +7,7 @@
 			</view>
 		</view>
 		<view class="lf-list">
-			<view @click="checkUpdate">
+			<view @click="">
 				<text class="uni-text-md">检测更新</text>
 				<view>
 					<view class="prod prod-height"></view>

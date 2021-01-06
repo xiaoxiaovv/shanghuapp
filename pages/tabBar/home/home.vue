@@ -40,13 +40,13 @@
 							<view class='match-left-space align-left ml-50'>
 								新增会员<view class='mlr-10 darker'>{{realOrder && realOrder.memberTotalToday? realOrder.memberTotalToday : 0}}</view>人
 							</view>
-							<!-- <view @click="posTest">手机pos下单；</view> -->
-							<!-- <view @click="orderSure">网联下单确认</view>													 -->
-							<!-- <view @click="gotoNativePage">跳到原生1；</view>
-							<view @click="addOrEditBankCark">加卡；</view>
+							<view @click="posTest">手机pos下单；</view>
+							<view @click="orderSure">网联下单确认；</view>													
+							<!-- <view @click="gotoNativePage">跳到原生1；</view> -->
+							<!-- <view @click="addOrEditBankCark">加卡；</view> -->
 							<view @click="bankCarkList">卡表；</view>
-							<view @click="bankCardInfo">查卡；</view>
-							<view @click="delBankCard">删卡；</view> -->
+							<!-- <view @click="bankCardInfo">查卡；</view> -->
+							<!-- <view @click="delBankCard">删卡；</view> -->
 						</view>
 					</view>
 					<!-- 收银栏 -->
@@ -396,7 +396,7 @@
 						isShow: 1,
 						iconWidth: 44,
 						iconHeight: 38
-					},
+					}/* ,
 					"depositManage":{
 						src: '../../../static/homev2/shop.png',
 						name: '商城',
@@ -405,7 +405,7 @@
 						isShow: 1,
 						iconWidth: 200,
 						iconHeight: 200
-					}/* ,
+					} *//* ,
 					"depositManage":{
 						src: '../../../static/homev2/dm.png',
 						name: '手机pos',
@@ -591,10 +591,10 @@
 				let merchantId = uni.getStorageSync('merchantId')
 				let realName = '张国军'
 				let idCard = '130533198309185913'
-				let accNo = '6259699916289238'
+				let accNo = '6226880385610282'
 				let mobile = '15803196620'
-				let cvv2 = '184'
-				let validity = '0423'
+				let cvv2 = '947'
+				let validity = '0523'
 				addOrEditBankCark(merchantId, realName, idCard, accNo, mobile, cvv2, validity)
 			},
 			bankCarkList(){
@@ -602,15 +602,30 @@
 				bankCarkList(merchantId)
 			},
 			bankCardInfo(bankCardId){
-				bankCardInfo('1342280412233465856')
+				bankCardInfo('1345981813639208960')
 			},
 			delBankCard(bankCardId){
-				delBankCard('1342280412233465856')
+				delBankCard('1345981813639208960')
+			},
+			posTest(){
+				// 下单
+				let userId = uni.getStorageSync('userId') || ''
+				let merchantId = uni.getStorageSync('merchantId') || ''
+				// let merchantId = '123213123213'
+				let storeId = uni.getStorageSync('storeId') || ''
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				// console.log('customerInfo==============',customerInfo)
+				let totalPrice = '11' //this.paymentMoney || '0.01'
+				let payWay = 8
+				let payChannel = 18 //17 pos  18 网联
+				let bankCardId = '1345981813639208960'
+				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, bankCardId).then(function(data){console.log('sucess==========',JSON.stringify(data))},function(data){console.log('fail==========',JSON.stringify(data))})
 			},
 			orderSure(bankCardId){
 				let customerInfo = uni.getStorageSync('customerCount')
 				let serviceId = customerInfo.serviceId
-				orderSure('20201228112242356950','923019',serviceId,'C070820113023698','202112281122416768')
+				orderSure('20210104143544242783','332633',serviceId,'C070820113023698','202101041435446833')
 			},
 			// 获取当前时间
 			getCurrentTime() {
@@ -1169,21 +1184,7 @@
 				testModule.pay(objStr);
 				// testModule.gotoNativePage();
 			},
-			posTest(){
-				// 下单
-				let userId = uni.getStorageSync('userId') || ''
-				// let merchantId = uni.getStorageSync('merchantId') || ''
-				let merchantId = '123213123213'
-				let storeId = uni.getStorageSync('storeId') || ''
-				let customerInfo = uni.getStorageSync('customerCount')
-				let serviceId = customerInfo.serviceId
-				// console.log('customerInfo==============',customerInfo)
-				let totalPrice = '11' //this.paymentMoney || '0.01'
-				let payWay = 8
-				let payChannel = 17 //17 pos  18 网联
-				let bankCardId = '1342280548032446464'
-				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, bankCardId).then(function(data){console.log('sucess==========',JSON.stringify(data))},function(data){console.log('fail==========',JSON.stringify(data))})
-			},
+			
 			/* 扫码收款 */
 			cashierScan() {
 				/* if(parseFloat(this.paymentMoney) === 0){
@@ -1855,6 +1856,9 @@
 						break;
 					case 7:		//现金支付
 						return '会员+支付宝';
+						break;
+					case 8:		//现金支付
+						return '手机pos';
 						break;
 					case 99:	//未知支付
 						return '未知方式'

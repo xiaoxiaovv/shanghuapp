@@ -899,8 +899,8 @@
 		    },
 		    {
 		        "pagePath" : "pages/tabBar/shop/shop",
-		        "iconPath" : "static/tabBar/btn_the_order.png",
-		        "selectedIconPath" : "static/tabBar/btn_the_order_click.png",
+		        "iconPath" : "static/tabBar/btn_shop.png",
+		        "selectedIconPath" : "static/tabBar/btn_shop_click.png",
 		        "text" : "商城"
 		    },
 		    {

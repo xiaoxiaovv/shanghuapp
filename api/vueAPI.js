@@ -1269,6 +1269,7 @@ export function queryOrderSummary(createTime, storeId, status, payWay, endCreate
  * @param {Object} mobile  手机号
  * @param {Object} cvv2 银行卡背面 后三位
  * @param {Object} validity 有效期 格式： MMYY
+ * @param {Object} id bankid  银行卡id
  */
 export function addOrEditBankCark(merchantId, realName, idCard, accNo, mobile, cvv2, validity) {
 	let data = {

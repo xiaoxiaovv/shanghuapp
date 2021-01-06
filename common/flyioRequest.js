@@ -5,22 +5,9 @@ import { getDomain, getRealVersion } from './appcommon'
 import { debug } from './wxapi'
 
 const fly = new Fly;
-// const URL = "http://192.168.1.150:80"	//全局总URL
-// const URL = getDomain() || "http://pay-adm.vmajy.com"	//全局总URL
- // const URL = getDomain() || "http://pay.ydcyd.cn"	//全局总URL
- // const URL = getDomain() || "http://pay-adm.h5h5h5.cn"	//全局总URL
- // const URL = getDomain() || "https://pay.oem.51hbpay.com"	//全局总URL
- // const URL = getDomain() || "http://pay.oem.test.mamipay.com:41000"	//全局总URL
+
  const URL = getDomain() || "http://mamipay.com:41000"	//全局总URL
- // const URL = getDomain() || "http://pay.glaimb.com"	//全局总URL
- // const URL = getDomain() || "http://pay.yyvvv.net"	//全局总URL
- // const URL = getDomain() || "http://pay.shempay.com"	//全局总URL
- // const URL = getDomain() || "http://pay.oem.wexiaocheng.com"	//全局总URL
- // const URL = getDomain() || "http://pay-test.vmajy.com"	//全局总URL
- // const URL = getDomain() || "http://pay.jiangshenkeji.com"	//全局总URL
- // const URL = getDomain() || "http://pay.sanyizf.com"	//全局总URL
- // const URL = "http://pay-adm.vmajy.com"	//全局总URL
-// const URL = "https://pay.itdui.cn"	//全局总URL
+ 
 //设置超时
 fly.config.timeout = 10000;
 //设置请求基地址

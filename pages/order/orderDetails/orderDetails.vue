@@ -198,7 +198,7 @@
 	import { isFuiouPlatform, onFuiouBankRefund } from '../../../api/fuiouApi.js'
 	import { showToast, showLoading } from '../../../common/wxapi.js'
 	import { print, isPrinterExist } from '../../../api/printApi.js'
-	import { getPrintOrderDetailAndPrint, getOrderDetailsAndPrint } from '../../../api/orderApi.js'
+	import { getPrintOrderDetailAndPrint, getOrderDetailsAndPrint} from '../../../api/orderApi.js'
 	
 	export default {
 		components: { neilModal, HMmessages, 'vma-modal': VmaModal },
@@ -310,6 +310,9 @@
 					case 7:		//现金支付
 						return '会员+支付宝';
 						break;
+					case 8:		//现金支付
+						return '手机pos';
+						break;	
 					case 99:	//未知支付
 						return '未知支付';
 						break;
@@ -403,7 +406,11 @@
 					channel = '易生'
 				} else if (channel === 14) {
 					channel = '新大陆'
-				} 
+				} else if (channel === 17) {
+					channel = '手机pos'
+				}else if (channel === 18) {
+					channel = '快捷支付'
+				}
 				return channel
 			}
 		},

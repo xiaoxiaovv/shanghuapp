@@ -40,11 +40,11 @@
 							<view class='match-left-space align-left ml-50'>
 								新增会员<view class='mlr-10 darker'>{{realOrder && realOrder.memberTotalToday? realOrder.memberTotalToday : 0}}</view>人
 							</view>
-							<view @click="posTest">手机pos下单；</view>
-							<view @click="orderSure">网联下单确认；</view>													
+							<!-- <view @click="posTest">手机pos下单；</view> -->
+							<!-- <view @click="orderSure">网联下单确认；</view>													 -->
 							<!-- <view @click="gotoNativePage">跳到原生1；</view> -->
 							<!-- <view @click="addOrEditBankCark">加卡；</view> -->
-							<view @click="bankCarkList">卡表；</view>
+							<!-- <view @click="bankCarkList">卡表；</view> -->
 							<!-- <view @click="bankCardInfo">查卡；</view> -->
 							<!-- <view @click="delBankCard">删卡；</view> -->
 						</view>
@@ -392,6 +392,15 @@
 						src: '../../../static/homev2/dm.png',
 						name: '押金管理',
 						url: '/pages/home/depositManage/index/index',
+						status: 1,
+						isShow: 1,
+						iconWidth: 44,
+						iconHeight: 38
+					},
+					"depositManage":{
+						src: '../../../static/homev2/quickPay.png',
+						name: '快捷支付',
+						url: 'quickPayJump',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -821,6 +830,12 @@
 				// 商城
 				if(url === 'shop'){
 					this.shopJump();
+					return
+				}
+				// 网联，快捷支付
+				if(url === 'quickPayJump'){
+					this.quickPayJump();
+					return
 				}
 				/* // 手机pos调取原生页面
 				if(url === 'sjPosJump'){
@@ -1121,10 +1136,24 @@
 				}
 				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
 				if (!nowStoreDetail.storeId) {
-					uni.showToast({
+				uni.showModal({
+					title: '提示',
+					content: '请选择门店',
+					showCancel: true,
+					// confirmText: '请选择门店',
+					success: (res) => {
+						// console.log('确定', res.confirm)
+						if (res.confirm) {
+							this.storeSelect()
+							
+						}
+					}
+				})
+					
+					/* uni.showToast({
 						title: '请选择门店',
 						icon: 'none'
-					})
+					}) */
 					return
 				}
 				
@@ -1157,6 +1186,44 @@
 			shopJump(){
 				location.href = 'https://alitong.vip/ydh5/index.html?i=1#/yidu_tc/pages/tabbar/index'
 			},
+			quickPayJump() {
+				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
+				if (!nowStoreDetail.storeId) {
+					uni.showModal({
+						title: '提示',
+						content: '请选择门店',
+						showCancel: true,
+						// confirmText: '请选择门店',
+						success: (res) => {
+							// console.log('确定', res.confirm)
+							if (res.confirm) {
+								this.storeSelect()
+								
+							}
+						}
+					})
+					// this.storeSelect()
+					/* uni.showToast({
+						title: '请选择门店',
+						icon: 'none'
+					}) */
+					return
+				}
+				let storeId = nowStoreDetail.storeId
+				let userId = uni.getStorageSync('userId') || ''
+				let merchantId = uni.getStorageSync('merchantId') || ''
+				// let merchantId = '123213123213'
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				// console.log('customerInfo==============',customerInfo)
+				let totalPrice = this.paymentMoney //this.paymentMoney || '0.01'
+				let token = uni.getStorageSync('token');
+				var obj = {merchantId,storeId,serviceId,userId,token}
+				var objStr = JSON.stringify(obj)
+				// console.log(objStr)
+				testModule.quickPay(objStr);
+				// testModule.gotoNativePage();
+			},
 			sjPosJump() {
 				
 				// 调取摄像头传给sdk的,暂时没用
@@ -1187,27 +1254,20 @@
 			
 			/* 扫码收款 */
 			cashierScan() {
-				/* if(parseFloat(this.paymentMoney) === 0){
+				 if(parseFloat(this.paymentMoney) === 0){
 					uni.showToast({
 						title: '请输入正确金额',
 						icon: 'none'
 					})
 					return
 				}
-				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
-				if (!nowStoreDetail.storeId) {
-					uni.showToast({
-						title: '请选择门店',
-						icon: 'none'
-					})
-					return
-				}
+				
 				// console.log(nowStoreDetail.storeId)
 				let that = this
 				// console.log('哈哈哈哈', that.scanPayMoney, that.paymentMoney)
 				that.scanPayMoney = that.paymentMoney
 				// 聚合通道
-				if(android != null){
+				/*if(android != null){
 					let storeId = '';
 					let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
 					let equipmentId = uni.getStorageSync('equipmentId') || ''
@@ -1227,6 +1287,7 @@
 				}else{
 					console.log('没有扫码设备')
 				} */
+			
 				uni.scanCode({
 					onlyFromCamera: true,
 					success: (res) => {
@@ -1237,10 +1298,13 @@
 						// 临时注释
 						let storeId = '';
 						let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
+						console.log('nowStoreDetail',nowStoreDetail)
 						if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail){
 							storeId = nowStoreDetail.storeId
 						}
 						let equipmentId = uni.getStorageSync('equipmentId') || ''
+						// console.log('that.scanPayMoney',that.scanPayMoney)
+						// console.log(55555555555555,that.scanPayMoney, 0, res.result, storeId, equipmentId)
 						scanPay(that.scanPayMoney, 0, res.result, storeId, equipmentId).then(res => {
 							// console.log(6666666666666666666666666666, res)
 							uni.navigateTo({
@@ -1254,6 +1318,7 @@
 							that.isNumberKeyboard = false
 							that.closeNumbeKeyboard()
 						}).catch(err => {
+							// console.log(777777777777777777777777, err)
 							console.log(err)
 						})
 					}

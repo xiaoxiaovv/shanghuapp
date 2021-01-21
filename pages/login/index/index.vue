@@ -172,7 +172,7 @@
 				this.btnLoading = true;
 				login( this.username.trim() , this.password.trim() ).then(res => {
 					// console.log(777, res)
-					console.log(JSON.stringify(res.obj))
+					// console.log(JSON.stringify(res.obj))
 					// return
 					/* 记住账户/密码 */
 					if(this.isRememberPassword){

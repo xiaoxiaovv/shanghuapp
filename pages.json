@@ -870,6 +870,15 @@
 				}
 			}
 		}
+		,{
+		    "path" : "pages/home/quickPay/index",
+		    "style" : {
+				"navigationBarTitleText": "快捷支付",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

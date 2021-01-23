@@ -1164,9 +1164,9 @@
 				let serviceId = customerInfo.serviceId
 				// console.log('customerInfo==============',customerInfo)
 				let totalPrice = this.paymentMoney //this.paymentMoney || '0.01'
-				let payWay = 8
+				/* let payWay = 8
 				let payChannel = 17
-				let bankCardId = '1342280548032446464'
+				let bankCardId = '1342280548032446464' */
 				
 				
 				

@@ -853,7 +853,7 @@ export function webPay(userId, merchantId, storeId, totalPrice, payWay, payChann
 }
 
 /* 下单确认 */
-export function orderSure(chSerialNo, checkCode, serviceId, chMerCode, orderCode) {
+export function transactionSure(chSerialNo, checkCode, serviceId, chMerCode, orderCode) {
 	// chSerialNo第三方下单返回的交易流水号
 	// checkCode短信验证码
 	// serviceId服务商id
@@ -1271,15 +1271,16 @@ export function queryOrderSummary(createTime, storeId, status, payWay, endCreate
  * @param {Object} validity 有效期 格式： MMYY
  * @param {Object} id bankid  银行卡id
  */
-export function addOrEditBankCark(merchantId, realName, idCard, accNo, mobile, cvv2, validity) {
+export function addOrEditBankCark(merchantId, realName, accNo, mobile, cvv2, validity, bankName, idCard) {
 	let data = {
 		merchantId,
 		realName,
-		idCard,
 		accNo,
 		mobile,
 		cvv2,
-		validity
+		validity,
+		bankName,
+		idCard
 	}
 	return fly.post('/order/bank/saveAndFlush', qs.stringify(data))
 }

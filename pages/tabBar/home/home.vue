@@ -517,10 +517,10 @@
 		},
 		
 		onReady() {
-			console.log('我来到火星的世界x1', LoginCache)
+			// console.log('我来到火星的世界x1', LoginCache)
 			// 存储登录页的状态
 			LoginCache.state = false
-			console.log('我来到火星的世界x2', LoginCache)
+			// console.log('我来到火星的世界x2', LoginCache)
 			// 轮询查询新订单
 			this.queryNewOrder()
 			
@@ -1209,7 +1209,10 @@
 					}) */
 					return
 				}
-				let storeId = nowStoreDetail.storeId
+				uni.navigateTo({
+					url: '/pages/home/quickPay/index'
+				})
+				/* let storeId = nowStoreDetail.storeId
 				let userId = uni.getStorageSync('userId') || ''
 				let merchantId = uni.getStorageSync('merchantId') || ''
 				// let merchantId = '123213123213'
@@ -1222,7 +1225,7 @@
 				var objStr = JSON.stringify(obj)
 				// console.log(objStr)
 				testModule.quickPay(objStr);
-				// testModule.gotoNativePage();
+				// testModule.gotoNativePage(); */
 			},
 			sjPosJump() {
 				

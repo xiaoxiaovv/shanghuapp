@@ -879,6 +879,24 @@
 				}
 			}
 		}
+		,{
+		    "path" : "pages/home/quickPay/selectCard",
+		    "style" : {
+				"navigationBarTitleText": "选择支付卡",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
+		    "path" : "pages/home/quickPay/addOrEditCard",
+		    "style" : {
+				"navigationBarTitleText": "添加 / 编辑支付卡",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

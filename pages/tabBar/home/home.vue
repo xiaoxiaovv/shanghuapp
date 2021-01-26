@@ -1209,10 +1209,10 @@
 					}) */
 					return
 				}
-				uni.navigateTo({
+				/* uni.navigateTo({
 					url: '/pages/home/quickPay/index'
-				})
-				/* let storeId = nowStoreDetail.storeId
+				}) */
+				let storeId = nowStoreDetail.storeId
 				let userId = uni.getStorageSync('userId') || ''
 				let merchantId = uni.getStorageSync('merchantId') || ''
 				// let merchantId = '123213123213'
@@ -1225,7 +1225,7 @@
 				var objStr = JSON.stringify(obj)
 				// console.log(objStr)
 				testModule.quickPay(objStr);
-				// testModule.gotoNativePage(); */
+				// testModule.gotoNativePage();
 			},
 			sjPosJump() {
 				

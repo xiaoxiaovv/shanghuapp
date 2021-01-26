@@ -32,7 +32,14 @@
 			</view>
 		</view>
 		
-		
+		<!-- 输入验证码 -->
+		<neil-modal :show="showVerificationCodeModel" @close="closeVerificationCodeModel" title="验证码" @cancel="editVerificationCodeBtn('cancel')" @confirm="editVerificationCodeBtn('confirm')">
+			<view style="min-height: 90upx;padding: 32upx 24upx;">
+				<view>
+					<input class="lf-remarks-input" type="text" placeholder="请输入验证码" maxlength="10" v-model="VerificationCodeModelContent">
+				</view>
+			</view>
+		</neil-modal>
 		
 		</view>
 		
@@ -40,12 +47,13 @@
 </template>
 <script>
 	// 后台接口
-	import {addOrEditBankCark, bankCarkList, bankCardInfo, delBankCard, orderSure } from '../../../api/vueAPI.js'
+	import {transactionSure} from '../../../api/vueAPI.js'
 	export default {
 		data(){
 			return {
-				cardList:[],
-				cardName:'请选择支付卡'
+				cardName:'请选择支付卡',
+				VerificationCodeModelContent:'', //验证码
+				showVerificationCodeModel:false
 			}
 		},
 		onReady(){
@@ -78,33 +86,10 @@
 			 * @param {Object} mobile  手机号
 			 * @param {Object} cvv2 银行卡背面 后三位
 			 * @param {Object} validity 有效期 格式： MMYY
+			 * @param {Object} id 记录id
+			 * @param {Object} bankName 银行名称
 			 */
-			addOrEditBankCark(){
-				let merchantId = uni.getStorageSync('merchantId')
-				let realName = '张国军'
-				let idCard = '130533198309185913'
-				let accNo = '6226880385610282'
-				let mobile = '15803196620'
-				let cvv2 = '947'
-				let validity = '0523'
-				addOrEditBankCark(merchantId, realName, idCard, accNo, mobile, cvv2, validity)
-			},
-			bankCarkList(){
-				let merchantId = uni.getStorageSync('merchantId')
-				bankCarkList(merchantId).then(data=>{
-					
-				}
-				,err=>{
-					console.log('fail==========',JSON.stringify(err))
-				})
-			},
-			 bankCardInfo(bankCardId){
-				bankCardInfo('1345981813639208960')
-			},
-			delBankCard(bankCardId){
-				delBankCard('1345981813639208960')
-			},
-			transaction(){
+			transaction(item){
 				// 下单
 				let userId = uni.getStorageSync('userId') || ''
 				let merchantId = uni.getStorageSync('merchantId') || ''
@@ -116,19 +101,39 @@
 				let totalPrice = '11' //this.paymentMoney || '0.01'
 				let payWay = 8
 				let payChannel = 18 //17 pos  18 网联
-				let bankCardId = '1345981813639208960'
-				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, bankCardId).then(
+				let id = '1345981813639208960'
+				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, id).then(
 				data=>{
 					this.cardList = data.obj
 					console.log('sucess==========',JSON.stringify(data))}
-					,data=>{console.log('fail==========',JSON.stringify(data))})
+					//,data=>{console.log('fail==========',JSON.stringify(data))
+					)
 			},
 			transactionSure(bankCardId){
 				// 下单确认
 				let customerInfo = uni.getStorageSync('customerCount')
 				let serviceId = customerInfo.serviceId
 				transactionSure('20210104143544242783','332633',serviceId,'C070820113023698','202101041435446833')
-			}
+			},
+			/* /* 打开验证码输入模态框 */
+			showEditVerificationCodeModel() {
+				this.showVerificationCodeModel = true;
+			},
+			/* 编辑备注确认 */
+			editVerificationCodeBtn(str) {
+				if(str === 'confirm'){
+					// console.log('进行修改');
+					this.editVerificationCode();
+				}
+				/* 关闭模态框 */
+				this.showVerificationCodeModel = false;
+				/* 模态框数据初始化 */
+				this.verificationCodeModelContent = '';
+			},
+			/* 编辑备注模态框关闭后事件 */
+			closeVerificationCodeModel(){
+				
+			},
 		}, 
 		filters:{
 			

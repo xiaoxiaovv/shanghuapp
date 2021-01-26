@@ -897,6 +897,15 @@
 				}
 			}
 		}
+		,{
+		    "path" : "pages/home/quickPay/manageCard",
+		    "style" : {
+				"navigationBarTitleText": "卡管理",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

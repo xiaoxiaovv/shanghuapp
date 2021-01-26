@@ -1271,7 +1271,7 @@ export function queryOrderSummary(createTime, storeId, status, payWay, endCreate
  * @param {Object} validity 有效期 格式： MMYY
  * @param {Object} id bankid  银行卡id
  */
-export function addOrEditBankCark(merchantId, realName, accNo, mobile, cvv2, validity, bankName, idCard) {
+export function addOrEditBankCard(merchantId, realName, accNo, mobile, cvv2, validity, bankName, idCard, id) {
 	let data = {
 		merchantId,
 		realName,
@@ -1280,7 +1280,8 @@ export function addOrEditBankCark(merchantId, realName, accNo, mobile, cvv2, val
 		cvv2,
 		validity,
 		bankName,
-		idCard
+		idCard,
+		id
 	}
 	return fly.post('/order/bank/saveAndFlush', qs.stringify(data))
 }

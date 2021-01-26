@@ -11,6 +11,10 @@
 					<input type="text" placeholder="请输入开户人姓名" v-model="realName">
 				</view>
 				<view class="lf-from-block text-lg lf-top-line">
+					<text>身份证号</text>
+					<input type="text" placeholder="请输入身份证号" v-model="idCard">
+				</view>
+				<view class="lf-from-block text-lg lf-top-line">
 					<text>银行卡号</text>
 					<input type="text" placeholder="请输入银行卡号" v-model="accNo">
 				</view>
@@ -28,7 +32,7 @@
 				</view>
 			</uni-list>
 			<view class="lf-change-btn margin-top-xl">
-				<view class="btn" @click="addOrEditBankCark">
+				<view class="btn" @click="addOrEditBankCard">
 					<text class="text-lg">提交</text>
 				</view>
 			</view>
@@ -37,41 +41,46 @@
 </template>
 
 <script>
-	import {addOrEditBankCark} from '../../../api/vueAPI.js'
+	import {
+		addOrEditBankCard,
+		bankCardInfo
+	} from '../../../api/vueAPI.js'
 	export default {
-		data(){
+		data() {
 			return {
-				editFlag:null,
-				bankName:'',
-				realName:'',
-				accNo:'',
-				validity:'',
-				cvv2:'',
-				mobile:'',
-				idCard:''
+				bankName: '',
+				realName: '',
+				idCard:'',
+				accNo: '',
+				validity: '',
+				cvv2: '',
+				mobile: '',
+				idCard: '',
+				id:'0', //添加时传随意值
+				merchantId:''
 			}
 		},
-		onReady(){
-			
+		onReady() {
+
 		},
-		onShow(){
-			
+		onShow() {
+
 		},
-		onHide(){
-			
+		onHide() {
+
 		},
-		onLoad(obj){
-			if(obj.editFlag&&obj.editFlag === '1'){
-				
+		onLoad(obj) {
+			if (obj.id) {
+				this.bankCardInfo(obj.id)
 			}
-			
+
 		},
-		watch:{
-			
+		watch: {
+
 		},
-		methods:{
+		methods: {
 			/**
-			 * addOrEditBankCark  添加和编辑银行卡
+			 * addOrEditBankCard  添加和编辑银行卡
 			 * @param {Object} merchantId 商户ID
 			 * @param {Object} realName 开户人名称
 			 * @param {Object} idCard  身份证号
@@ -79,8 +88,11 @@
 			 * @param {Object} mobile  手机号
 			 * @param {Object} cvv2 银行卡背面 后三位
 			 * @param {Object} validity 有效期 格式： MMYY
+			 * @param {Object} id 记录id
+			 * @param {Object} bankName 银行名称
 			 */
-			addOrEditBankCark(){
+			addOrEditBankCard() {
+				this.merchantId = uni.getStorageSync('merchantId')
 				/* let merchantId = uni.getStorageSync('merchantId')
 				let realName = '张国军'
 				let idCard = '130533198309185913'
@@ -88,24 +100,42 @@
 				let mobile = '15803196620'
 				let cvv2 = '947'
 				let validity = '0523' */
-				
-				addOrEditBankCark(this.merchantId, this.realName, this.accNo, this.mobile, this.cvv2, this.validity, this.bankName, this.idCard)
+
+				addOrEditBankCard(this.merchantId, this.realName, this.accNo, this.mobile, this.cvv2, this.validity, this.bankName,
+					this.idCard, this.id)
+			},
+			bankCardInfo(bankCardId) {
+				bankCardInfo(bankCardId).then(res => {
+					let data = res.obj
+					this.merchantId = data.merchantId;
+					this.realName = data.realName;
+					this.accNo = data.accNo;
+					this.mobile = data.mobile;
+					this.cvv2 = data.cvv2;
+					this.validity = data.validity;
+					this.bankName = data.bankName;
+					this.idCard = data.idCard;
+					this.id = data.id
+				})
 			}
 		},
-		}
+	}
 </script>
 
 <style>
-	body{
+	body {
 		background-color: #F1F1F3;
 	}
-	.lf-top-line{
+
+	.lf-top-line {
 		border-top: 1upx solid #F1F1F3;
 	}
-	.lf-bottom-line{
+
+	.lf-bottom-line {
 		border-bottom: 1upx solid #F1F1F3;
 	}
-	.lf-from-block{
+
+	.lf-from-block {
 		width: 750upx;
 		height: 100upx;
 		padding: 0 30upx;
@@ -113,17 +143,20 @@
 		justify-content: space-between;
 		align-items: center;
 	}
-	.lf-from-block input{
+
+	.lf-from-block input {
 		width: 70%;
 	}
-	.lf-change-btn{
+
+	.lf-change-btn {
 		width: 750upx;
 		height: 120upx;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
-	.lf-change-btn .btn{
+
+	.lf-change-btn .btn {
 		width: 690upx;
 		height: 80upx;
 		border-radius: 40upx;

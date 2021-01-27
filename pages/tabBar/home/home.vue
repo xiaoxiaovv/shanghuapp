@@ -65,21 +65,31 @@
 				</view>
 				
 				<view 
-					class="lf-cash-register padding shadow align-center box" 
+					class="lf-cash-register padding-sm shadow align-center box" 
 					v-show="isShowCashRegister && !isRich">
 					<image 
 						class=''
 						src="../../../static/home/btn_shoukuanma_click.png" 
 						@click="jumpPaymentCode"/>
 					<image 
-						class="ml-30"
+						class="ml-50"
 						src="../../../static/home/btn_shouyin_click.png" 
 						@click="cashierScan"/>
+				</view>
+				<view
+					class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box" 
+					v-show="isShowCashRegister && !isRich">
+					<image 
+						class=''
+						src="../../../static/home/btn_quickPay_click.png" 
+						@click="quickPayJump"/>
+					
 					<image
-							class="ml-30"
+							class="ml-50"
 							src="../../../static/home/btn_shoujipos_click.png" 
 							@click="shouJiPosPay"/>
 				</view>
+				
 				
 				<view
 					class="lf-cash-register padding shadow align-center box" 
@@ -396,7 +406,7 @@
 						isShow: 1,
 						iconWidth: 44,
 						iconHeight: 38
-					},
+					}/* ,
 					"depositManage":{
 						src: '../../../static/homev2/quickPay.png',
 						name: '快捷支付',
@@ -405,7 +415,7 @@
 						isShow: 1,
 						iconWidth: 44,
 						iconHeight: 38
-					}/* ,
+					} *//* ,
 					"depositManage":{
 						src: '../../../static/homev2/shop.png',
 						name: '商城',
@@ -1209,10 +1219,10 @@
 					}) */
 					return
 				}
-				/* uni.navigateTo({
-					url: '/pages/home/quickPay/index'
-				}) */
-				let storeId = nowStoreDetail.storeId
+				uni.navigateTo({
+					url: '/pages/home/quickPay/index?paymentMoney='+this.paymentMoney
+				})
+				/* let storeId = nowStoreDetail.storeId
 				let userId = uni.getStorageSync('userId') || ''
 				let merchantId = uni.getStorageSync('merchantId') || ''
 				// let merchantId = '123213123213'
@@ -1225,7 +1235,7 @@
 				var objStr = JSON.stringify(obj)
 				// console.log(objStr)
 				testModule.quickPay(objStr);
-				// testModule.gotoNativePage();
+				// testModule.gotoNativePage(); */
 			},
 			sjPosJump() {
 				
@@ -1964,7 +1974,7 @@
 	
 	.lf-cash-register {
 		position: absolute;
-		bottom: 0;
+		bottom: 50upx;
 		width: 750upx;
 		// width: 100%;
 		background-color: #F1F2F3;
@@ -1972,8 +1982,8 @@
 		margin-bottom: -194upx;
 		
 		image {
-			width: 200upx;
-			height: 90upx;
+			width: 240upx;
+			height: 100upx;
 		}
 		
 		.image {
@@ -1995,7 +2005,9 @@
 			}
 		}
 	}
-
+    .lf-cash-register-bottom{
+		bottom:-70upx
+	}
 	.page-home-x {
 		width: 100%;
 		// height: 100%;

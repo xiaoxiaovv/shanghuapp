@@ -1,11 +1,18 @@
 <template>
 	<view>
-		<view class="lf-orderList text-lg match-width align-left ptb-10 align-hor-bet" v-for="(item,index) in cardList" >
-			<text @click="selectCard">
-				{{item.bankName}} ({{item.accNo}})
+		<view class="lf-list" v-for="(item,index) in cardList" >
+			<view class="match-width">
+			<text @click="selectCard" class="line-height">
+				{{item.bankName}}
+				{{item.accNo}}
 			</text>
-			<text class="edit ly-font-color-main" @click="jumpAddOrEditCard(item.id)">编辑</text>
-			<text class="ly-font-color-main" @click="delBankCard(item)">删除</text>
+			<view>
+				<text class="edit ly-font-color-main" @click="jumpAddOrEditCard(item.id)">编辑</text>
+				<text class="ly-font-color-main" @click="delBankCard(item)">删除</text>
+			</view>
+			</view>
+			<!-- <text class="edit ly-font-color-main" @click="jumpAddOrEditCard(item.id)">编辑</text>
+			<text class="ly-font-color-main del" @click="delBankCard(item)">删除</text> -->
 		</view>
 		
 	</view>
@@ -13,7 +20,7 @@
 
 <script>
 	// 后台接口
-	import {bankCarkList} from '../../../api/vueAPI.js'
+	import {bankCarkList, delBankCard} from '../../../api/vueAPI.js'
 	export default {
 		data(){
 			return {
@@ -49,11 +56,15 @@
 				})
 			},
 			delBankCard(item){
+				let that = this;
 				uni.showModal({
 					content: '确定删除该卡吗? '+item.bankName+' '+item.accNo,
 					success(res) {
 						if(res.confirm){
-							delBankCard(item.id)
+							delBankCard(item.id).then(res=>{
+								// 更新列表
+								that.bankCarkList()
+							})
 						}else{
 							
 						}
@@ -66,16 +77,46 @@
 </script>
 
 <style>
-	.lf-orderList{
+	.lf-list{
+		/* // width: 720upx; */
+		width: 100%;
+		/* // padding-left: 40upx; */
+		background-color: #FFF;
+		border-top: 1upx solid #F0F0F0;
+		color: #666666;
+		font-size: 32upx;
+		font-weight: 500;
+		box-sizing: border-box;
+	}
+	.lf-list:nth-last-child(1)
+	{
+	border-bottom: 1upx solid #F0F0F0;
+	}
+	
+	.lf-list > view{
 		width: 100%;
 		height: 120upx;
 		padding: 0 30upx;
-		/* display: flex;
+		display: flex;
 		justify-content: space-between;
-		align-items: center; */
-		border-top: 1upx solid #EFEFEF;
+		align-items: center;
+		box-sizing: border-box;
+	}
+	.lf-list > view > image{
+		width: 20upx;
+		height: 30upx;
+	}
+	.lf-list > view > view > image{
+		width: 50upx;
+		height: 50upx;
+		margin-right: 20upx;
 	}
 	.edit{
-		margin-left: 80upx;
+		margin-right: 30upx;
 	}
+		
+	.line-height{
+		line-height: 44upx;
+	}
+	
 </style>

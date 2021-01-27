@@ -2,16 +2,16 @@
 	<view class="quick-pay">
 		<view class="solid"></view>
 		<view class=" align-center">
-		<view class="quickPay-bb width  align-center text-xl  ly-font-color-6 padding-tb-xs quick-pay-fw">
+		<view class="quickPay-bb width  align-center text-xl  ly-font-color-6 padding-tb-sm quick-pay-fw">
 			<!-- <text class="text-price">aaa</text> -->
 			确认付款
 		</view>
 		
-			<view class="quickPay-bb text-price width  align-center  text-xl  ly-font-color-6 padding-tb-xs quick-pay-fw">
-				200
+			<view class="quickPay-bb text-price width  align-center  text-xl  ly-font-color-6 padding-tb-sm quick-pay-fw">
+				{{paymentMoney}}
 			</view>
 		
-			<view class="quickPay-bb  width   text-lg   ly-font-color-6 padding-tb-xs quick-pay-fw"
+			<view class="quickPay-bb  width   text-lg   ly-font-color-6 padding-tb-sm quick-pay-fw"
 			@click="jumpCardList"
 			>
 				<text class="">付款方式</text>
@@ -23,20 +23,20 @@
 						mode='scaleToFill'
 					/>
 				</view>
-				<text class="fr margin-right-xs" v-text="cardName"></text>
+				<text class="fr margin-right-xs">{{bankName}}</text>
 			</view>
 		
 		<view class="lf-btn">
-			<view class="bg-ff8800">
+			<view class="bg-ff8800" @click="transaction">
 				<text class="text-white">立即支付</text>
 			</view>
 		</view>
 		
 		<!-- 输入验证码 -->
-		<neil-modal :show="showVerificationCodeModel" @close="closeVerificationCodeModel" title="验证码" @cancel="editVerificationCodeBtn('cancel')" @confirm="editVerificationCodeBtn('confirm')">
+		<neil-modal :show="showVerificationCodeModel" @close="closeVerificationCodeModel" title="验证码" @cancel="submitVerificationCodeBtn('cancel')" @confirm="submitVerificationCodeBtn('confirm')">
 			<view style="min-height: 90upx;padding: 32upx 24upx;">
 				<view>
-					<input class="lf-remarks-input" type="text" placeholder="请输入验证码" maxlength="10" v-model="VerificationCodeModelContent">
+					<input class="lf-remarks-input" type="text" placeholder="请输入验证码" maxlength="10" v-model="verificationCodeModelContent">
 				</view>
 			</view>
 		</neil-modal>
@@ -47,17 +47,28 @@
 </template>
 <script>
 	// 后台接口
-	import {transactionSure} from '../../../api/vueAPI.js'
+	import {webPay,transactionSure} from '../../../api/vueAPI.js'
 	export default {
 		data(){
 			return {
-				cardName:'请选择支付卡',
+				bankName:'请选择支付卡',
 				VerificationCodeModelContent:'', //验证码
-				showVerificationCodeModel:false
+				showVerificationCodeModel:false,
+				accNo:'',
+				id:'',
+				chSerialNo:'',
+				verificationCodeModelContent:'',
+				serviceId:'', 
+				chMerCode:'',
+				orderCode:'',
+				paymentMoney:''
 			}
 		},
 		onReady(){
 			
+		},
+		onLoad(obj){
+			this.paymentMoney = obj.paymentMoney
 		},
 		onShow(){
 			
@@ -89,7 +100,7 @@
 			 * @param {Object} id 记录id
 			 * @param {Object} bankName 银行名称
 			 */
-			transaction(item){
+			transaction(){
 				// 下单
 				let userId = uni.getStorageSync('userId') || ''
 				let merchantId = uni.getStorageSync('merchantId') || ''
@@ -98,32 +109,40 @@
 				let customerInfo = uni.getStorageSync('customerCount')
 				let serviceId = customerInfo.serviceId
 				// console.log('customerInfo==============',customerInfo)
-				let totalPrice = '11' //this.paymentMoney || '0.01'
+				let totalPrice = this.paymentMoney
 				let payWay = 8
 				let payChannel = 18 //17 pos  18 网联
-				let id = '1345981813639208960'
+				let id = this.id
+				console.log('this.id==============',this.id)
 				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, id).then(
-				data=>{
-					this.cardList = data.obj
-					console.log('sucess==========',JSON.stringify(data))}
+				res=>{
+					let data = res.obj.jsPayResponse
+					this.chSerialNo = data.chSerialNo;					
+					this.chMerCode = data.chMerCode;
+					this.orderCode = data.orderCode;
+					this.showSubmitVerificationCodeModel()
+					// console.log('sucess==========',JSON.stringify(res))}
 					//,data=>{console.log('fail==========',JSON.stringify(data))
-					)
+					})
 			},
-			transactionSure(bankCardId){
+			transactionSure(){
 				// 下单确认
 				let customerInfo = uni.getStorageSync('customerCount')
 				let serviceId = customerInfo.serviceId
-				transactionSure('20210104143544242783','332633',serviceId,'C070820113023698','202101041435446833')
+				transactionSure(this.chSerialNo,this.verificationCodeModelContent,serviceId,this.chMerCode,this.orderCode)
 			},
-			/* /* 打开验证码输入模态框 */
-			showEditVerificationCodeModel() {
+			 /* 打开验证码输入模态框 */
+			showSubmitVerificationCodeModel() {
 				this.showVerificationCodeModel = true;
 			},
-			/* 编辑备注确认 */
-			editVerificationCodeBtn(str) {
+			submitVerificationCode(){
+				this.verificationCodeModelContent
+			},
+			/* 提交验证码确认 */
+			submitVerificationCodeBtn(str) {
 				if(str === 'confirm'){
 					// console.log('进行修改');
-					this.editVerificationCode();
+					this.transactionSure();
 				}
 				/* 关闭模态框 */
 				this.showVerificationCodeModel = false;

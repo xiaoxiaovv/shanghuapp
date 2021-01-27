@@ -6,8 +6,9 @@
 			</text>
 		</view>
 		<view class="lf-orderList text-lg match-width align-left ptb-10 align-hor-bet">
-			<text class="ly-font-color-main" @click="jumpAddOrEditCard">+ 添加支付卡</text>
+			
 			<text class="ly-font-color-main" @click="jumpManageCard">卡管理</text>
+			<text class="ly-font-color-main" @click="jumpAddOrEditCard">+ 添加支付卡</text>
 		</view>
 	</view>
 </template>
@@ -45,10 +46,12 @@
 				let prevPage = pages[pages.length - 2]; //上一个页面
 				// console.log(prevPage)
 				/* 修改上页面参数 */
-				prevPage.storeId = storeDetails.value;
-				prevPage.storeName = storeDetails.name;
-				prevPage.$vm.storeId = storeDetails.value;
-				prevPage.$vm.storeName = storeDetails.name;
+				prevPage.id = item.id
+				prevPage.$vm.id = item.id;
+				prevPage.bankName = item.bankName
+				prevPage.$vm.bankName = item.bankName;
+				prevPage.accNo = item.accNo
+				prevPage.$vm.accNo = item.accNo;
 				/* 返回上页面 */
 				uni.navigateBack();
 			},

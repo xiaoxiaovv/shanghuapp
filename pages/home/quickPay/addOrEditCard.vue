@@ -1,34 +1,34 @@
 <template>
-	<view>
-		<view>
+	
+		<view class="bg-white">
 			<uni-list>
 				<view class="lf-from-block text-lg lf-top-line">
 					<text>银行名称</text>
-					<input type="text" placeholder="请输入银行名称" v-model="bankName">
+					<input type="text" placeholder="请输入银行名称" maxlength="16" v-model="bankName">
 				</view>
 				<view class="lf-from-block text-lg lf-top-line">
 					<text>开户人姓名</text>
-					<input type="text" placeholder="请输入开户人姓名" v-model="realName">
+					<input type="text" placeholder="请输入开户人姓名" maxlength="8"  v-model="realName">
 				</view>
 				<view class="lf-from-block text-lg lf-top-line">
 					<text>身份证号</text>
-					<input type="text" placeholder="请输入身份证号" v-model="idCard">
+					<input type="text" placeholder="请输入身份证号" maxlength="18"  v-model="idCard">
 				</view>
 				<view class="lf-from-block text-lg lf-top-line">
 					<text>银行卡号</text>
-					<input type="text" placeholder="请输入银行卡号" v-model="accNo">
+					<input type="text" placeholder="请输入银行卡号" maxlength="26"  v-model="accNo">
 				</view>
 				<view class="lf-from-block text-lg lf-top-line">
 					<text>有效期</text>
-					<input type="text" placeholder="四位有效期" v-model="validity">
+					<input type="text" placeholder="四位有效期" maxlength="4" v-model="validity">
 				</view>
 				<view class="lf-from-block text-lg lf-top-line">
 					<text>安全校验码</text>
-					<input type="text" placeholder="卡背面后三位" v-model="cvv2">
+					<input type="text" placeholder="卡背面后三位" maxlength="3" v-model="cvv2">
 				</view>
 				<view class="lf-from-block text-lg lf-top-line lf-bottom-line">
 					<text>预留手机号</text>
-					<input type="text" placeholder="请输入预留手机号" v-model="mobile">
+					<input type="text" placeholder="请输入预留手机号" maxlength="11"  v-model="mobile">
 				</view>
 			</uni-list>
 			<view class="lf-change-btn margin-top-xl">
@@ -37,7 +37,7 @@
 				</view>
 			</view>
 		</view>
-	</view>
+	
 </template>
 
 <script>
@@ -45,7 +45,9 @@
 		addOrEditBankCard,
 		bankCardInfo
 	} from '../../../api/vueAPI.js'
+	import { uniList, uniListItem } from '@dcloudio/uni-ui'
 	export default {
+		components: {uniList},
 		data() {
 			return {
 				bankName: '',
@@ -100,9 +102,49 @@
 				let mobile = '15803196620'
 				let cvv2 = '947'
 				let validity = '0523' */
+				if(!this.bankName.trim() || !this.realName.trim() || !this.idCard.trim() || !this.accNo.trim() || !this.validity.trim() || !this.cvv2.trim() || !this.mobile.trim()){
+					uni.showToast({
+						title:"请补全内容",
+						icon:'none'
+					})
+					return
+				}
+				if(this.idCard.length !== 18){
+					uni.showToast({
+						title:"身份证号格式错误",
+						icon:'none'
+					})
+					return
+				}
+				if(this.validity.length !== 4){
+					uni.showToast({
+						title:"有效期格式错误",
+						icon:'none'
+					})
+					return
+				}
+				if(this.cvv2.length !== 3){
+					uni.showToast({
+						title:"安全校验码格式错误",
+						icon:'none'
+					})
+					return
+				}
+				if(this.mobile.length !== 11){
+					uni.showToast({
+						title:"手机号码格式错误",
+						icon:'none'
+					})
+					return
+				}
 
 				addOrEditBankCard(this.merchantId, this.realName, this.accNo, this.mobile, this.cvv2, this.validity, this.bankName,
-					this.idCard, this.id)
+					this.idCard, this.id).then(res=>{
+						uni.showToast({
+							title:'提交成功',
+							icon:'none'
+						})
+					})
 			},
 			bankCardInfo(bankCardId) {
 				bankCardInfo(bankCardId).then(res => {

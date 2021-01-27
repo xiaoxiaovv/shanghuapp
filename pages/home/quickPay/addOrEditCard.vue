@@ -165,10 +165,6 @@
 </script>
 
 <style>
-	body {
-		background-color: #F1F1F3;
-	}
-
 	.lf-top-line {
 		border-top: 1upx solid #F1F1F3;
 	}

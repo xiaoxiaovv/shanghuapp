@@ -145,7 +145,7 @@
 				<view v-for="order in timeList.orders" :key="order.id" class="lf-orderList match-width align-left ptb-10" @click="jumpOrderDetails(order.orderNumber)">
 					<image :src="order.payWay === 1? '../../../static/order/icon_wechat_list.png': 
 						order.payWay === 2?'../../../static/order/icon_zhifubao_list.png':
-						order.payWay === 3? '../../../static/order/icon_unionpay_list.png':'../../../static/order/icon_receive_money.png'"/>			
+						order.payWay === 3? '../../../static/order/icon_unionpay_list.png':order.payChannel === 17? '../../../static/order/icon_pos_list.png':order.payChannel === 18? '../../../static/order/icon_quick_pay_list.png':'../../../static/order/icon_receive_money.png'"/>						
 					<view class="match-left-space align-ver-left"> 			
 						<view class="match-width align-hor-bet">
 							<view>{{yenSymbol}} {{(order.actPayPrice)}}</view>

@@ -11,8 +11,6 @@
 				<text class="ly-font-color-main" @click="delBankCard(item)">删除</text>
 			</view>
 			</view>
-			<!-- <text class="edit ly-font-color-main" @click="jumpAddOrEditCard(item.id)">编辑</text>
-			<text class="ly-font-color-main del" @click="delBankCard(item)">删除</text> -->
 		</view>
 		
 	</view>

@@ -343,6 +343,9 @@
 					case 7:		//会员+支付宝
 						return '../../../static/home/icon_king.png';
 						break;
+					case 8:		//手机pos和快捷支付（网联）
+						return '../../../static/order/icon_pos.png';
+						break;	
 					case 99:	//未知支付
 						return '../../../static/order/icon_receive_money.png';
 						break;

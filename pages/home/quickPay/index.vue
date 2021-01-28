@@ -48,6 +48,7 @@
 <script>
 	// 后台接口
 	import {webPay,transactionSure} from '../../../api/vueAPI.js'
+	import {showLoading} from '../../../common/wxapi.js'
 	export default {
 		data(){
 			return {
@@ -113,9 +114,12 @@
 				let payWay = 8
 				let payChannel = 18 //17 pos  18 网联
 				let id = this.id
-				console.log('this.id==============',this.id)
+				// console.log('this.id==============',this.id)
+				showLoading(true)
+				// return
 				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, id).then(
 				res=>{
+					showLoading(false)
 					let data = res.obj.jsPayResponse
 					this.chSerialNo = data.chSerialNo;					
 					this.chMerCode = data.chMerCode;
@@ -127,21 +131,33 @@
 			},
 			transactionSure(){
 				// 下单确认
+				
 				let customerInfo = uni.getStorageSync('customerCount')
 				let serviceId = customerInfo.serviceId
-				transactionSure(this.chSerialNo,this.verificationCodeModelContent,serviceId,this.chMerCode,this.orderCode)
+				transactionSure(this.chSerialNo,this.verificationCodeModelContent,serviceId,this.chMerCode,this.orderCode).then(res=>{
+					showLoading(false)
+					uni.navigateTo({
+						url: '/pages/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=1'
+					})
+				},err=>{
+					// console.log('8888888888888888888888888888888',err)
+					uni.navigateTo({
+						url: '/pages/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=0'+'&failMsg='+err.msg
+					})
+				})
 			},
 			 /* 打开验证码输入模态框 */
 			showSubmitVerificationCodeModel() {
 				this.showVerificationCodeModel = true;
 			},
-			submitVerificationCode(){
+			/* submitVerificationCode(){
 				this.verificationCodeModelContent
-			},
+			}, */
 			/* 提交验证码确认 */
 			submitVerificationCodeBtn(str) {
 				if(str === 'confirm'){
 					// console.log('进行修改');
+					showLoading(true)
 					this.transactionSure();
 				}
 				/* 关闭模态框 */

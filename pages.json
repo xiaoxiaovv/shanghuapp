@@ -815,24 +815,6 @@
 					}
 				}
 			}
-		},
-		{
-		    "path" : "pages/home/depositManage/index/index",
-		    "style" : {
-				"navigationBarTitleText": "手机pos",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
-								"text": "\ue601",
-								"fontSrc": "/static/assets/iconfont/iconfont.ttf",
-								"fontSize": "22px"
-							}
-						]
-					}
-				}
-			}
 		}
 		,{
 		    "path" : "pages/user/newPrinter/index/index",
@@ -889,6 +871,15 @@
 			}
 		}
 		,{
+		    "path" : "pages/home/quickPay/manageCard",
+		    "style" : {
+				"navigationBarTitleText": "管理支付卡",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
 		    "path" : "pages/home/quickPay/addOrEditCard",
 		    "style" : {
 				"navigationBarTitleText": "添加 / 编辑支付卡",
@@ -898,9 +889,9 @@
 			}
 		}
 		,{
-		    "path" : "pages/home/quickPay/manageCard",
+		    "path" : "pages/home/quickPay/result",
 		    "style" : {
-				"navigationBarTitleText": "卡管理",
+				"navigationBarTitleText": "支付结果",
 				"app-plus": {
 					"bounce": "none"
 				}

@@ -67,7 +67,7 @@
 					url: '/pages/home/quickPay/addOrEditCard'
 				})
 			},
-			jumpManageCard(item) {
+			jumpManageCard() {
 				uni.navigateTo({
 					url: '/pages/home/quickPay/manageCard'
 				})

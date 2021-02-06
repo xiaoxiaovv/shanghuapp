@@ -413,6 +413,8 @@
 					channel = '手机pos'
 				}else if (channel === 18) {
 					channel = '快捷支付'
+				}else if (channel === 19) {
+					channel = '开店宝'
 				}
 				return channel
 			}

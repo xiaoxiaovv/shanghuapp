@@ -12,9 +12,13 @@ const VERSION = getVersion() || '1.0.0'
 
 // const API_TOKEN = getFirToken() || 'bf6322d6ccc3a74c123c1b61c31dc96e'
 
-const API_TOKEN = getFirToken() || '0871cfa2c1e5ecdbde8a64c53a0bf21d'
+/* const API_TOKEN = getFirToken() || '0871cfa2c1e5ecdbde8a64c53a0bf21d'
 
-const ID = getFirID() || '5d35ac7ef945481a89aefaf5'
+const ID = getFirID() || '5d35ac7ef945481a89aefaf5' */
+
+const API_TOKEN = getFirToken() || 'a9ee6117812ca47d8e8bc3e5c128f3d0'
+
+const ID = getFirID() || '601ba24ef945480cc38862f6'
 
 const bundle_id = ''
 

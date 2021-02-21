@@ -63,8 +63,23 @@
 					<!-- 青蛙app入口 -->
 					<view class="icon-frog iconfont icon-richscan_icon" @click="frogJump"></view>
 				</view>
-				
 				<view 
+					class="lf-cash-register padding shadow align-center box" 
+					v-show="isShowCashRegister && !isRich">
+					<image 
+						class=''
+						src="../../../static/home/btn_shoukuanma_click.png" 
+						@click="jumpPaymentCode"/>
+					<image 
+						class="ml-30"
+						src="../../../static/home/btn_shouyin_click.png" 
+						@click="cashierScan"/>
+					<image
+							class="ml-30"
+							src="../../../static/home/btn_shoujipos_click.png" 
+							@click="shouJiPosPay"/>
+				</view>
+				<!-- <view 
 					class="lf-cash-register padding-sm shadow align-center box" 
 					v-show="isShowCashRegister && !isRich">
 					<image 
@@ -75,20 +90,7 @@
 						class="ml-50"
 						src="../../../static/home/btn_shouyin_click.png" 
 						@click="cashierScan"/>
-				</view>
-				<view
-					class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box" 
-					v-show="isShowCashRegister && !isRich">
-					<image 
-						class=''
-						src="../../../static/home/btn_quickPay_click.png" 
-						@click="quickPayJump"/>
-					
-					<image
-							class="ml-50"
-							src="../../../static/home/btn_shoujipos_click.png" 
-							@click="shouJiPosPay"/>
-				</view>
+				</view> -->
 				
 				
 				<view
@@ -1995,8 +1997,8 @@
 		margin-bottom: -194upx;
 		
 		image {
-			width: 240upx;
-			height: 100upx;
+			width: 200upx;
+			height: 90upx;
 		}
 		
 		.image {
@@ -2018,9 +2020,7 @@
 			}
 		}
 	}
-    .lf-cash-register-bottom{
-		bottom:-70upx
-	}
+
 	.page-home-x {
 		width: 100%;
 		// height: 100%;

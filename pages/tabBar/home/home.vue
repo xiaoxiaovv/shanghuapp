@@ -1048,9 +1048,22 @@
 				}
 				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
 				if (!nowStoreDetail.storeId) {
-					uni.showToast({
+					/* uni.showToast({
 						title: '请选择门店',
 						icon: 'none'
+					}) */
+					uni.showModal({
+						title: '提示',
+						content: '请选择门店',
+						showCancel: true,
+						// confirmText: '请选择门店',
+						success: (res) => {
+							// console.log('确定', res.confirm)
+							if (res.confirm) {
+								this.storeSelect()
+								
+							}
+						}
 					})
 					return
 				}

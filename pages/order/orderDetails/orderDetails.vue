@@ -88,7 +88,7 @@
 		<view class="lf-btn">
 			<view class="bg-ff8800" 
 				  @click="showRefundModal" 
-				  v-if="orderDetails.status == 2 || orderDetails.status == 6 || orderDetails.status === 7">
+				  v-if="orderDetails.status == 2 && orderDetails.payWay !=8 || orderDetails.status == 6 && orderDetails.payWay !=8 || orderDetails.status === 7 && orderDetails.payWay !=8">
 				<text class="text-white">退款</text>
 			</view>
 			<view class="bg-ffcb90 disabled" v-else>
@@ -313,6 +313,12 @@
 					case 8:		//现金支付
 						return '手机pos';
 						break;	
+					case 9:		//现金支付
+						return '云闪付';
+						break;		
+					case 10:		//刷脸付 畅捷
+						return '刷脸付';
+						break;	
 					case 99:	//未知支付
 						return '未知支付';
 						break;
@@ -323,13 +329,13 @@
 			payWayImgFilters(val) {
 				switch(parseInt(val)){
 					case 1:		//微信支付
-						return '../../../static/order/icon_wechat_list.png';
+						return '../../../static/order/icon_wechat.png';
 						break;
 					case 2:		//支付宝支付
-						return '../../../static/order/icon_zhifubao_list.png';
+						return '../../../static/order/icon_zhifubao.png';
 						break;
 					case 3:		//银行卡支付
-						return '../../../static/order/icon_unionpay_list.png';
+						return '../../../static/order/icon_unionpay_little.png';
 						break;
 					case 4:		//会员卡支付
 						return '../../../static/home/icon_king.png';
@@ -345,7 +351,13 @@
 						break;
 					case 8:		//手机pos和快捷支付（网联）
 						return '../../../static/order/icon_pos.png';
-						break;	
+						break;
+					case 9:		//云闪付
+						return '../../../static/order/icon_yunshanfu.png';
+						break;
+					case 10:		//刷脸付
+						return '../../../static/order/icon_shualianfu.png';
+						break;			
 					case 99:	//未知支付
 						return '../../../static/order/icon_receive_money.png';
 						break;
@@ -415,6 +427,8 @@
 					channel = '快捷支付'
 				}else if (channel === 19) {
 					channel = '开店宝'
+				}else if (channel === 20) {
+					channel = '畅捷'
 				}
 				return channel
 			}

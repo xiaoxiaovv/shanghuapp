@@ -1,4 +1,4 @@
-<<template>
+<template>
 	<view class="quick-pay">
 		<view class="solid"></view>
 		<view class=" align-center">
@@ -27,8 +27,11 @@
 			</view>
 		
 		<view class="lf-btn">
-			<view class="bg-ff8800" @click="transaction">
+			<view class="bg-ff8800" @click="transaction" v-if="fromPayChannel==='18'">
 				<text class="text-white">立即支付</text>
+			</view>
+			<view class="bg-ff8800" @click="shuaLianTransaction" v-if="fromPayChannel==='20'">
+				<text class="text-white">刷脸并支付</text>
 			</view>
 		</view>
 		
@@ -53,23 +56,27 @@
 		data(){
 			return {
 				bankName:'请选择支付卡',
-				VerificationCodeModelContent:'', //验证码
+				// VerificationCodeModelContent:'',
 				showVerificationCodeModel:false,
 				accNo:'',
 				id:'',
 				chSerialNo:'',
-				verificationCodeModelContent:'',
+				verificationCodeModelContent:'',  //验证码
 				serviceId:'', 
 				chMerCode:'',
 				orderCode:'',
-				paymentMoney:''
+				paymentMoney:'',
+				fromPayChannel:''
 			}
 		},
 		onReady(){
 			
 		},
 		onLoad(obj){
+			console.log('77777777777777777:',obj)
 			this.paymentMoney = obj.paymentMoney
+			this.fromPayChannel = obj.fromPayChannel
+			
 		},
 		onShow(){
 			
@@ -86,8 +93,38 @@
 		 methods:{
 			 jumpCardList(){
 				 uni.navigateTo({
-				 	url: '/pages/home/quickPay/selectCard'
+				 	url: `/pages/home/quickPay/selectCard?fromPayChannel=${this.fromPayChannel}`
 				 })
+			 },
+			 shuaLianTransaction(){
+			 	// 下单
+			 	let userId = uni.getStorageSync('userId') || ''
+			 	let merchantId = uni.getStorageSync('merchantId') || ''
+			 	// let merchantId = '123213123213'
+			 	let storeId = uni.getStorageSync('storeId') || ''
+			 	let customerInfo = uni.getStorageSync('customerCount')
+			 	let serviceId = customerInfo.serviceId
+			 	// console.log('customerInfo==============',customerInfo)
+			 	let totalPrice = this.paymentMoney
+			 	/* let payWay = 8
+			 	let payChannel = 18 //17 pos  18 网联 */
+			 	let payWay = 10
+			 	let payChannel = 20 //17 pos  18 畅捷
+			 	let id = this.id
+			 	// console.log('this.id==============',this.id)
+			 	showLoading(true)
+			 	// return
+			 	webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, id).then(
+			 	res=>{
+			 		showLoading(false)
+			 		let data = res.obj.jsPayResponse
+			 		this.chSerialNo = data.chSerialNo;					
+			 		this.chMerCode = data.chMerCode;
+			 		this.orderCode = data.orderCode;
+			 		// this.showSubmitVerificationCodeModel()
+			 		// console.log('sucess==========',JSON.stringify(res))}
+			 		//,data=>{console.log('fail==========',JSON.stringify(data))
+			 		})
 			 },
 			/**
 			 * addOrEditBankCark  添加和编辑银行卡
@@ -113,6 +150,8 @@
 				let totalPrice = this.paymentMoney
 				let payWay = 8
 				let payChannel = 18 //17 pos  18 网联
+				/* let payWay = 10
+				let payChannel = 20 //17 pos  18 畅捷 */
 				let id = this.id
 				// console.log('this.id==============',this.id)
 				showLoading(true)

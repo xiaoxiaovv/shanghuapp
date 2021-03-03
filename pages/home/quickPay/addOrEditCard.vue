@@ -4,7 +4,7 @@
 			<uni-list>
 				<view class="lf-from-block text-lg lf-top-line">
 					<text>银行名称</text>
-					<input type="text" placeholder="请输入银行名称" maxlength="16" v-model="bankName">
+					<input type="text" placeholder="银行名称与卡面名称保持一致" maxlength="16" v-model="bankName">
 				</view>
 				<view class="lf-from-block text-lg lf-top-line">
 					<text>开户人姓名</text>
@@ -36,6 +36,15 @@
 					<text class="text-lg">提交</text>
 				</view>
 			</view>
+			<!-- 输入验证码 -->
+			<neil-modal :show="showVerificationCodeModel" @close="closeVerificationCodeModel" title="验证码" @cancel="submitVerificationCodeBtn('cancel')"
+			 @confirm="submitVerificationCodeBtn('confirm')">
+				<view style="min-height: 90upx;padding: 32upx 24upx;">
+					<view>
+						<input class="lf-remarks-input" type="text" placeholder="请输入验证码" maxlength="10" v-model="captcha">
+					</view>
+				</view>
+			</neil-modal>
 		</view>
 	
 </template>
@@ -43,9 +52,12 @@
 <script>
 	import {
 		addOrEditBankCard,
-		bankCardInfo
+		bankCardInfo,
+		chanpayPreSign,
+		chanpayPreSignSure
 	} from '../../../api/vueAPI.js'
 	import { uniList, uniListItem } from '@dcloudio/uni-ui'
+	import {showLoading} from '../../../common/wxapi.js'
 	export default {
 		components: {uniList},
 		data() {
@@ -59,7 +71,9 @@
 				mobile: '',
 				idCard: '',
 				id:'0', //添加时传随意值
-				merchantId:''
+				merchantId:'',
+				showVerificationCodeModel:false,
+				captcha: ''//验证码
 			}
 		},
 		onReady() {
@@ -73,6 +87,7 @@
 		},
 		onLoad(obj) {
 			if (obj.id) {
+				// 编辑页面跳转过来携带的数据
 				this.bankCardInfo(obj.id)
 			}
 
@@ -81,6 +96,35 @@
 
 		},
 		methods: {
+			/* 打开验证码输入模态框 */
+			showSubmitVerificationCodeModel() {
+				this.showVerificationCodeModel = true;
+			},
+			/* 提交验证码确认 */
+			submitVerificationCodeBtn(str) {
+				if (str === 'confirm') {
+					// console.log('进行修改');
+					showLoading(true)
+					this.chanpayPreSignSure(this.accNo, this.captcha);
+				}
+				/* 关闭模态框 */
+				this.showVerificationCodeModel = false;
+				/* 模态框数据初始化 */
+				this.captcha = '';
+			},
+			chanpayPreSignSure(accNo, captcha) {
+				// 预授权确认
+
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				chanpayPreSignSure(accNo, captcha).then(
+					res => {
+						showLoading(false)
+					}, err => {
+						showLoading(false)
+						
+					})
+			},
 			/**
 			 * addOrEditBankCard  添加和编辑银行卡
 			 * @param {Object} merchantId 商户ID
@@ -138,11 +182,25 @@
 					return
 				}
 
+
+				let that = this;
 				addOrEditBankCard(this.merchantId, this.realName, this.accNo, this.mobile, this.cvv2, this.validity, this.bankName,
 					this.idCard, this.id).then(res=>{
 						uni.showToast({
 							title:'提交成功',
 							icon:'none'
+						})
+						uni.showModal({
+							content: '是否开通刷脸付？您也可以到卡管理列表开通',
+							success(res) {
+								if(res.confirm){
+									chanpayPreSign(that.accNo).then(res=>{
+										that.showSubmitVerificationCodeModel()
+									})
+								}else{
+									
+								}
+							}
 						})
 					})
 			},

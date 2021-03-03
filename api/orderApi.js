@@ -158,7 +158,7 @@ export const dealWithMoney = (money) => {
 }
 
 /**
- * 订单支付渠道过滤
+ * 订单支付渠道过滤   应该是没有使用，导入的函数在过滤中引用不到，如果定义一个空函数再赋值估计可以
  */
 export const payChannelFilters = (channel) => {
 	if (channel === 1) {
@@ -193,7 +193,9 @@ export const payChannelFilters = (channel) => {
 		channel = '手机pos'
 	}else if (channel === 18) {
 		channel = '快捷支付'
-	}  
+	}else if (channel === 19) {
+		channel = '开店宝'
+	}
 	return channel
 }
 

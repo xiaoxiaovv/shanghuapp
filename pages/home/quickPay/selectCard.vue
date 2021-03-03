@@ -1,12 +1,12 @@
 <template>
 	<view>
-		<view class="lf-orderList text-lg match-width align-left ptb-10 align-hor-bet" v-for="(item,index) in cardList">
+		<view class="lf-orderList text-lg match-width  ptb-10 align-hor-bet " v-for="(item,index) in cardList">
 			<text @click="selectCard(item)">
-				{{item.bankName}} ({{item.accNo}})
+				{{item.bankName}} ({{item.accNo | cardFilter}})
 			</text>
+			<!-- <view class="ly-font-color-main" @click="chanpayPreSign(item)">开通刷脸付</view> -->
 		</view>
-		<view class="lf-orderList text-lg match-width align-left ptb-10 align-hor-bet">
-			
+		<view class="lf-orderList text-lg match-width  ptb-10 align-hor-bet">			
 			<text class="ly-font-color-main" @click="jumpManageCard">卡管理</text>
 			<text class="ly-font-color-main" @click="jumpAddOrEditCard">+ 添加支付卡</text>
 		</view>
@@ -16,12 +16,15 @@
 <script>
 	// 后台接口
 	import {
-		bankCarkList
-	} from '../../../api/vueAPI.js'
+		bankCarkList,
+		chanpayPreSign
+	} from '../../../api/vueAPI.js';
+	import{cardFilter, phoneFilter}from '../../../common/utils.js'
 	export default {
 		data() {
 			return {
-				cardList: []
+				cardList: [],
+				fromPayChannel:''
 			}
 		},
 		onReady() {
@@ -33,14 +36,30 @@
 		onHide() {
 
 		},
-		onLoad() {
-			
+		onLoad(obj) {
+			this.fromPayChannel = obj.fromPayChannel
 		},
 		watch: {
 
 		},
 		methods: {
 			selectCard(item){
+				let that = this;
+				if(this.fromPayChannel==='20'&&item.chanpayStatus!==2){
+					uni.showModal({
+										content: `该卡尚未开通刷脸付功能，点击“确定”到《卡管理》列表进行开通`,
+										success(res) {
+											if (res.confirm) {
+													// 跳转至卡管理列表
+													that.jumpManageCard()
+												
+											} else {
+					
+											}
+										}
+									})
+									rerurn
+				}
 				let pages = getCurrentPages();
 				let currPage = pages[pages.length - 1]; //当前页面
 				let prevPage = pages[pages.length - 2]; //上一个页面
@@ -73,11 +92,18 @@
 				})
 
 			}
+		},
+		filters:{
+			cardFilter,
+			phoneFilter
 		}
 	}
 </script>
 
 <style>
+	.mb--10{
+		margin-bottom: -10upx;
+	}
 	.lf-orderList {
 		width: 100%;
 		height: 120upx;

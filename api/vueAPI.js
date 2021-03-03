@@ -1315,3 +1315,25 @@ export function delBankCard(id) {
 	}
 	return fly.post('/order/bank/delete', qs.stringify(data))
 }					
+/**
+ * chanpayPreSign  畅捷预授权
+ * @param {Object} id 银行卡号
+ */
+export function chanpayPreSign(accNo) {
+	let data = {
+		accNo
+	}
+	return fly.post('/order/bank/chanpayPreSign', qs.stringify(data))
+}
+/**
+ * chanpayPreSign  畅捷预授权确认
+ * @param {Object} accNo 银行卡号
+ */
+export function chanpayPreSignSure(accNo, captcha) {
+	let data = {
+		accNo,
+		captcha
+	}
+	return fly.post('/order/bank/chanpaySureSign', qs.stringify(data))
+}
+

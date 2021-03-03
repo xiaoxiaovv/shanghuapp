@@ -304,6 +304,18 @@
 						name:'会员+支付宝支付',
 						value:7
 					},
+					{
+						name:'手机pos和快捷支付',
+						value:8
+					},
+					{
+						name:'云闪付支付',
+						value:9
+					}/* ,
+					{
+						name:'刷脸支付',
+						value:10
+					} */
 				],
 				isMerchant:true,
 				totalSummary: {}

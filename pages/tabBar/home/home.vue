@@ -75,14 +75,22 @@
 						class="ml-50"
 						src="../../../static/home/btn_shouyin_click.png" 
 						@click="cashierScan"/>
+					<image
+						class='ml-50'
+						src="../../../static/home/btn_quickPay_click.png" 
+						@click="quickPayJump"/>	
 				</view>
 				<view
 					class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box" 
 					v-show="isShowCashRegister && !isRich">
-					<image 
+					<image
 						class=''
 						src="../../../static/home/btn_quickPay_click.png" 
-						@click="quickPayJump"/>
+						@click="quickPayJump20"/>
+					<!-- <image 
+						class='ml-50'
+						src="../../../static/home/btn_quickPay_click.png" 
+						@click="quickPayJump"/> -->
 					
 					<image
 							class="ml-50"
@@ -635,9 +643,9 @@
 				let customerInfo = uni.getStorageSync('customerCount')
 				let serviceId = customerInfo.serviceId
 				// console.log('customerInfo==============',customerInfo)
-				let totalPrice = '11' //this.paymentMoney || '0.01'
+				let totalPrice = '1' //this.paymentMoney || '0.01'
 				let payWay = 8
-				let payChannel = 18 //17 pos  18 网联
+				let payChannel = 17 //17 pos  18 网联
 				let bankCardId = '1345981813639208960'
 				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, bankCardId).then(function(data){console.log('sucess==========',JSON.stringify(data))},function(data){console.log('fail==========',JSON.stringify(data))})
 			},
@@ -671,6 +679,7 @@
 							status: false
 						})
 						this.storeName = ''
+						this.storeNameGet()
 						break
 					/* 登录者-店长 */
 					case 2:
@@ -734,11 +743,28 @@
 					console.log("没有url")
 				}
 			},
-			/* 登陆者为店长/店员，获取门店名称 */
+			/* 登陆者为店长/店员，获取门店名称  新增：如果登录这为商户本人，并且只有一个商铺，加上全部门店项，共两个，则该商户为默认选择商铺，如果有多个商铺，付款时需要手动选择 */
 			storeNameGet() {
 				getAccountInfo().then(res => {
 					// console.log("信息");
 					// console.log(res);
+					this.userType = parseInt(uni.getStorageSync('userType'))
+					if(this.userType === 1){
+						let storeSelectItemArr = res.obj.storeSelectItem
+						if(storeSelectItemArr.length===2){
+							this.storeId = storeSelectItemArr[1].storeId;
+							this.storeName = storeSelectItemArr[1].storeName;
+							// uni.setStorageSync('storeId', this.storeId)				
+							uni.setStorageSync('nowStoreDetail',{
+								storeId: this.storeId,
+								storeName: this.storeName,
+								// todo status卡券核销记录页面用到了，不太清楚区别，商户手动选择是true，店长店员登录自动获取的是false
+								status: true
+							})
+						}
+					}
+					
+					
 					if(!res.obj.storeId){
 						this.storeName = res.obj.merchantName
 						this.storeId = ''
@@ -1233,7 +1259,48 @@
 					return
 				}
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney='+this.paymentMoney
+					url: '/pages/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=18'
+				})
+				/* let storeId = nowStoreDetail.storeId
+				let userId = uni.getStorageSync('userId') || ''
+				let merchantId = uni.getStorageSync('merchantId') || ''
+				// let merchantId = '123213123213'
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				// console.log('customerInfo==============',customerInfo)
+				let totalPrice = this.paymentMoney //this.paymentMoney || '0.01'
+				let token = uni.getStorageSync('token');
+				var obj = {merchantId,storeId,serviceId,userId,token}
+				var objStr = JSON.stringify(obj)
+				// console.log(objStr)
+				testModule.quickPay(objStr);
+				// testModule.gotoNativePage(); */
+			},
+			quickPayJump20() {
+				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
+				if (!nowStoreDetail.storeId) {
+					uni.showModal({
+						title: '提示',
+						content: '请选择门店',
+						showCancel: true,
+						// confirmText: '请选择门店',
+						success: (res) => {
+							// console.log('确定', res.confirm)
+							if (res.confirm) {
+								this.storeSelect()
+								
+							}
+						}
+					})
+					// this.storeSelect()
+					/* uni.showToast({
+						title: '请选择门店',
+						icon: 'none'
+					}) */
+					return
+				}
+				uni.navigateTo({
+					url: '/pages/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
 				})
 				/* let storeId = nowStoreDetail.storeId
 				let userId = uni.getStorageSync('userId') || ''
@@ -1951,6 +2018,12 @@
 					case 8:		//现金支付
 						return '手机pos';
 						break;
+					case 9:		//现金支付
+						return '云闪付';
+						break;		
+					case 10:		//刷脸付 畅捷
+						return '刷脸付';
+						break;	
 					case 99:	//未知支付
 						return '未知方式'
 						break
@@ -1995,8 +2068,12 @@
 		margin-bottom: -194upx;
 		
 		image {
-			width: 240upx;
-			height: 100upx;
+			// 两个的尺寸
+			/* width: 240upx;
+			height: 100upx; */
+			// 三个的尺寸
+			width: 190upx;
+			height: 80upx;
 		}
 		
 		.image {

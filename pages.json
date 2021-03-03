@@ -855,7 +855,7 @@
 		,{
 		    "path" : "pages/home/quickPay/index",
 		    "style" : {
-				"navigationBarTitleText": "快捷支付",
+				"navigationBarTitleText": "",
 				"app-plus": {
 					"bounce": "none"
 				}

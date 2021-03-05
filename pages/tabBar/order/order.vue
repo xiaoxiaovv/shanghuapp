@@ -143,9 +143,10 @@
 					</view>
 				</view>
 				<view v-for="order in timeList.orders" :key="order.id" class="lf-orderList match-width align-left ptb-10" @click="jumpOrderDetails(order.orderNumber)">
-					<image :src="order.payWay === 1? '../../../static/order/icon_wechat_list.png': 
+					<!-- <image :src="order.payWay === 1? '../../../static/order/icon_wechat_list.png': 
 						order.payWay === 2?'../../../static/order/icon_zhifubao_list.png':
-						order.payWay === 3? '../../../static/order/icon_unionpay_list.png':order.payChannel === 17? '../../../static/order/icon_pos_list.png':order.payChannel === 18? '../../../static/order/icon_quick_pay_list.png':'../../../static/order/icon_receive_money.png'"/>						
+						order.payWay === 3? '../../../static/order/icon_unionpay_list.png':order.payChannel === 17? '../../../static/order/icon_pos_list.png':order.payChannel === 18? '../../../static/order/icon_quick_pay_list.png':'../../../static/order/icon_receive_money.png'"/>		 -->				
+					<image :src="order | payWayImgFilters"/>		
 					<view class="match-left-space align-ver-left"> 			
 						<view class="match-width align-hor-bet">
 							<view>{{yenSymbol}} {{(order.actPayPrice)}}</view>
@@ -377,8 +378,28 @@
 			payTimeFilters(val) {
 				return val.split(' ')[1];
 			},
-			payWayFilters(val) {
-				switch(parseInt(val)){
+			payWayImgFilters(order) {
+				
+				if(parseInt(order.payWay)===1){
+					return '../../../static/order/icon_wechat_list.png';
+				}else if(parseInt(order.payWay)===2){
+					return '../../../static/order/icon_zhifubao_list.png';
+				}else if(parseInt(order.payWay)===3){
+					return '../../../static/order/icon_unionpay_list.png';
+				}else if(parseInt(order.payWay)===9){
+					return '../../../static/order/icon_yunshanfu_list.png';
+				}else if(parseInt(order.payWay)===10){
+					return '../../../static/order/icon_shualianfu_list.png';
+				}else if(parseInt(order.payChannel)===17){
+					return '../../../static/order/icon_pos_list.png';
+				}else if(parseInt(order.payChannel)===18){
+					return '../../../static/order/icon_quick_pay_list.png';
+				}else if(parseInt(order.payWay)===99){
+					return '../../../static/order/icon_receive_money.png';
+				}else{
+					console.log("异常支付码："+val)
+				}
+				/* switch(parseInt(val)){
 					case 1:		//微信支付
 						return '../../../static/order/icon_wechat_list.png';
 						break;
@@ -393,7 +414,7 @@
 						break;
 					default:
 						console.log("异常支付码："+val)
-				}
+				} */
 			},
 			// 金币保留两位小数
 			dealWithMoney(money) {

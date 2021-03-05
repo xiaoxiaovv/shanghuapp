@@ -40,6 +40,7 @@
 							<view class='match-left-space align-left ml-50'>
 								新增会员<view class='mlr-10 darker'>{{realOrder && realOrder.memberTotalToday? realOrder.memberTotalToday : 0}}</view>人
 							</view>
+							<!-- <view class="" @click="callback">异步回调</view> -->
 							<!-- <view @click="posTest">手机pos下单；</view> -->
 							<!-- <view @click="orderSure">网联下单确认；</view>													 -->
 							<!-- <view @click="gotoNativePage">跳到原生1；</view> -->
@@ -64,7 +65,7 @@
 					<view class="icon-frog iconfont icon-richscan_icon" @click="frogJump"></view>
 				</view>
 				
-				<view 
+				<!-- <view 
 					class="lf-cash-register padding-sm shadow align-center box" 
 					v-show="isShowCashRegister && !isRich">
 					<image 
@@ -86,17 +87,14 @@
 					<image
 						class=''
 						src="../../../static/home/btn_quickPay_click.png" 
-						@click="quickPayJump20"/>
-					<!-- <image 
-						class='ml-50'
-						src="../../../static/home/btn_quickPay_click.png" 
-						@click="quickPayJump"/> -->
+						@click="shuaLian"/>
+		
 					
 					<image
 							class="ml-50"
 							src="../../../static/home/btn_shoujipos_click.png" 
 							@click="shouJiPosPay"/>
-				</view>
+				</view> -->
 				
 				
 				<view
@@ -162,6 +160,29 @@
 			
 			<view v-if="lastOrder && lastOrder.actPayPrice != 0" class='bar'></view>
 			
+			<view class="lf-cash-register padding-lg shadow  box">
+				<image
+					class=''
+					src="../../../static/home/btn_shoukuanma_click.png" 
+					@click="jumpPaymentCode"/>
+				<image 
+					class="ml-50"
+					src="../../../static/home/btn_shouyin_click.png" 
+					@click="cashierScan"/>
+				<image
+					class='ml-50'
+					src="../../../static/home/btn_quickPay_click.png" 
+					@click="quickPayJump"/>	
+				<image
+					class='margin-top-sm'
+					src="../../../static/home/btn_shualian_click.png" 
+					@click="shuaLian"/>
+				
+				<image
+						class="ml-50"
+						src="../../../static/home/btn_shoujipos_click.png" 
+						@click="shouJiPosPay"/>	
+			</view>
 			<!-- 菜单 -->
 			<!-- <view :class="['page-home-x__menu align-left box plr-30', isSmall ? 'pt-30' : 'pt-50']">
 				<view
@@ -186,7 +207,8 @@
 				indicator-color='#F0F0F0'
 				indicator-active-color='#999'>
 				<swiper-item> -->
-					<view :class="['page-home-x__menu align-left box plr-10', isSmall ? '': 'mt-20']">
+				<view class='bar'></view>
+					<view :class="['page-home-x__menu align-left box plr-10 margin-top-lg', isSmall ? '': 'mt-20']">
 						<view
 							:class="['item align-ver-bet box']" 
 							v-for="(menu, index) in menuList"  
@@ -634,6 +656,25 @@
 			delBankCard(bankCardId){
 				delBankCard('1345981813639208960')
 			},
+			/* callback(){
+				uni.showToast({
+					title:'已开始调取',
+					icon:'none'
+									
+				})
+				// 调用异步方法
+				testModule.postest({
+						'name': 'unimp',
+						'age': 1
+					},
+					(ret) => {
+						uni.showToast({
+							title:ret,
+							icon:'none'
+											
+						})
+					})
+			}, */
 			posTest(){
 				// 下单
 				let userId = uni.getStorageSync('userId') || ''
@@ -1176,9 +1217,9 @@
 			
 			shouJiPosPay(){
 				// console.log('ssssssssssssssssssssssssssssssssss')
-				if(parseFloat(this.paymentMoney) === 0){
+				if(parseFloat(this.paymentMoney) < 10){
 					uni.showToast({
-						title: '请输入正确金额',
+						title: '手机POS交易金额不能小于10元',
 						icon: 'none'
 					})
 					return
@@ -1236,6 +1277,13 @@
 				location.href = 'https://alitong.vip/ydh5/index.html?i=1#/yidu_tc/pages/tabbar/index'
 			},
 			quickPayJump() {
+				if(parseFloat(this.paymentMoney) === 0){
+					uni.showToast({
+						title: '请输入正确金额',
+						icon: 'none'
+					})
+					return
+				}
 				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
 				if (!nowStoreDetail.storeId) {
 					uni.showModal({
@@ -1276,7 +1324,14 @@
 				testModule.quickPay(objStr);
 				// testModule.gotoNativePage(); */
 			},
-			quickPayJump20() {
+			shuaLian() {
+				if(parseFloat(this.paymentMoney) === 0){
+					uni.showToast({
+						title: '请输入正确金额',
+						icon: 'none'
+					})
+					return
+				}
 				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
 				if (!nowStoreDetail.storeId) {
 					uni.showModal({
@@ -1317,24 +1372,31 @@
 				testModule.quickPay(objStr);
 				// testModule.gotoNativePage(); */
 			},
-			sjPosJump() {
+			/* sjPosJump() {
 				
 				// 调取摄像头传给sdk的,暂时没用
-				/* var obj = {
-					"memberCode": "C070820120351304",
-					"tranAmount": "1100",
-					"txnDate": "20201231",
-					"txnTime": "104857",
-					"systrace": "023920",
-					"orderCode": "202012151348574454",
-					"netCode": "9",
-					"manufacturer": "小米",
-					"deviceType": "MI 9",
-					"serialNum": "52882189691967929917",
-					"location": "116.455746,39.954022",
-					"ip": "125.33.28.50",										
-					"additionalInfo": "TUK9z3tXUT5A176QygmTPR5intwPMmHrYh2nl9z/8xRja2t17+zeWlJde2HMQuqvp1NGUJ8HVxI="					
-				} */
+				// var obj = {
+				// 	"memberCode": "C070820120351304",
+				// 	"tranAmount": "1100",
+				// 	"txnDate": "20201231",
+				// 	"txnTime": "104857",
+				// 	"systrace": "023920",
+				// 	"orderCode": "202012151348574454",
+				// 	"netCode": "9",
+				// 	"manufacturer": "小米",
+				// 	"deviceType": "MI 9",
+				// 	"serialNum": "52882189691967929917",
+				// 	"location": "116.455746,39.954022",
+				// 	"ip": "125.33.28.50",										
+				// 	"additionalInfo": "TUK9z3tXUT5A176QygmTPR5intwPMmHrYh2nl9z/8xRja2t17+zeWlJde2HMQuqvp1NGUJ8HVxI="					
+				// }
+				if(parseFloat(this.paymentMoney) < 10){
+					uni.showToast({
+						title: '手机POS交易金额不能小于10元',
+						icon: 'none'
+					})
+					return
+				}
 				var obj = {userName:'15803196620',password:'123456',merchantId:'111'}
 				var objStr = JSON.stringify(obj)
 				// testModule.gotoNativePage()
@@ -1343,7 +1405,7 @@
 				// console.log('testModulePay=========',testModule.pay)
 				testModule.pay(objStr);
 				// testModule.gotoNativePage();
-			},
+			}, */
 			
 			/* 扫码收款 */
 			cashierScan() {
@@ -2059,13 +2121,13 @@
 	// }
 	
 	.lf-cash-register {
-		position: absolute;
+		// position: absolute;
 		bottom: 50upx;
 		width: 750upx;
 		// width: 100%;
-		background-color: #F1F2F3;
+		// background-color: #F1F2F3;
 		z-index: 100;
-		margin-bottom: -194upx;
+		// margin-bottom: -194upx;
 		
 		image {
 			// 两个的尺寸
@@ -2095,6 +2157,46 @@
 			}
 		}
 	}
+	
+	///*浮动收款样式开始 ***************** */
+	// .lf-cash-register {
+	// 	position: absolute;
+	// 	bottom: 50upx;
+	// 	width: 750upx;
+	// 	// width: 100%;
+	// 	background-color: #F1F2F3;
+	// 	z-index: 100;
+	// 	margin-bottom: -194upx;
+		
+	// 	image {
+	// 		// 两个的尺寸
+	// 		/* width: 240upx;
+	// 		height: 100upx; */
+	// 		// 三个的尺寸
+	// 		width: 190upx;
+	// 		height: 80upx;
+	// 	}
+		
+	// 	.image {
+	// 		width: 320upx;
+	// 		height: 130upx;
+	// 		background-color: #DDD;
+	// 		border: 2upx solid #FFF;
+	// 		display: flex;
+	// 		align-items: center;
+	// 		justify-content: center;
+	// 		border-radius: 20upx;
+	// 		font-size: 37upx;
+	// 		font-weight: 400;
+	// 		color: #FFF;
+	// 		margin-top: 20upx;
+			
+	// 		&:active {
+	// 			opacity: 0.8;
+	// 		}
+	// 	}
+	// }
+	///*浮动收款样式结束 ***************** */
     .lf-cash-register-bottom{
 		bottom:-70upx
 	}

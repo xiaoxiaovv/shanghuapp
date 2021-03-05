@@ -64,8 +64,10 @@
 				 if(this.resultFlag === '0'){
 					 this.msg = '支付失败'
 					 this.errTextShow = true;
-					 this.backBtnMsg = '返回订单列表';
-					 this.backUrl = '/pages/tabBar/order/order'
+					 this.backBtnMsg = '返回首页';
+					 this.backUrl = '/pages/tabBar/home/home'
+					 /* this.backBtnMsg = '返回订单列表';
+					 this.backUrl = '/pages/tabBar/order/order' */
 					 this.imgSrc = '../../../static/common/pay_fail_big.png'
 				
 				 }else if(this.resultFlag === '1'){

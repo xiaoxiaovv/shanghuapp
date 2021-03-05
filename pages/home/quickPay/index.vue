@@ -121,10 +121,18 @@
 			 		this.chSerialNo = data.chSerialNo;					
 			 		this.chMerCode = data.chMerCode;
 			 		this.orderCode = data.orderCode;
+					uni.navigateTo({
+						url: '/pages/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=1'
+					})
 			 		// this.showSubmitVerificationCodeModel()
 			 		// console.log('sucess==========',JSON.stringify(res))}
 			 		//,data=>{console.log('fail==========',JSON.stringify(data))
-			 		})
+			 		},err=>{
+					// console.log('8888888888888888888888888888888',err)
+					uni.navigateTo({
+						url: '/pages/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=0'+'&failMsg='+err.msg
+					})
+				})
 			 },
 			/**
 			 * addOrEditBankCark  添加和编辑银行卡

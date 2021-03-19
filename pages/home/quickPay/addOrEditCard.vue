@@ -63,7 +63,7 @@
 		data() {
 			return {
 				bankName: '',
-				realName: '',
+				realName: '', //开户人名称
 				idCard:'',
 				accNo: '',
 				validity: '',

@@ -71,6 +71,8 @@
 				prevPage.$vm.bankName = item.bankName;
 				prevPage.accNo = item.accNo
 				prevPage.$vm.accNo = item.accNo;
+				prevPage.bankCardInfo = item
+				prevPage.$vm.bankCardInfo = item;
 				/* 返回上页面 */
 				uni.navigateBack();
 			},

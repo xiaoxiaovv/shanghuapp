@@ -30,7 +30,7 @@
 			<view class="bg-ff8800" @click="transaction" v-if="fromPayChannel==='18'">
 				<text class="text-white">立即支付</text>
 			</view>
-			<view class="bg-ff8800" @click="shuaLianTransaction" v-if="fromPayChannel==='20'">
+			<view class="bg-ff8800" @click="shuaLianAsyncFunc" v-if="fromPayChannel==='20'">
 				<text class="text-white">刷脸并支付</text>
 			</view>
 		</view>
@@ -52,6 +52,7 @@
 	// 后台接口
 	import {webPay,transactionSure} from '../../../api/vueAPI.js'
 	import {showLoading} from '../../../common/wxapi.js'
+	var shuaLianModule = uni.requireNativePlugin('DCloud-ShuaLianMoudle')
 	export default {
 		data(){
 			return {
@@ -66,14 +67,28 @@
 				chMerCode:'',
 				orderCode:'',
 				paymentMoney:'',
-				fromPayChannel:''
+				fromPayChannel:'',
+				bankCardInfo:{
+					bankName: '',
+					realName: '', //开户人名称
+					idCard:'',
+					accNo: '',
+					validity: '',
+					cvv2: '',
+					mobile: '',
+					idCard: '',
+					id:'0', //添加时传随意值
+					merchantId:'',
+					showVerificationCodeModel:false,
+					captcha: ''//验证码
+				}
 			}
 		},
 		onReady(){
 			
 		},
 		onLoad(obj){
-			console.log('77777777777777777:',obj)
+			// console.log('77777777777777777:',obj)
 			this.paymentMoney = obj.paymentMoney
 			this.fromPayChannel = obj.fromPayChannel
 			
@@ -91,6 +106,72 @@
 			
 		},
 		 methods:{
+			 shuaLianCallback(ret){
+				 let shuaLianAuthResult = JSON.parse(ret)
+				 if(shuaLianAuthResult.Code == 0){
+					 this.shuaLianTransaction();
+				 }else{
+					 uni.showToast({
+					 		title: '人脸验证失败',
+					 		icon: 'none'
+					 	})
+				 	/* uni.showModal({
+				 		content: `人脸验证失败`,
+				 		showCancel: false
+				 	}) */
+				 }
+				 /* validate_result	String 验证结果	-1,身份证和姓名不一致 -2,公安库中无此身份证记录 -3,公安身份证库中没有此号码的照片
+				 -4 照片参数不合格 -5 照片相片体积过大 -6,请检查图片编码 -7,照片相片体积过小 1,系统分析为同一人 ，2,系统分析可能为同一人 3, 系统分析为不是同人 4,没检测到人脸 5,疑似非活体 6,出现多张脸 7,身份证和姓名一致，官方人脸比对失败
+
+similarity	String	相似度 1~100 (当validate_result>0时，本值才有效(相似度>=45 为同一人； 40<=相似度<45 不确定为同一人； 相似度<40 确定为不同人))
+*/
+			 	/* if(ret){
+					uni.showModal({
+						content: ret,
+						showCancel: false
+					})
+					let shuaLianAuthResult = JSON.parse(ret)
+					if(shuaLianAuthResult.result.validate_result !== '1' || shuaLianAuthResult.result.similarity<45){
+						uni.showModal({
+							content: `人脸验证失败（代码：${shuaLianAuthResult.validate_result},${shuaLianAuthResult.similarity}）。`,
+							showCancel: false
+						})
+					}else{
+						this.shuaLianTransaction();
+					}
+				}else{
+					uni.showModal({
+						content: `人脸验证系统错误。`,
+						showCancel: false
+					})
+				} */
+				
+				
+			 },
+			 shuaLianAsyncFunc() {
+				 if(this.id === ''){
+					 uni.showToast({
+					 		title: '请选择支付卡',
+					 		icon: 'none'
+					 	})
+						return
+				 }
+			 /* 	uni.showToast({
+			 		title: 'shuaLianModule7777777777777777777'+shuaLianModule,
+			 		icon: 'none'
+			 	}) */
+			 	let obj = {
+			 			Name: this.bankCardInfo.realName,
+			 			Number: this.bankCardInfo.idCard,
+			 			Count:1
+			 		};
+			 		let objStr = JSON.stringify(obj)
+			 	shuaLianModule.shuaLianAuth(objStr,
+			 		(ret) => {
+			 			this.shuaLianCallback(ret)
+			 		})
+			 	
+			 },
 			 jumpCardList(){
 				 uni.navigateTo({
 				 	url: `/pages/home/quickPay/selectCard?fromPayChannel=${this.fromPayChannel}`
@@ -108,8 +189,8 @@
 			 	let totalPrice = this.paymentMoney
 			 	/* let payWay = 8
 			 	let payChannel = 18 //17 pos  18 网联 */
-			 	let payWay = 10
-			 	let payChannel = 20 //17 pos  18 畅捷
+			 	let payWay = 10 //10:刷脸
+			 	let payChannel = 20   //20:畅捷
 			 	let id = this.id
 			 	// console.log('this.id==============',this.id)
 			 	showLoading(true)

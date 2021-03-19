@@ -171,7 +171,7 @@
 				}
 				this.btnLoading = true;
 				login( this.username.trim() , this.password.trim() ).then(res => {
-					// console.log(777, res)
+					console.log(444444444, res)
 					// console.log(JSON.stringify(res.obj))
 					// return
 					/* 记住账户/密码 */
@@ -208,8 +208,10 @@
 					}).catch(err => {
 						console.log(err)
 					})
+				},err => {
+					console.log(55555,err)
 				}).catch((err) => {	
-					console.log(err)
+					console.log('11111112222222',err)
 					this.btnLoading = false;
 				})
 			},

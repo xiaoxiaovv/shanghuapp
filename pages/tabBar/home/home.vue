@@ -126,9 +126,9 @@
 				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
 				<image class="ml-50" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
 				<image class='ml-50' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" />
-				<image class='margin-top-sm' src="../../../static/home/btn_shualian_click.png" @click="shuaLian" />
+				<!-- <image class='margin-top-sm' src="../../../static/home/btn_shualian_click.png" @click="shuaLian" /> -->
 
-				<image class="ml-50" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
+				<image class="margin-top-sm" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
 			</view>
 
 			<!-- 菜单 -->

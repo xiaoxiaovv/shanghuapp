@@ -6,14 +6,14 @@
 					<text>银行名称</text>
 					<input type="text" placeholder="银行名称与卡面名称保持一致" maxlength="16" v-model="bankName">
 				</view>
-				<view class="lf-from-block text-lg lf-top-line">
+				<!-- <view class="lf-from-block text-lg lf-top-line">
 					<text>开户人姓名</text>
 					<input type="text" placeholder="请输入开户人姓名" maxlength="8"  v-model="realName">
 				</view>
 				<view class="lf-from-block text-lg lf-top-line">
 					<text>身份证号</text>
 					<input type="text" placeholder="请输入身份证号" maxlength="18"  v-model="idCard">
-				</view>
+				</view> -->
 				<view class="lf-from-block text-lg lf-top-line">
 					<text>银行卡号</text>
 					<input type="text" placeholder="请输入银行卡号" maxlength="26"  v-model="accNo">
@@ -54,7 +54,8 @@
 		addOrEditBankCard,
 		bankCardInfo,
 		chanpayPreSign,
-		chanpayPreSignSure
+		chanpayPreSignSure,
+		getUserInfo
 	} from '../../../api/vueAPI.js'
 	import { uniList, uniListItem } from '@dcloudio/uni-ui'
 	import {showLoading} from '../../../common/wxapi.js'
@@ -90,12 +91,21 @@
 				// 编辑页面跳转过来携带的数据
 				this.bankCardInfo(obj.id)
 			}
-
+          this.getUserInfo();
 		},
 		watch: {
 
 		},
 		methods: {
+			getUserInfo(){
+				this.merchantId = uni.getStorageSync('merchantId')
+				getUserInfo(this.merchantId).then(res=>{
+					this.certificateNum = res.obj.certificateNum;
+					this.representativeName = res.obj.representativeName;
+				    console.log(this.certificateNum,this.representativeName)
+					
+				})
+			},
 			/* 打开验证码输入模态框 */
 			showSubmitVerificationCodeModel() {
 				this.showVerificationCodeModel = true;
@@ -146,20 +156,20 @@
 				let mobile = '15803196620'
 				let cvv2 = '947'
 				let validity = '0523' */
-				if(!this.bankName.trim() || !this.realName.trim() || !this.idCard.trim() || !this.accNo.trim() || !this.validity.trim() || !this.cvv2.trim() || !this.mobile.trim()){
+				if(!this.bankName.trim() || !this.accNo.trim() || !this.validity.trim() || !this.cvv2.trim() || !this.mobile.trim()){
 					uni.showToast({
 						title:"请补全内容",
 						icon:'none'
 					})
 					return
 				}
-				if(this.idCard.length !== 18){
+				/* if(this.idCard.length !== 18){
 					uni.showToast({
 						title:"身份证号格式错误",
 						icon:'none'
 					})
 					return
-				}
+				} */
 				if(this.validity.length !== 4){
 					uni.showToast({
 						title:"有效期格式错误",
@@ -184,6 +194,9 @@
 
 
 				let that = this;
+				this.realName = this.representativeName;
+				this.idCard = this.certificateNum;
+				console.log('2222222222',this.realName,this.idCard)
 				addOrEditBankCard(this.merchantId, this.realName, this.accNo, this.mobile, this.cvv2, this.validity, this.bankName,
 					this.idCard, this.id).then(res=>{
 						uni.showToast({

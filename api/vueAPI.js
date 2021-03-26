@@ -1258,6 +1258,16 @@ export function queryOrderSummary(createTime, storeId, status, payWay, endCreate
 	}
 	return fly.get('/order/app/query_order/summary', qs.stringify(data))
 }
+// 获取商户的进件信息
+/**
+ * @param {Object} id   商户id
+ */
+export function getUserInfo(id) {
+	let data = {
+		id
+	}
+	return fly.get('/merchant/mch_info/feedDetail', qs.stringify(data))
+}
 // 手机pos-网联卡管理
 
 /**

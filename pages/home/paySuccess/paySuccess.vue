@@ -77,6 +77,7 @@
 <script>
 	import { getOrderDetails, getAdvertises, clickAdvertise, adClick } from '../../../api/vueAPI.js'
 	import { getPrintOrderDetailAndPrint } from '../../../api/orderApi.js'
+	import { payWayFilters } from '../../../common/utils.js'
 	
 	export default {
 		data() {
@@ -129,7 +130,8 @@
 						console.log("异常状态值："+val);
 				}
 			},
-			payWayFilters(val) {
+			payWayFilters,
+			/* payWayFilters(val) {
 				switch(parseInt(val)){
 					case 1:		//微信支付
 						return '微信';
@@ -149,7 +151,7 @@
 					default:
 						console.log("异常支付码："+val)
 				}
-			},
+			}, */
 			payWayImgFilters(val) {
 				switch(parseInt(val)){
 					case 1:		//微信支付

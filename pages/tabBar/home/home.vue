@@ -121,38 +121,22 @@
 			</view>
 
 			<view v-if="lastOrder && lastOrder.actPayPrice != 0" class='bar'></view>
-<!-- 两行两个 -->
-<view 
-					class="lf-cash-register padding-sm shadow align-center box" 
-					>
-					<image 
-						class=''
-						src="../../../static/home/btn_shoukuanma_click.png" 
-						@click="jumpPaymentCode"/>
-					<image 
-						class="ml-50"
-						src="../../../static/home/btn_shouyin_click.png" 
-						@click="cashierScan"/>
-					
-				</view>
-				<view
-					class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box" 
-					>
-					<!-- <image
+			<!-- 两行两个 -->
+			<view class="lf-cash-register padding-sm shadow align-center box">
+				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
+				<image class="ml-50" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
+
+			</view>
+			<view class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box">
+				<!-- <image
 						class=''
 						src="../../../static/home/btn_quickPay_click.png" 
 						@click="shuaLian"/> -->
-		<image
-			class=''
-			src="../../../static/home/btn_quickPay_click.png" 
-			@click="quickPayJump"/>	
-					
-					<image
-							class="ml-50"
-							src="../../../static/home/btn_shoujipos_click.png" 
-							@click="shouJiPosPay"/>
-				</view>
-<!-- 两行三个 -->
+				<image class='' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" />
+
+				<image class="ml-50" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
+			</view>
+			<!-- 两行三个 -->
 			<!-- <view class="lf-cash-register padding-lg shadow  box">
 				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
 				<image class="ml-50" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />

@@ -121,15 +121,46 @@
 			</view>
 
 			<view v-if="lastOrder && lastOrder.actPayPrice != 0" class='bar'></view>
-
-			<view class="lf-cash-register padding-lg shadow  box">
+<!-- 两行两个 -->
+<view 
+					class="lf-cash-register padding-sm shadow align-center box" 
+					>
+					<image 
+						class=''
+						src="../../../static/home/btn_shoukuanma_click.png" 
+						@click="jumpPaymentCode"/>
+					<image 
+						class="ml-50"
+						src="../../../static/home/btn_shouyin_click.png" 
+						@click="cashierScan"/>
+					
+				</view>
+				<view
+					class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box" 
+					>
+					<!-- <image
+						class=''
+						src="../../../static/home/btn_quickPay_click.png" 
+						@click="shuaLian"/> -->
+		<image
+			class=''
+			src="../../../static/home/btn_quickPay_click.png" 
+			@click="quickPayJump"/>	
+					
+					<image
+							class="ml-50"
+							src="../../../static/home/btn_shoujipos_click.png" 
+							@click="shouJiPosPay"/>
+				</view>
+<!-- 两行三个 -->
+			<!-- <view class="lf-cash-register padding-lg shadow  box">
 				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
 				<image class="ml-50" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
 				<image class='ml-50' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" />
-				<!-- <image class='margin-top-sm' src="../../../static/home/btn_shualian_click.png" @click="shuaLian" /> -->
+				<image class='margin-top-sm' src="../../../static/home/btn_shualian_click.png" @click="shuaLian" />
 
 				<image class="margin-top-sm" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
-			</view>
+			</view> -->
 
 			<!-- 菜单 -->
 			<!-- <view :class="['page-home-x__menu align-left box plr-30', isSmall ? 'pt-30' : 'pt-50']">

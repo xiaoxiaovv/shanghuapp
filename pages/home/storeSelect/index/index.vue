@@ -91,13 +91,15 @@
 			},
 			/* 选择门店 */
 			selectStore(storeDetails) {
+				console.log('选择门店=====',storeDetails)
 				this.storeId = storeDetails.value;
 				this.storeName = storeDetails.name;
 				// uni.setStorageSync('storeId', this.storeId)				
 				uni.setStorageSync('nowStoreDetail',{
 					storeId: this.storeId,
 					storeName: this.storeName,
-					status: true
+					status: true,
+					isOpen:storeDetails.isOpen
 				})
 				let pages = getCurrentPages();
 				let currPage = pages[pages.length - 1]; //当前页面

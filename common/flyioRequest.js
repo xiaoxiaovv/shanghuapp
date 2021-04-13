@@ -11,6 +11,7 @@ const fly = new Fly;
  // const URL = getDomain() || "http://pay-adm.h5h5h5.cn"	//全局总URL
  // const URL = getDomain() || "https://pay.oem.51hbpay.com"	//全局总URL
  // const URL = getDomain() || "http://pay.oem.test.mamipay.com:41000"	//全局总URL
+ // const URL = getDomain() || "https://yt.hbpay.vip"	//全局总URL
  // const URL = getDomain() || "http://mamipay.com:41000"	//全局总URL
  const URL = getDomain() || "https://mamipay.com"	//全局总URL
  // const URL = getDomain() || "http://192.168.0.13"	//全局总URL

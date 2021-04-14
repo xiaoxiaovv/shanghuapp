@@ -312,7 +312,7 @@
 			onJumpDetails(item) {
 				uni.setStorageSync('classExchangeDetail', item)
 				uni.navigateTo({
-					url: '/pages/user/classReplace/details/index'
+					url: '/packageA/pages/user/classReplace/details/index'
 				})
 				
 			}

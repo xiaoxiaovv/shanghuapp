@@ -170,7 +170,7 @@
 			/* 跳转会员协议页面 */
 			jumpMemberAgreement() {
 				uni.navigateTo({
-					url: '/pages/home/memberCenter/memberManage/memberServiceAgreement/memberServiceAgreement'
+					url: '/packageA/pages/home/memberCenter/memberManage/memberServiceAgreement/memberServiceAgreement'
 				})
 			},
 			/* 获得手机验证码 */

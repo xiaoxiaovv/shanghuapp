@@ -82,14 +82,14 @@
 				if (type === 'add') {
 					// 新增
 					uni.navigateTo({
-						url: '/pages/user/newPrinter/addPrinter/index'
+						url: '/packageA/pages/user/newPrinter/addPrinter/index'
 					})
 				} else if (type === 'edit') {
 					// 编辑
 					uni.setStorageSync('printer', item)
 					setTimeout(() => {
 						uni.navigateTo({
-							url: '/pages/user/newPrinter/addPrinter/index'
+							url: '/packageA/pages/user/newPrinter/addPrinter/index'
 						})
 					}, 400)
 				} else if (type === 'unbind') {

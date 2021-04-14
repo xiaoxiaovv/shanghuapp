@@ -76,7 +76,7 @@
 			},
 			jumpAddOrEditCard(id) {
 				uni.navigateTo({
-					url: '/pages/home/quickPay/addOrEditCard?id=' + id
+					url: '/packageA/pages/home/quickPay/addOrEditCard?id=' + id
 				})
 			},
 			delBankCard(item) {

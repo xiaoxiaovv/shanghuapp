@@ -1,310 +1,281 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-		    "path" : "pages/login/index/index",
-		    "style" : {
+			"path": "pages/login/index/index",
+			"style": {
 				"navigationBarTitleText": "登录",
 				"app-plus": {
 					"bounce": "none",
 					"titleNView": false
 				}
 			}
-		}
-		,{
-		    "path" : "pages/login/register/register",
-		    "style" : {
+		}, {
+			"path": "pages/login/forgetPassword/forgetPassword",
+			"style": {
+				"navigationBarTitleText": "找回密码",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/login/register/register",
+			"style": {
 				"navigationBarTitleText": "注册",
 				"app-plus": {
 					"bounce": "none",
 					"titleNView": false
 				}
 			}
-		}
-	    ,{
-            "path" : "pages/tabBar/home/home",
-            "style" : {
+		}, {
+			"path": "pages/tabBar/home/home",
+			"style": {
 				"navigationBarTitleText": "首页",
 				"app-plus": {
 					"bounce": "none",
 					"titleNView": false
 				}
 			}
-        }
-        ,{
-            "path" : "pages/tabBar/order/order",
-            "style" : {
+		}, {
+			"path": "pages/tabBar/order/order",
+			"style": {
 				"navigationBarTitleText": "订单",
-				"onReachBottomDistance" : 100,		//mescroll
+				"onReachBottomDistance": 100, //mescroll
 				"app-plus": {
 					"bounce": "none",
 					"titleNView": false
 				}
 			}
-        }
-		,{
-		    "path" : "pages/tabBar/shop/shop",
-		    "style" : {
+		}, {
+			"path": "pages/tabBar/shop/shop",
+			"style": {
 				"navigationBarTitleText": "商城",
-				"onReachBottomDistance" : 100,		//mescroll
+				"onReachBottomDistance": 100, //mescroll
 				"app-plus": {
 					"bounce": "none",
 					"titleNView": true
 				}
 			}
-		}
-        ,{
-            "path" : "pages/tabBar/user/user",
-            "style" : {
+		}, {
+			"path": "pages/tabBar/user/user",
+			"style": {
 				"navigationBarTitleText": "我的",
 				"app-plus": {
 					"bounce": "none",
 					"titleNView": false
 				}
 			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/index/index",
-            "style" : {
-				"navigationBarTitleText": "会员",
-				"app-plus": {
-					"bounce": "none"
+		}
+	],
+	"subPackages": [{
+		"root": "packageA",
+		"pages": [{
+				"path": "pages/home/memberCenter/index/index",
+				"style": {
+					"navigationBarTitleText": "会员",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/storeAdministration/index/index",
-            "style" : {
-				"navigationBarTitleText": "门店管理",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"searchInput": {
-							"align": "left",
-							"backgroundColor": "rgba(238,238,238,0.8)",
-							"borderRadius": "20px",
-							"placeholder": "搜索",
-							"placeholderColor": "#BEBEBE"
-						},
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/storeAdministration/index/index",
+				"style": {
+					"navigationBarTitleText": "门店管理",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"searchInput": {
+								"align": "left",
+								"backgroundColor": "rgba(238,238,238,0.8)",
+								"borderRadius": "20px",
+								"placeholder": "搜索",
+								"placeholderColor": "#BEBEBE"
+							},
+							"buttons": [{
 								"text": "新增",
 								"fontSize": "14px",
 								"width": "50px"
-							}
-						]
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/statistics/index/index",
-            "style" : {
-				"navigationBarTitleText": "全部门店",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": false
+			}, {
+				"path": "pages/home/statistics/index/index",
+				"style": {
+					"navigationBarTitleText": "全部门店",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": false
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/staffManagement/index/index",
-            "style" : {
-				"navigationBarTitleText": "员工管理",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"searchInput": {
-							"align": "left",
-							"backgroundColor": "rgba(238,238,238,0.8)",
-							"borderRadius": "20px",
-							"placeholder": "搜索",
-							"placeholderColor": "#BEBEBE"
-						},
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/staffManagement/index/index",
+				"style": {
+					"navigationBarTitleText": "员工管理",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"searchInput": {
+								"align": "left",
+								"backgroundColor": "rgba(238,238,238,0.8)",
+								"borderRadius": "20px",
+								"placeholder": "搜索",
+								"placeholderColor": "#BEBEBE"
+							},
+							"buttons": [{
 								"text": "新增",
 								"fontSize": "14px",
 								"width": "50px"
-							}
-						]
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/2DcodeAdministration/index/index",
-            "style" : {
-				"navigationBarTitleText": "二维码管理",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"searchInput": {
-							"align": "left",
-							"backgroundColor": "rgba(238,238,238,0.8)",
-							"borderRadius": "20px",
-							"placeholder": "搜索",
-							"placeholderColor": "#BEBEBE"
-						},
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/2DcodeAdministration/index/index",
+				"style": {
+					"navigationBarTitleText": "二维码管理",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"searchInput": {
+								"align": "left",
+								"backgroundColor": "rgba(238,238,238,0.8)",
+								"borderRadius": "20px",
+								"placeholder": "搜索",
+								"placeholderColor": "#BEBEBE"
+							},
+							"buttons": [{
 								"text": "新增",
 								"fontSize": "14px",
 								"width": "50px"
-							}
-						]
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/user/messageCenter/index/index",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/user/messageCenter/messageDetails/messageDetails",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/user/set/index/index",
-			"style" : {
-				"navigationBarTitleText": "设置",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/user/messageCenter/index/index",
+				"style": {}
+			}, {
+				"path": "pages/user/messageCenter/messageDetails/messageDetails",
+				"style": {}
+			}, {
+				"path": "pages/user/set/index/index",
+				"style": {
+					"navigationBarTitleText": "设置",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-		}
-        ,{
-            "path" : "pages/user/printer/index/index",
-            "style" : {
-				"navigationBarTitleText": "打印设置",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/user/printer/index/index",
+				"style": {
+					"navigationBarTitleText": "打印设置",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-		,{
-		    "path" : "pages/user/ticketSet/index/index",
-			"style" : {
-				"navigationBarTitleText": "电子发票设置",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/user/ticketSet/index/index",
+				"style": {
+					"navigationBarTitleText": "电子发票设置",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-		}
-		,{
-		    "path" : "pages/user/ticketSet/query/index",
-			"style" : {
-				"navigationBarTitleText": "电子发票设置",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/user/ticketSet/query/index",
+				"style": {
+					"navigationBarTitleText": "电子发票设置",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-		}
-		,{
-		    "path" : "pages/user/vipSet/index/index",
-			"style" : {
-				"navigationBarTitleText": "会员支付设置",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/user/vipSet/index/index",
+				"style": {
+					"navigationBarTitleText": "会员支付设置",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-		}
-		,{
-		    "path" : "pages/user/vipSet/pay/index",
-			"style" : {
-				"navigationBarTitleText": "会员支付设置",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/user/vipSet/pay/index",
+				"style": {
+					"navigationBarTitleText": "会员支付设置",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-		}
-		,{
-		    "path" : "pages/user/classReplace/index/index",
-			"style" : {
-				"navigationBarTitleText": "交接班记录",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/user/classReplace/index/index",
+				"style": {
+					"navigationBarTitleText": "交接班记录",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-		}
-		,{
-		    "path" : "pages/user/classReplace/details/index",
-			"style" : {
-				"navigationBarTitleText": "交接班记录详情",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/user/classReplace/details/index",
+				"style": {
+					"navigationBarTitleText": "交接班记录详情",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "\ue79e",
 								"fontSrc": "/static/assets/iconfont/iconfont.ttf",
 								"fontSize": "22px"
-							}
-						]
+							}]
+						}
 					}
 				}
 			}
-		}
-        ,{
-            "path" : "pages/login/forgetPassword/forgetPassword",
-            "style" : {
-				"navigationBarTitleText": "找回密码",
-				"app-plus": {
-					"bounce": "none"
+
+			, {
+				"path": "pages/home/consumerAnalysis/index/index",
+				"style": {}
+			}, {
+				"path": "pages/home/refund/index/index",
+				"style": {
+					"navigationBarTitleText": "扫码退款",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/consumerAnalysis/index/index",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/home/refund/index/index",
-            "style" : {
-				"navigationBarTitleText": "扫码退款",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/storeSelect/index/index",
+				"style": {
+					"navigationBarTitleText": "选择门店",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/storeSelect/index/index",
-            "style" : {
-				"navigationBarTitleText": "选择门店",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/user/AlipaySigningPage/index/index",
+				"style": {}
+			}, {
+				"path": "pages/user/about/index/index",
+				"style": {
+					"navigationBarTitleText": "关于",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/user/AlipaySigningPage/index/index",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/user/about/index/index",
-            "style" : {
-				"navigationBarTitleText": "关于",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/memberCenter/memberAnalysis/memberAnalysis",
+				"style": {
+					"navigationBarTitleText": "会员分析",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/memberAnalysis/memberAnalysis",
-            "style" : {
-				"navigationBarTitleText": "会员分析",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/membershipConsumptionRecords/membershipConsumptionRecords",
-            "style" : {
-				"navigationBarTitleText": "全部门店\ue61a",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": false /* {
+			}, {
+				"path": "pages/home/memberCenter/membershipConsumptionRecords/membershipConsumptionRecords",
+				"style": {
+					"navigationBarTitleText": "全部门店\ue61a",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": false
+						/* {
 						"buttons": [
 							{
 								"text": "\ue64d",
@@ -320,631 +291,559 @@
 							}
 						]
 					} */
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/memberManage/index/index",
-            "style" : {
-				"navigationBarTitleText": "会员管理",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"searchInput": {
-							"align": "left",
-							"backgroundColor": "rgba(238,238,238,0.8)",
-							"borderRadius": "5px",
-							"placeholder": "请输入会员卡号或手机号",
-							"placeholderColor": "#BEBEBE"
-						},
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/memberCenter/memberManage/index/index",
+				"style": {
+					"navigationBarTitleText": "会员管理",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"searchInput": {
+								"align": "left",
+								"backgroundColor": "rgba(238,238,238,0.8)",
+								"borderRadius": "5px",
+								"placeholder": "请输入会员卡号或手机号",
+								"placeholderColor": "#BEBEBE"
+							},
+							"buttons": [{
 								"text": "\ue65c",
 								"fontSrc": "/static/iconfont.ttf",
 								"fontSize": "22px"
-							}
-						]
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/memberManage/registeredMember/registeredMember",
-            "style" : {
-				"navigationBarTitleText": "注册会员",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/memberCenter/memberManage/registeredMember/registeredMember",
+				"style": {
+					"navigationBarTitleText": "注册会员",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "保存",
 								"fontSize": "14px",
-								"width":"50px"
-							}
-						]
+								"width": "50px"
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/memberManage/membershipDetails/membershipDetails",
-            "style" : {
-				"navigationBarTitleText": "会员详情",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/memberCenter/memberManage/membershipDetails/membershipDetails",
+				"style": {
+					"navigationBarTitleText": "会员详情",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/memberManage/memberServiceAgreement/memberServiceAgreement",
-            "style" : {
-				"navigationBarTitleText": "会员服务协议",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/memberCenter/memberManage/memberServiceAgreement/memberServiceAgreement",
+				"style": {
+					"navigationBarTitleText": "会员服务协议",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/memberManage/storedValue/storedValue",
-            "style" : {
-				"navigationBarTitleText": "储值",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/memberCenter/memberManage/storedValue/storedValue",
+				"style": {
+					"navigationBarTitleText": "储值",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "储值明细",
 								"fontSize": "14px",
-								"width":"70px"
-							}
-						]
+								"width": "70px"
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/cashRegisterCode/cashRegisterCode",
-            "style" : {
-				"navigationBarTitleText": " ",	//收银二维码
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/cashRegisterCode/cashRegisterCode",
+				"style": {
+					"navigationBarTitleText": " ", //收银二维码
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/order/orderDetails/orderDetails",
-            "style" : {
-				"navigationBarTitleText": "订单详细",	//收银二维码
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/order/orderDetails/orderDetails",
+				"style": {
+					"navigationBarTitleText": "订单详细", //收银二维码
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "\ue79e",
 								"fontSrc": "/static/assets/iconfont/iconfont.ttf",
 								"fontSize": "22px"
-							}
-						]
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/user/set/messageNotification/messageNotification",
-            "style" : {
-				"navigationBarTitleText": "设置",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/user/set/messageNotification/messageNotification",
+				"style": {
+					"navigationBarTitleText": "设置",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/user/set/changePassword/changePassword",
-            "style" : {
-				"navigationBarTitleText": "设置",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/user/set/changePassword/changePassword",
+				"style": {
+					"navigationBarTitleText": "设置",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/storeAdministration/storeDetails/storeDetails",
-            "style" : {
-				"navigationBarTitleText": "门店详情",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/storeAdministration/storeDetails/storeDetails",
+				"style": {
+					"navigationBarTitleText": "门店详情",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "修改",
 								"fontSize": "14px",
-								"width":"40px"
-							}
-						]
+								"width": "40px"
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/paySuccess/paySuccess",
-            "style" : {
-				"navigationBarTitleText": "",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": false
-					// "titleNView": {
-					// 	"buttons": [
-					// 		{
-					// 			"text": "打印",
-					// 			"fontSize": "14px",
-					// 			"width":"40px"
-					// 		}
-					// 	]
-					// }
+			}, {
+				"path": "pages/home/paySuccess/paySuccess",
+				"style": {
+					"navigationBarTitleText": "",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": false
+						// "titleNView": {
+						// 	"buttons": [
+						// 		{
+						// 			"text": "打印",
+						// 			"fontSize": "14px",
+						// 			"width":"40px"
+						// 		}
+						// 	]
+						// }
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/storeAdministration/addStore/addStore",
-            "style" : {
-				"navigationBarTitleText": "新增门店",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/storeAdministration/addStore/addStore",
+				"style": {
+					"navigationBarTitleText": "新增门店",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "保存",
 								"fontSize": "14px",
-								"width":"40px"
-							}
-						]
+								"width": "40px"
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/storeAdministration/changeStore/changeStore",
-            "style" : {
-				"navigationBarTitleText": "修改门店",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/storeAdministration/changeStore/changeStore",
+				"style": {
+					"navigationBarTitleText": "修改门店",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "保存",
 								"fontSize": "14px",
-								"width":"40px"
-							}
-						]
+								"width": "40px"
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/staffManagement/staffDetails/staffDetails",
-            "style" : {
-				"navigationBarTitleText": "员工详情",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/staffManagement/staffDetails/staffDetails",
+				"style": {
+					"navigationBarTitleText": "员工详情",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "修改",
 								"fontSize": "14px",
-								"width":"40px"
-							}
-						]
+								"width": "40px"
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/staffManagement/addStaff/addStaff",
-            "style" : {
-				"navigationBarTitleText": "新增员工",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/staffManagement/addStaff/addStaff",
+				"style": {
+					"navigationBarTitleText": "新增员工",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "保存",
 								"fontSize": "14px",
-								"width":"40px"
-							}
-						]
+								"width": "40px"
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/staffManagement/changeStaff/changeStaff",
-            "style" : {
-				"navigationBarTitleText": "修改员工",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/staffManagement/changeStaff/changeStaff",
+				"style": {
+					"navigationBarTitleText": "修改员工",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "保存",
 								"fontSize": "14px",
-								"width":"40px"
-							}
-						]
+								"width": "40px"
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/statistics/bill/bill",
-            "style" : {
-				"navigationBarTitleText": "对账",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/statistics/bill/bill",
+				"style": {
+					"navigationBarTitleText": "对账",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/upload/upload",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/home/2DcodeAdministration/QRcodeDetails/QRcodeDetails",
-            "style" : {
-				"navigationBarTitleText": "二维码详情",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/upload/upload",
+				"style": {}
+			}, {
+				"path": "pages/home/2DcodeAdministration/QRcodeDetails/QRcodeDetails",
+				"style": {
+					"navigationBarTitleText": "二维码详情",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "修改",
 								"fontSize": "14px",
-								"width":"40px"
-							}
-						]
+								"width": "40px"
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/2DcodeAdministration/addQRcode/addQRcode",
-            "style" : {
-				"navigationBarTitleText": "新增二维码",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/2DcodeAdministration/addQRcode/addQRcode",
+				"style": {
+					"navigationBarTitleText": "新增二维码",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/2DcodeAdministration/changeQRcode/changeQRcode",
-            "style" : {
-				"navigationBarTitleText": "修改二维码",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/2DcodeAdministration/changeQRcode/changeQRcode",
+				"style": {
+					"navigationBarTitleText": "修改二维码",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "保存",
 								"fontSize": "14px",
-								"width":"40px"
-							}
-						]
+								"width": "40px"
+							}]
+						}
 					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/selectStaff/index/index",
-            "style" : {
-				"navigationBarTitleText": "选择员工",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/selectStaff/index/index",
+				"style": {
+					"navigationBarTitleText": "选择员工",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/2DcodeAdministration/QRcodeImg/QRcodeImg",
-            "style" : {
-				"navigationBarTitleText": "",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/2DcodeAdministration/QRcodeImg/QRcodeImg",
+				"style": {
+					"navigationBarTitleText": "",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/SHOP/index/index",
-            "style" : {
-				"navigationBarTitleText": "积分商城",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/memberCenter/SHOP/index/index",
+				"style": {
+					"navigationBarTitleText": "积分商城",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "\ue666",
 								"fontSrc": "/static/iconfont.ttf",
 								"fontSize": "22px"
-							}
-						]
-					}
-				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/SHOP/goodsDetail/goodsDetail",
-            "style" : {
-				"navigationBarTitleText": "兑换详情",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/memberManage/paymentSuccess/paymentSuccess",
-            "style" : {
-				"navigationBarTitleText": "充值结果",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": false
-					// "titleNView": {
-					// 	"buttons": [
-					// 		{
-					// 			"text": "打印",
-					// 			"fontSize": "14px",
-					// 			"width":"40px"
-					// 		}
-					// 	]
-					// }
-				}
-			}
-        }
-        ,{
-            "path" : "pages/home/couponCancel/couponCancel",
-            "style" : {
-            	"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "white",
-				"navigationBarTextStyle": "black",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": false
-				}
-            }
-        }
-        ,{
-            "path" : "pages/home/memberCenter/recordDetail/recordDetail",
-            "style" : {
-				"navigationBarTitleText": "订单详细",	//收银二维码
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						// "buttons": [
-						// 	{
-						// 		"text": "打印",
-						// 		"fontSize": "14px",
-						// 		"width":"60px"
-						// 	}
-						// ]
-					}
-				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/memberManage/storageDetails/index/index",
-            "style" : {
-							"navigationBarTitleText": "储值明细",
-							"app-plus": {
-								"bounce": "none"
-							}
+							}]
 						}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/memberManage/storageDetails/storageDetail/storageDetail",
-            "style" : {
-				"navigationBarTitleText": "储值详情",
-				"app-plus": {
-					"bounce": "none"
+					}
 				}
-			}
-		}
-        ,{
-            "path" : "pages/home/memberCenter/memberManage/integralDetails/index/index",
-            "style" : {
-				"navigationBarTitleText": "积分明细",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/memberCenter/SHOP/goodsDetail/goodsDetail",
+				"style": {
+					"navigationBarTitleText": "兑换详情",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/memberManage/integralDetails/integralDetail/integralDetail",
-            "style" : {
-				"navigationBarTitleText": "积分详情",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/memberCenter/memberManage/paymentSuccess/paymentSuccess",
+				"style": {
+					"navigationBarTitleText": "充值结果",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": false
+						// "titleNView": {
+						// 	"buttons": [
+						// 		{
+						// 			"text": "打印",
+						// 			"fontSize": "14px",
+						// 			"width":"40px"
+						// 		}
+						// 	]
+						// }
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/home/memberCenter/memberManage/couponDetails/couponDetails",
-            "style" : {
-				"navigationBarTitleText": "会员优惠券",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/couponCancel/couponCancel",
+				"style": {
+					"navigationBarTitleText": "",
+					"navigationBarBackgroundColor": "white",
+					"navigationBarTextStyle": "black",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": false
+					}
 				}
-			}
-        }
-		,{
-		    "path" : "pages/user/userDetail/userDetail",
-		    "style" : {
-				"navigationBarTitleText": "商户详情",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/memberCenter/recordDetail/recordDetail",
+				"style": {
+					"navigationBarTitleText": "订单详细", //收银二维码
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							// "buttons": [
+							// 	{
+							// 		"text": "打印",
+							// 		"fontSize": "14px",
+							// 		"width":"60px"
+							// 	}
+							// ]
+						}
+					}
 				}
-			}
-		}
-		,{
-            "path" : "pages/home/advertisement/advertisement",
-            "style" : {
-				"navigationBarTitleText": "网页浏览",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/memberCenter/memberManage/storageDetails/index/index",
+				"style": {
+					"navigationBarTitleText": "储值明细",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-        }
-		,{
-		    "path" : "pages/home/classExchange/index/index",
-		    "style" : {
-				"navigationBarTitleText": "交接班",
-				"app-plus": {
-					"bounce": "none"
+			}, {
+				"path": "pages/home/memberCenter/memberManage/storageDetails/storageDetail/storageDetail",
+				"style": {
+					"navigationBarTitleText": "储值详情",
+					"app-plus": {
+						"bounce": "none"
+					}
 				}
-			}
-		}
-		,{
-		    "path" : "pages/home/depositManage/index/index",
-		    "style" : {
-				"navigationBarTitleText": "押金管理",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
+			}, {
+				"path": "pages/home/memberCenter/memberManage/integralDetails/index/index",
+				"style": {
+					"navigationBarTitleText": "积分明细",
+					"app-plus": {
+						"bounce": "none"
+					}
+				}
+			}, {
+				"path": "pages/home/memberCenter/memberManage/integralDetails/integralDetail/integralDetail",
+				"style": {
+					"navigationBarTitleText": "积分详情",
+					"app-plus": {
+						"bounce": "none"
+					}
+				}
+			}, {
+				"path": "pages/home/memberCenter/memberManage/couponDetails/couponDetails",
+				"style": {
+					"navigationBarTitleText": "会员优惠券",
+					"app-plus": {
+						"bounce": "none"
+					}
+				}
+			}, {
+				"path": "pages/user/userDetail/userDetail",
+				"style": {
+					"navigationBarTitleText": "商户详情",
+					"app-plus": {
+						"bounce": "none"
+					}
+				}
+			}, {
+				"path": "pages/home/advertisement/advertisement",
+				"style": {
+					"navigationBarTitleText": "网页浏览",
+					"app-plus": {
+						"bounce": "none"
+					}
+				}
+			}, {
+				"path": "pages/home/classExchange/index/index",
+				"style": {
+					"navigationBarTitleText": "交接班",
+					"app-plus": {
+						"bounce": "none"
+					}
+				}
+			}, {
+				"path": "pages/home/depositManage/index/index",
+				"style": {
+					"navigationBarTitleText": "押金管理",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							"buttons": [{
 								"text": "\ue601",
 								"fontSrc": "/static/assets/iconfont/iconfont.ttf",
 								"fontSize": "22px"
-							}
-						]
+							}]
+						}
+					}
+				}
+			}, {
+				"path": "pages/user/newPrinter/index/index",
+				"style": {
+					"navigationBarTitleText": "打印机",
+					"app-plus": {
+						"bounce": "none"
+					}
+				}
+			}, {
+				"path": "pages/user/newPrinter/addPrinter/index",
+				"style": {
+					"navigationBarTitleText": "添加打印机",
+					"app-plus": {
+						"bounce": "none",
+						"titleNView": {
+							// "buttons": [
+							// 	{
+							// 		"text": "\ue661",
+							// 		"fontSrc": "/static/assets/iconfont/iconfont.ttf",
+							// 		"fontSize": "22px"
+							// 	}
+							// ]
+						}
+					}
+				}
+			}, {
+				"path": "pages/user/newPrinter/printerList/index",
+				"style": {
+					"navigationBarTitleText": "打印机列表",
+					"app-plus": {
+						"bounce": "none"
+					}
+				}
+			}, {
+				"path": "pages/home/quickPay/index",
+				"style": {
+					"navigationBarTitleText": "",
+					"app-plus": {
+						"bounce": "none"
+					}
+				}
+			}, {
+				"path": "pages/home/quickPay/selectCard",
+				"style": {
+					"navigationBarTitleText": "选择支付卡",
+					"app-plus": {
+						"bounce": "none"
+					}
+				}
+			}, {
+				"path": "pages/home/quickPay/manageCard",
+				"style": {
+					"navigationBarTitleText": "管理支付卡",
+					"app-plus": {
+						"bounce": "none"
+					}
+				}
+			}, {
+				"path": "pages/home/quickPay/addOrEditCard",
+				"style": {
+					"navigationBarTitleText": "添加 / 编辑支付卡",
+					"app-plus": {
+						"bounce": "none"
+					}
+				}
+			}, {
+				"path": "pages/home/quickPay/result",
+				"style": {
+					"navigationBarTitleText": "支付结果",
+					"app-plus": {
+						"bounce": "none"
 					}
 				}
 			}
-		}
-		,{
-		    "path" : "pages/user/newPrinter/index/index",
-		    "style" : {
-				"navigationBarTitleText": "打印机",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/user/newPrinter/addPrinter/index",
-		    "style" : {
-				"navigationBarTitleText": "添加打印机",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						// "buttons": [
-						// 	{
-						// 		"text": "\ue661",
-						// 		"fontSrc": "/static/assets/iconfont/iconfont.ttf",
-						// 		"fontSize": "22px"
-						// 	}
-						// ]
-					}
-				}
-			}
-		}
-		,{
-		    "path" : "pages/user/newPrinter/printerList/index",
-		    "style" : {
-				"navigationBarTitleText": "打印机列表",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/home/quickPay/index",
-		    "style" : {
-				"navigationBarTitleText": "",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/home/quickPay/selectCard",
-		    "style" : {
-				"navigationBarTitleText": "选择支付卡",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/home/quickPay/manageCard",
-		    "style" : {
-				"navigationBarTitleText": "管理支付卡",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/home/quickPay/addOrEditCard",
-		    "style" : {
-				"navigationBarTitleText": "添加 / 编辑支付卡",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/home/quickPay/result",
-		    "style" : {
-				"navigationBarTitleText": "支付结果",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-    ],
+		]
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "脸付",
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#FFFFFF"
 	},
-	"tabBar":{
+	"tabBar": {
 		// "color" : "#7A7E83",
 		// "selectedColor" : "#FF9A2F",
-		"color" : "#999",
-		"selectedColor" : "#4BA8FF",
-		"borderStyle" : "black",
-		"backgroundColor" : "#FFFFFF",
-		"list":[
-		    {
-		        "pagePath" : "pages/tabBar/home/home",
-		        "iconPath" : "static/tabBar/btn_home.png",
-		        "selectedIconPath" : "static/tabBar/btn_home_click.png",
-		        "text" : "首页"
-		    },
-		    {
-		        "pagePath" : "pages/tabBar/order/order",
-		        "iconPath" : "static/tabBar/btn_the_order.png",
-		        "selectedIconPath" : "static/tabBar/btn_the_order_click.png",
-		        "text" : "订单"
-		    },
-		    {
-		        "pagePath" : "pages/tabBar/shop/shop",
-		        "iconPath" : "static/tabBar/btn_shop.png",
-		        "selectedIconPath" : "static/tabBar/btn_shop_click.png",
-		        "text" : "商城"
-		    },
-		    {
-		        "pagePath" : "pages/tabBar/user/user",
-		        "iconPath" : "static/tabBar/btn_my.png",
-		        "selectedIconPath" : "static/tabBar/btn_my_click.png",
-		        "text" : "我的"
-		    }
-		]
-	}/* ,
-	"condition": { //模式配置，仅开发期间生效
-		"current": 0, //当前激活的模式（list 的索引项）
+		"color": "#999",
+		"selectedColor": "#4BA8FF",
+		"borderStyle": "black",
+		"backgroundColor": "#FFFFFF",
 		"list": [{
-				"name": "now", //模式名称
-				"path": "pages/user/printer/index/index", //启动页面，必选
-				"query": "interval=4000&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
+				"pagePath": "pages/tabBar/home/home",
+				"iconPath": "static/tabBar/btn_home.png",
+				"selectedIconPath": "static/tabBar/btn_home_click.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/tabBar/order/order",
+				"iconPath": "static/tabBar/btn_the_order.png",
+				"selectedIconPath": "static/tabBar/btn_the_order_click.png",
+				"text": "订单"
+			},
+			/* {
+			    "pagePath" : "pages/tabBar/shop/shop",
+			    "iconPath" : "static/tabBar/btn_shop.png",
+			    "selectedIconPath" : "static/tabBar/btn_shop_click.png",
+			    "text" : "商城"
+			}, */
+			{
+				"pagePath": "pages/tabBar/user/user",
+				"iconPath": "static/tabBar/btn_my.png",
+				"selectedIconPath": "static/tabBar/btn_my_click.png",
+				"text": "我的"
 			}
 		]
-	} */
+	}
+	/* ,
+		"condition": { //模式配置，仅开发期间生效
+			"current": 0, //当前激活的模式（list 的索引项）
+			"list": [{
+					"name": "now", //模式名称
+					"path": "pages/user/printer/index/index", //启动页面，必选
+					"query": "interval=4000&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
+				}
+			]
+		} */
 }

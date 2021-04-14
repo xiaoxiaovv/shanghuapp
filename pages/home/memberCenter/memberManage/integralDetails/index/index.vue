@@ -271,7 +271,7 @@
 			/* 跳转门店 */
 			jumpStoreSelect() {
 				uni.navigateTo({
-					url: '/pages/home/storeSelect/index/index'
+					url: '/packageA/pages/home/storeSelect/index/index'
 				})
 			},
 			/* 跳转积分详情 */

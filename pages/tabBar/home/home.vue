@@ -124,18 +124,15 @@
 			<!-- 两行两个 -->
 			<view class="lf-cash-register padding-sm shadow align-center box">
 				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
-				<image class="ml-50" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
+				<image class="lf-cash-register_img_ml" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
 
 			</view>
-			<view class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box">
-				<!-- <image
-						class=''
-						src="../../../static/home/btn_quickPay_click.png" 
-						@click="shuaLian"/> -->
+			<!-- <view class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box">
+	
 				<image class='' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" />
 
 				<image class="ml-50" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
-			</view>
+			</view> -->
 			<!-- 两行三个 -->
 			<!-- <view class="lf-cash-register padding-lg shadow  box">
 				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
@@ -311,8 +308,8 @@
 		LoginCache
 	} from '../../../utils/cache/index.js'
 
-	var posModule = uni.requireNativePlugin('DCloud-PosMoudle')
-	// var shuaLianModule = uni.requireNativePlugin('DCloud-ShuaLianMoudle')
+	
+	
 
 	export default {
 		components: {
@@ -354,7 +351,7 @@
 					"memberCenter": {
 						src: '../../../static/homev2/hy.png',
 						name: '会员中心',
-						url: '/pages/home/memberCenter/index/index',
+						url: '/packageA/pages/home/memberCenter/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -372,7 +369,7 @@
 					"statistics": {
 						src: '../../../static/homev2/tj.png',
 						name: '统计',
-						url: '/pages/home/statistics/index/index',
+						url: '/packageA/pages/home/statistics/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 40,
@@ -381,7 +378,7 @@
 					"QRcodeAdministration": {
 						src: '../../../static/homev2/ewm.png',
 						name: '二维码管理',
-						url: '/pages/home/2DcodeAdministration/index/index',
+						url: '/packageA/pages/home/2DcodeAdministration/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 38,
@@ -390,7 +387,7 @@
 					"storeAdministration": {
 						src: '../../../static/homev2/md.png',
 						name: '门店管理',
-						url: '/pages/home/storeAdministration/index/index',
+						url: '/packageA/pages/home/storeAdministration/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 42,
@@ -399,7 +396,7 @@
 					"staffManagement": {
 						src: '../../../static/homev2/yg.png',
 						name: '员工管理',
-						url: '/pages/home/staffManagement/index/index',
+						url: '/packageA/pages/home/staffManagement/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 43,
@@ -409,7 +406,7 @@
 						src: '../../../static/homev2/kq.png',
 						name: '卡券核销',
 						url: 'couponCancel',
-						// url: '/pages/home/couponCancel/couponCancel',
+						// url: '/packageA/pages/home/couponCancel/couponCancel',
 						status: 1,
 						isShow: 1,
 						iconWidth: 47,
@@ -418,7 +415,7 @@
 					"consumerAnalysis": {
 						src: '../../../static/homev2/xfz.png',
 						name: '客流统计',
-						// url: '/pages/home/consumerAnalysis/index/index',
+						// url: '/packageA/pages/home/consumerAnalysis/index/index',
 						url: 'consumerAnalysis',
 						status: 1,
 						isShow: 0,
@@ -428,7 +425,7 @@
 					"classExchange": {
 						src: '../../../static/homev2/workinfo.png',
 						name: '交接班',
-						url: '/pages/home/classExchange/index/index',
+						url: '/packageA/pages/home/classExchange/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -437,7 +434,7 @@
 					"depositManage": {
 						src: '../../../static/homev2/dm.png',
 						name: '押金管理',
-						url: '/pages/home/depositManage/index/index',
+						url: '/packageA/pages/home/depositManage/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -674,18 +671,7 @@
 					icon: 'none'
 
 				})
-				// 调用异步方法
-				posModule.postest({
-						'name': 'unimp',
-						'age': 1
-					},
-					(ret) => {
-						uni.showToast({
-							title: ret,
-							icon: 'none'
-
-						})
-					})
+				
 			},
 			posTest() {
 				// 下单
@@ -794,7 +780,7 @@
 				if (url) {
 					// console.log("广告跳转啦~",url)
 					uni.navigateTo({
-						url: '/pages/home/advertisement/advertisement?id=' + id + '&url=' + url
+						url: '/packageA/pages/home/advertisement/advertisement?id=' + id + '&url=' + url
 					})
 				} else {
 					console.log("没有url")
@@ -907,7 +893,7 @@
 			storeSelect() {
 				// console.log("选择门店")
 				uni.navigateTo({
-					url: '/pages/home/storeSelect/index/index?ishome=1'
+					url: '/packageA/pages/home/storeSelect/index/index?ishome=1'
 				})
 			},
 			/* 菜单功能跳转 */
@@ -1171,7 +1157,7 @@
 				// this.onPayWayShow(1)
 				let that = this
 				uni.navigateTo({
-					url: '/pages/home/cashRegisterCode/cashRegisterCode?paymentMoney=' + that.paymentMoney + '&payWay=' + that.payWay +
+					url: '/packageA/pages/home/cashRegisterCode/cashRegisterCode?paymentMoney=' + that.paymentMoney + '&payWay=' + that.payWay +
 						'&storeId=' + storeId,
 					complete() {
 						/* 金额初始化 */
@@ -1239,7 +1225,7 @@
 							getOrderDetails(res.result).then(res => {
 								// console.log('uuuuuuuuuu', res)
 								uni.navigateTo({
-									url: '/pages/order/orderDetails/orderDetails?orderNumber=' + res.obj.orderNumber
+									url: '/packageA/pages/order/orderDetails/orderDetails?orderNumber=' + res.obj.orderNumber
 								})
 							}).catch(err => {
 								console.log('yyyyyyyyyyyyyyy', err)
@@ -1319,7 +1305,7 @@
 				}
 				let posDataObjStr = JSON.stringify(posDataObj);
 				// console.log('posDataObjStr=========================',posDataObjStr)
-				posModule.pos(posDataObjStr)
+				
 			},
 			shopJump() {
 				location.href = 'https://alitong.vip/ydh5/index.html?i=1#/yidu_tc/pages/tabbar/index'
@@ -1355,7 +1341,7 @@
 					return
 				}
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=18'
+					url: '/packageA/pages/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=18'
 				})
 				/* let storeId = nowStoreDetail.storeId
 				let userId = uni.getStorageSync('userId') || ''
@@ -1369,8 +1355,7 @@
 				var obj = {merchantId,storeId,serviceId,userId,token}
 				var objStr = JSON.stringify(obj)
 				// console.log(objStr)
-				posModule.quickPay(objStr);
-				// posModule.gotoNativePage(); */
+				 */
 			},
 			/* shuaLianCallback(ret){
 				uni.showToast({
@@ -1378,7 +1363,7 @@
 					icon: 'none'
 				})
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
+					url: '/packageA/pages/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
 				})
 			},
 			shuaLianAsyncFunc() {
@@ -1424,7 +1409,7 @@
 					return
 				}
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
+					url: '/packageA/pages/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
 				})
 			}, */
 			shuaLian() {
@@ -1453,7 +1438,7 @@
 					return
 				}
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=20'
+					url: '/packageA/pages/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=20'
 				})
 				this.shuaLianAsyncFunc()
 
@@ -1486,12 +1471,7 @@
 				}
 				var obj = {userName:'15803196620',password:'123456',merchantId:'111'}
 				var objStr = JSON.stringify(obj)
-				// posModule.gotoNativePage()
-				// posModule.toast()
-				// console.log('posModule=========',posModule)
-				// console.log('posModulePay=========',posModule.pay)
-				posModule.pay(objStr);
-				// posModule.gotoNativePage();
+				
 			}, */
 
 			/* 扫码收款 */
@@ -1864,7 +1844,7 @@
 			/* 跳转订单详情（附订单号） */
 			jumpOrderDetails(orderNumber) {
 				uni.navigateTo({
-					url: '/pages/order/orderDetails/orderDetails?orderNumber=' + orderNumber
+					url: '/packageA/pages/order/orderDetails/orderDetails?orderNumber=' + orderNumber
 				})
 				// 关闭键盘
 				that.$refs.keyb._keyHide()
@@ -2222,14 +2202,17 @@
 		// background-color: #F1F2F3;
 		z-index: 100;
 		// margin-bottom: -194upx;
+		&_img_ml{
+			margin-left:80upx ;
+		}
 
 		image {
 			// 两个的尺寸
-			/* width: 240upx;
-			height: 100upx; */
+			width: 240upx;
+			height: 100upx;
 			// 三个的尺寸
-			width: 190upx;
-			height: 80upx;
+			/* width: 190upx;
+			height: 80upx; */
 		}
 
 		.image {

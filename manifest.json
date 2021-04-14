@@ -1,5 +1,5 @@
 {
-    "name" : "银通掌柜",
+    "name" : "笑脸付商户端",
     "appid" : "__UNI__A800EB7",
     "description" : "",
     "versionName" : "1.0.0",
@@ -147,8 +147,7 @@
     "quickapp" : {},
     /* 快应用特有相关 */
     "mp-weixin" : {
-        /* 小程序特有相关 */
-        "appid" : "wxd32714b8cb030bf9",
+        "appid" : "wx2614e4c9b7eb7eee",
         "setting" : {
             "urlCheck" : false
         },

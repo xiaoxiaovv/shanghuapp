@@ -496,7 +496,7 @@
 			/* 跳转选择门店页面 */
 			jumpStoreSelect() {
 				uni.navigateTo({
-					url: '/pages/home/storeSelect/index/index'
+					url: '/packageA/pages/home/storeSelect/index/index'
 				})
 			},
 			/* 显示导航栏-搜索框 */
@@ -650,7 +650,7 @@
 			/* 跳转订单详情（附订单号） */
 			jumpOrderDetails (orderNumber) {
 				uni.navigateTo({
-					url: '/pages/order/orderDetails/orderDetails?orderNumber='+ orderNumber
+					url: '/packageA/pages/order/orderDetails/orderDetails?orderNumber='+ orderNumber
 				})
 			},
 			// mescroll组件初始化的回调,可获取到mescroll对象

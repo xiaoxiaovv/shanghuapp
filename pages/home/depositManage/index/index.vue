@@ -725,13 +725,13 @@
 			onModalConfirm(type) {
 				if (type === 1) {
 					uni.navigateTo({
-						url: '/pages/home/storeSelect/index/index'
+						url: '/packageA/pages/home/storeSelect/index/index'
 					})
 					return
 				} else if (type === 3) {
 					// 添加打印机
 					uni.navigateTo({
-						url: '/pages/user/newPrinter/index/index'
+						url: '/packageA/pages/user/newPrinter/index/index'
 					})
 					return
 				}

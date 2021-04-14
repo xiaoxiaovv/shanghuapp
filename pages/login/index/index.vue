@@ -46,7 +46,7 @@
 						忘记密码
 					</view>
 					
-					<!-- <navigator :url="'/pages/login/forgetPassword/forgetPassword?username=' + username"><text>忘记密码</text></navigator> -->
+					<!-- <navigator :url="'/packageA/pages/login/forgetPassword/forgetPassword?username=' + username"><text>忘记密码</text></navigator> -->
 				</view>
 			</view>
 			<view 
@@ -225,7 +225,7 @@
 			// 注册
 			register(){
 				uni.navigateTo({
-					url: '/pages/login/register/register'
+					url: '/packageA/pages/login/register/register'
 				})
 			},
 			// 获取站点信息

@@ -184,11 +184,11 @@
 					// 添加打印机
 					if (this.dataList.length) {
 						uni.navigateTo({
-							url: '/pages/user/newPrinter/printerList/index'
+							url: '/packageA/pages/user/newPrinter/printerList/index'
 						})
 					} else {
 						uni.navigateTo({
-							url: '/pages/user/newPrinter/addPrinter/index'
+							url: '/packageA/pages/user/newPrinter/addPrinter/index'
 						})
 					}
 				} else if (type == 1) {

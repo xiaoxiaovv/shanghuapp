@@ -194,13 +194,13 @@
 			/* 跳转选择门店 */
 			jumpStoreSelect() {
 				uni.navigateTo({
-					url: '/pages/home/storeSelect/index/index'
+					url: '/packageA/pages/home/storeSelect/index/index'
 				})
 			},
 			/* 跳转二维码详情（附二维码号） */
 			jumpQRcodeDetails (id) {
 				uni.navigateTo({
-					url: '/pages/home/2DcodeAdministration/QRcodeDetails/QRcodeDetails?id='+id
+					url: '/packageA/pages/home/2DcodeAdministration/QRcodeDetails/QRcodeDetails?id='+id
 				})
 			},
 			// mescroll组件初始化的回调,可获取到mescroll对象

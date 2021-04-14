@@ -39,31 +39,31 @@
 						image: '../../../static/tabBar/icon_setting_bg.png',
 						name: '设置',
 						remarks: '',
-						url: '/pages/user/set/index/index'
+						url: '/packageA/pages/user/set/index/index'
 					},
 					'printer':{
 						image: '../../../static/tabBar/icon_print_bg.png',
 						name: '打印机',
 						remarks: '',
-						url: '/pages/user/newPrinter/index/index'
+						url: '/packageA/pages/user/newPrinter/index/index'
 					},
 					// 'AlipaySigningPage':{
 					// 	image: '../../../static/tabBar/icon_pay_sign.png',
 					//  	name: '支付签约',
 					//  	remarks: '支付宝签约',
-					//  	url: '/pages/user/AlipaySigningPage/index/index'
+					//  	url: '/packageA/pages/user/AlipaySigningPage/index/index'
 					// },
 					'vipSet':{
 						image: '../../../static/tabBar/icon_vip.png',
 						name: '会员支付设置',
 						remarks: '',
-						url: '/pages/user/vipSet/index/index'
+						url: '/packageA/pages/user/vipSet/index/index'
 					},
 					'ticketSet':{
 						image: '../../../static/tabBar/icon_ticket.png',
 						name: '电子发票设置',
 						remarks: '',
-						url: '/pages/user/ticketSet/index/index'
+						url: '/packageA/pages/user/ticketSet/index/index'
 					},
 					// 'customerCount':{
 					// 	image: '../../../static/tabBar/icon_customer.png',
@@ -75,13 +75,13 @@
 						image: '../../../static/tabBar/workinfo.png',
 						name: '交接班记录',
 						remarks: '',
-						url: '/pages/user/classReplace/index/index'
+						url: '/packageA/pages/user/classReplace/index/index'
 					},
 					'about':{
 						image: '../../../static/tabBar/icon_about.png',
 						name: '关于',
 						remarks: '',
-						url: '/pages/user/about/index/index'
+						url: '/packageA/pages/user/about/index/index'
 					},
 				},
 				merchantName: '',
@@ -122,7 +122,7 @@
 				// console.log("跳转消息中心页面")
 				/* 保留页面栈进行跳转 */
 				uni.navigateTo({
-					url: '/pages/user/messageCenter/index/index'
+					url: '/packageA/pages/user/messageCenter/index/index'
 				})
 			},
 			/* 菜单跳转 */

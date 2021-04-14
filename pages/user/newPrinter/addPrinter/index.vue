@@ -494,7 +494,7 @@
 					}
 					// 所属门店
 					uni.navigateTo({
-						url: '/pages/home/storeSelect/index/index'
+						url: '/packageA/pages/home/storeSelect/index/index'
 					})
 				}
 			},

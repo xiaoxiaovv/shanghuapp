@@ -111,7 +111,7 @@
 				// })
 				// return
 				uni.navigateTo({
-					url: '/pages/user/set/messageNotification/messageNotification'
+					url: '/packageA/pages/user/set/messageNotification/messageNotification'
 				})
 			},
 			/* 键盘音效 */
@@ -125,7 +125,7 @@
 			/* 跳转修改密码页面 */
 			jumpChangePassword() {
 				uni.navigateTo({
-					url: '/pages/user/set/changePassword/changePassword'
+					url: '/packageA/pages/user/set/changePassword/changePassword'
 				})
 			},
 			/* 退出登录 */
@@ -156,7 +156,7 @@
 			// 跳转用户详情
 			jumpUserDetails() {
 				// uni.navigateTo({
-				// 	url: '/pages/user/userDetail/userDetail'
+				// 	url: '/packageA/pages/user/userDetail/userDetail'
 				// })
 				uni.showToast({
 					title: '敬请期待',

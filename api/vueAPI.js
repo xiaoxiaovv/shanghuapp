@@ -32,16 +32,23 @@ export function register(phone){
 	})
 }
 /* 登录 */
-export function login (username, password) {
-	let deviceId = getDeviceId()
-	return fly.request( '/merchant/admin/app/login', qs.stringify({
-		username,
+export function login (mobile, password) {
+	// let deviceId = getDeviceId()
+	return fly.request( 'api/supervision/api/login', {
+		mobile,
 		password,
-		deviceType: 3,
-		deviceId
-	}),{
+		
+	},{
 		method: 'post',
 	})
+	/* return fly.request({
+		url : 'api/supervision/api/login', 
+		method: 'post',
+		data:{
+			mobile,
+			password
+		}
+	}) */
 }
 /* 根据用户名查询手机号码 */
 export function getPhoneFindByUsername (username ) {

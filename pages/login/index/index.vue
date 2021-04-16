@@ -172,7 +172,7 @@
 				this.btnLoading = true;
 				login( this.username.trim() , this.password.trim() ).then(res => {
 					console.log(444444444, res)
-					// console.log(JSON.stringify(res.obj))
+					// console.log(JSON.stringify(res.data))
 					// return
 					/* 记住账户/密码 */
 					if(this.isRememberPassword){
@@ -180,25 +180,28 @@
 					}else{
 						uni.removeStorageSync('password')
 					}
+					uni.switchTab({
+						url: '/pages/tabBar/home/home'
+					})
 					uni.setStorageSync('username', this.username);
-					uni.setStorageSync('namename', res.obj.name);
+					uni.setStorageSync('namename', res.data.name);
 					/* app中使用信息 */
-					uni.setStorageSync('token', res.obj.token);
-					uni.setStorageSync('userId', res.obj.userId);
-					uni.setStorageSync('userType', res.obj.userType);
-					uni.setStorageSync('storeId', res.obj.storeId || res.obj.store_id)
-					uni.setStorageSync('merchantId', res.obj.merchantId)
-					uni.setStorageSync('equipmentId', res.obj.equipmentId)
+					uni.setStorageSync('token', res.data.token);
+					uni.setStorageSync('userId', res.data.userId);
+					uni.setStorageSync('userType', res.data.userType);
+					uni.setStorageSync('storeId', res.data.storeId || res.data.store_id)
+					uni.setStorageSync('merchantId', res.data.merchantId)
+					uni.setStorageSync('equipmentId', res.data.equipmentId)
 					// uni.switchTab({
 					// 	url: '/pages/tabBar/home/home'
 					// });
 					// console.log("登录完成")
 					this.btnLoading = false;
 					// 缓存用户信息，客流统计用
-					res && res.obj && uni.setStorageSync('customerCount', res.obj)
+					res && res.data && uni.setStorageSync('customerCount', res.data)
 					getAccountInfo().then(res => {
-						if (res && res.obj) {
-							let merchantName = res.obj.merchantName || ''
+						if (res && res.data) {
+							let merchantName = res.data.merchantName || ''
 							console.log('merchantName', merchantName)
 							uni.setStorageSync('merchantName', merchantName)
 							uni.switchTab({
@@ -232,7 +235,7 @@
 			getSiteInfo() {
 				getSiteInfo().then(res => {
 					if (res && res.code === 200) {
-						let { phone, privacy, agreement } = res.obj
+						let { phone, privacy, agreement } = res.data
 						this.phone = phone || ''
 						this.privacy = privacy || ''
 						this.agreement = agreement || ''

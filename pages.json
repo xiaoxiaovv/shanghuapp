@@ -42,6 +42,17 @@
 			}
         }
 		,{
+		    "path" : "pages/tabBar/group/group",
+		    "style" : {
+				"navigationBarTitleText": "团队管理",
+				"onReachBottomDistance" : 100,		//mescroll
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": false
+				}
+			}
+		}
+		,{
 		    "path" : "pages/tabBar/shop/shop",
 		    "style" : {
 				"navigationBarTitleText": "商城",
@@ -924,6 +935,12 @@
 		        "selectedIconPath" : "static/tabBar/btn_the_order_click.png",
 		        "text" : "订单"
 		    },
+			{
+			    "pagePath" : "pages/tabBar/group/group",
+			    "iconPath" : "static/tabBar/btn_the_order.png",
+			    "selectedIconPath" : "static/tabBar/btn_the_order_click.png",
+			    "text" : "团队管理"
+			},
 		    {
 		        "pagePath" : "pages/tabBar/shop/shop",
 		        "iconPath" : "static/tabBar/btn_shop.png",

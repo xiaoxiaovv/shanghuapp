@@ -13,7 +13,10 @@ const fly = new Fly;
  // const URL = getDomain() || "http://pay.oem.test.mamipay.com:41000"	//全局总URL
  // const URL = getDomain() || "https://yt.hbpay.vip"	//全局总URL
  // const URL = getDomain() || "http://mamipay.com:41000"	//全局总URL
- const URL = getDomain() || "https://mamipay.com"	//全局总URL
+ // const URL = getDomain() || "https://mamipay.com"	//全局总URL
+ const URL = getDomain() || "http://152.136.224.153:10003"	//全局总URL
+ 
+ 
  // const URL = getDomain() || "http://192.168.0.13"	//全局总URL
  // const URL = getDomain() || "https://yt.hbpay.vip"	//全局总URL
  // const URL = getDomain() || "http://yt.hbpay.vip:41000"	//全局总URL
@@ -71,7 +74,7 @@ fly.interceptors.response.use(
 		// console.log('ccccccccccccccccccccccccccccccccc========',response)
 		let data = response.data
 		
-		if (data.code === 200) {
+		if (data.code === 0) {
 			// console.log('1111111111111',data.code)
 			 return data
 		} else {

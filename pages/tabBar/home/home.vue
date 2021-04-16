@@ -122,19 +122,19 @@
 
 			<view v-if="lastOrder && lastOrder.actPayPrice != 0" class='bar'></view>
 			<!-- 两行两个 -->
-			<view class="lf-cash-register padding-sm shadow align-center box">
+			<!-- <view class="lf-cash-register padding-sm shadow align-center box">
 				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
 				<image class="ml-50" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
 
-			</view>
+			</view> -->
 			<view class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box">
 				<!-- <image
 						class=''
 						src="../../../static/home/btn_quickPay_click.png" 
 						@click="shuaLian"/> -->
-				<image class='' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" />
+				<!-- <image class='' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" /> -->
 
-				<image class="ml-50" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
+				<image class="" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
 			</view>
 			<!-- 两行三个 -->
 			<!-- <view class="lf-cash-register padding-lg shadow  box">
@@ -574,7 +574,7 @@
 			LoginCache.state = false
 			// console.log('我来到火星的世界x2', LoginCache)
 			// 轮询查询新订单
-			this.queryNewOrder()
+			// this.queryNewOrder()
 
 		},
 
@@ -582,8 +582,8 @@
 
 			this.isHomeSelf = true
 			// 轮询实时收入金额
-			this.getStatistics()
-			this.getStatisticsDate()
+			// this.getStatistics()
+			// this.getStatisticsDate()
 
 			// 获取门店名称
 			let storeDetail = uni.getStorageSync("nowStoreDetail")
@@ -1147,11 +1147,8 @@
 					return
 				}
 				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
-				if (!nowStoreDetail.storeId) {
-					/* uni.showToast({
-						title: '请选择门店',
-						icon: 'none'
-					}) */
+				/* if (!nowStoreDetail.storeId) {
+					
 					uni.showModal({
 						title: '提示',
 						content: '请选择门店',
@@ -1166,7 +1163,7 @@
 						}
 					})
 					return
-				}
+				} */
 				let storeId = nowStoreDetail.storeId || '';
 				// this.onPayWayShow(1)
 				let that = this

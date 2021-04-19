@@ -47,7 +47,7 @@ fly.interceptors.request.use((request)=>{
     //给所有请求添加自定义header
 	const token = uni.getStorageSync('token')
     if (token) {
-       request.headers['authorized'] = token;
+       request.headers['token'] = token;
     }
 	let { url } = request
 	if ('/merchant/admin/app/login' !== url) {

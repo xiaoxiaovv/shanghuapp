@@ -1,86 +1,68 @@
 <template>
-	<view  class="page-membership box align-default ly-bg-color-main">
+	<view  class="page-membership box align-default ">
 		<view class="user-info">
 			<view class="lf-member-bg">
 				<image 
 					class="match-parent" 
-					src="../../../static/home/bg.png"
+					src="../../../static/homev2/bg.png"
 					mode="scaleToFill"/>
 			</view>
-			<view class="user-info__cover box align-default plr-30 pt-24">
-				<view class="lf-content-head box pl-50">
-					<view class="lf-head-text"> 
-						<view>
-							<text class="phone">团队管理</text>
-						</view>
-					</view>
+			<view class="user-info__cover box align-default plr-30 ">
+				<view class="lf-content-head box ">
+					
+							<text class="">分享</text>
+					
 				</view>
-				<view class="lf-content-panel mt-20">
+				<view class="lf-content-panel ptb-30">
 					<view>
-						<view class="lf-panel-money flex  align-hor-bet">
+						<view class="lf-panel-money   align-center mb-20">
+							<view @click="jumpstorageDetails">
+								<text class="text-gray">团队成员（人）</text>
+								<text class="text-xxl mt-10">{{groupUsersInfo.countAll? groupUsersInfo.countAll:'0'}}</text>
+							</view>
+						</view>
+						<view class="lf-panel-money flex  mb-20">
 							<view @click="jumpstorageDetails">
 								<text class="text-gray">直接下级</text>
-								<text class="text-xxl mt-10">{{memberDetail.balance? memberDetail.balance:'0'}}</text>
+								<text class="text-xxl mt-10">{{groupUsersInfo.countPush? groupUsersInfo.countPush:'0'}}</text>
 							</view>
 							
 							<view @click="jumpintegralDetails">
 								<text class="text-gray">直接推荐佣金（元）</text>
-								<text class=" text-xxl mt-10">{{memberDetail.scores? memberDetail.scores:'0'}}</text>
+								<text class=" text-xxl mt-10">{{groupUsersInfo.scores? groupUsersInfo.scores:'0'}}</text>
 							</view>
 						</view>
-						<view class="lf-panel-money flex justify-around align-hor-bet">
+						<view class="lf-panel-money flex lf-panel-money__bottom pb-10">
 							<view @click="jumpstorageDetails">
 								<text class="text-gray">间接下级</text>
-								<text class="text-xxl mt-10">{{memberDetail.balance? memberDetail.balance:'0'}}</text>
+								<text class="text-xxl mt-10">{{groupUsersInfo.balance? groupUsersInfo.balance:'0'}}</text>
 							</view>
 							
 							<view @click="jumpintegralDetails">
 								<text class="text-gray">间接推荐佣金（元）</text>
-								<text class="text-xxl mt-10">{{memberDetail.scores? memberDetail.scores:'0'}}</text>
+								<text class="text-xxl mt-10">{{groupUsersInfo.scores? groupUsersInfo.scores:'0'}}</text>
 							</view>
 						</view>
-						<!-- <view class="lf-panel-recharge flex justify-between align-center box pt-20" @click="jumpStoredValue">
-							<text class="text-lg">账户充值</text>
-							<view class="flex align-center align-start">
-								<image src="../../../static/common/bank.png"></image>
-								<text class="icon-right text-lg text-gray ml-10"></text>
+						<!-- 列表 -->
+						<view v-for="user in groupUsersInfo.userDetail" :key="user.id" class="lf-orderList match-width align-left ptb-10" >
+							<view class="match-left-space align-ver-left"> 			
+								<view class="match-width align-hor-bet">
+									<view>代理名称</view>
+									<view class="ly-font-weight-500 ly-font-size-28">注册时间：2021-04-18</view>
+								</view>
+								<view class="ly-font-color-9 ly-font-size-24 match-width mt-10 align-hor-bet">
+									<view>推广人数：0 人</view>
+									<view>15000000000</view>
+									<!-- <text class=""><text class="text-sm">订单号：</text>{{order.orderNumber}}</text> -->
+								</view>
 							</view>
-						</view> -->
+						</view>
+						
 					</view>
 				</view>
 			</view>
 		</view>
-		<!-- <view class="match-width align-center">
-			<view class="lf-content-information">
-				<view class="cu-form-group box plr-40" @click="showNickNameModal">
-					<view class="title">昵称</view>
-					<text>
-						<text>{{memberDetail.nickname? memberDetail.nickname:'暂未设置'}}</text>
-						<text class="icon-right text-grey ml-10"></text>
-					</text>
-				</view>
-				<view class="cu-form-group box plr-40">
-					<view class="title">卡号</view>
-					<text class="ml-10">{{memberDetail.memberNum? memberDetail.memberNum:''}}</text>
-				</view>
-				<view class="cu-form-group box plr-40">
-					<view class="title">性别</view>
-					<text class="ml-10">{{memberDetail.sex === 1? '男':memberDetail.sex === 2? '女':''}}</text>
-				</view>
-				<view class="cu-form-group box plr-40">
-					<view class="title">生日</view>
-					<picker mode="date" :value="memberDetail.birthday" start="1900-01-01" end="" @change="DateChange">
-						<view class="picker">
-							{{memberDetail.birthday ? memberDetail.birthday : '请选择生日'}}
-						</view>
-					</picker>
-				</view>
-				<view class="cu-form-group box plr-40">
-					<view class="title">加入时间</view>
-					<text class="ml-10">{{memberDetail.createTime? memberDetail.createTime:''}}</text>
-				</view>
-			</view>
-		</view> -->
+		
 		<!-- 模态框 -->
 		<neil-modal :show="modalShow" @close="closeModal" title="昵称修改" auto-close="false" @confirm="bindBtn('confirm')">
 			<view style="min-height: 90upx;padding: 32upx 24upx;">
@@ -91,7 +73,7 @@
 </template>
 
 <script>
-	import {getMemberDetail, changeMember, baseURL, userFilesUpload, getImgThumbnail} from '../../../api/vueAPI.js'
+	import { changeMember, baseURL, userFilesUpload, getImgThumbnail, getGroupUsersInfo } from '../../../api/vueAPI.js'
 	import { uniList } from '@dcloudio/uni-ui'
 	import neilModal from '@/components/neil-modal/neil-modal.vue';
 	
@@ -101,7 +83,7 @@
 			return {
 				id: '',
 				nickname: '',
-				memberDetail: '',
+				groupUsersInfo: '',
 				modalShow: false,	//模态框显示
 				modalInput: '',		//模态框输入
 				imgSrc: '',
@@ -112,94 +94,17 @@
 		onLoad(obj) {
 			if(obj.id){
 				this.id = obj.id;
-				this.getMemberDetail();
+				// this.groupUsersInfo();
 			}
 		},
 		methods: {
-			/* 跳转储值页面 */
-			jumpStoredValue() {
-				uni.navigateTo({
-					url: '../storedValue/storedValue?id='+ this.id
-				})
+			getGroupUsersInfo(){
+				getGroupUsersInfo().then(res=>{
+					this.groupUsersInfo = res.data
+				});
 			},
-			/* 跳转储值明细 */
-			jumpstorageDetails() {
-				uni.navigateTo({
-					url: '../storageDetails/index/index?memberId='+ this.id
-				})
-			},
-			/* 跳转积分明细 */
-			jumpintegralDetails() {
-				uni.navigateTo({
-					url: '../integralDetails/index/index?memberNum='+ this.memberDetail.memberNum
-				})
-			},
-			/* 跳转优惠券明细 */
-			jumpcouponDetails() {
-				if(this.memberDetail.couponCount === null || this.memberDetail.couponCount === '' || this.memberDetail.couponCount <= 0){
-					return
-				}
-				uni.navigateTo({
-					url: '../couponDetails/couponDetails?memberId='+ this.id
-				})
-			},
-			/* 获取会员详情 */
-			getMemberDetail(){
-				let that = this;
-				getMemberDetail(this.id).then(res => {
-					// console.log(555, res)
-					this.memberDetail = res.obj
-					that.imgSrc = this.memberDetail.head
-					//图片回显（flyio出错，换用uni接口）
-					// if(this.memberDetail.head === null || this.memberDetail.head === ''){
-					// 	return
-					// }
-					// uni.downloadFile({
-					// 	url: baseURL +'/fms/upload/resource/thumbnail/'+ this.memberDetail.head,
-					// 	success: res => {
-					// 		console.log('uploadImage success, res is:', res);
-					// 		if (res.statusCode === 200) {
-					// 			console.log('下载成功');
-					// 			/* 将图片临时地址保存 */
-					// 			that.imgSrc = res.tempFilePath
-					// 			// console.log("data:image/jpeg;base64,"+ res.tempFilePath)
-					// 		}
-					// 	},
-					// 	fail: err => {
-					// 		console.log('uploadImage fail', err);
-					// 		// uni.showModal({
-					// 		// 	content: err.msg,
-					// 		// 	showCancel: false
-					// 		// });
-					// 		uni.hideLoading();
-					// 	},
-					// 	complete: () => {
-					// 		console.log('complate');
-					// 	}
-					// })
-				}).catch(err => {
-					console.log(err)
-				})
-			},
-			/* 会员修改 */
-			changeMember() {
-				let that = this;
-				uni.showLoading()
-				changeMember(this.memberDetail.id, this.memberDetail.nickname.trim(), this.memberDetail.birthday, this.memberDetail.head).then(res => {
-					// console.log(res)
-					uni.hideLoading()
-					uni.showToast({
-						title:"修改成功",
-						icon:"success",
-						success() {
-							that.getMemberDetail();
-						}
-					})
-				}).catch(err => {
-					uni.hideLoading()
-					console.log(err)
-				})
-			},
+			
+			
 			/* 昵称模态框 */
 			showNickNameModal() {
 				this.modalShow = true;
@@ -215,7 +120,7 @@
 						return
 					}
 					this.nickname = this.modalInput
-					this.memberDetail.nickname = this.modalInput
+					// this.groupUsersInfo.nickname = this.modalInput
 					this.changeMember();
 				}
 			},
@@ -225,7 +130,7 @@
 			},
 			/* 生日修改 */
 			DateChange(e) {
-				this.memberDetail.birthday = e.detail.value;
+				this.groupUsersInfo.birthday = e.detail.value;
 				this.changeMember();
 			},
 			/* 头像修改 */
@@ -248,6 +153,7 @@
 		filters: {
 		},
 		onShow() {
+			this.getGroupUsersInfo();
 			// console.log("onShow~")
 			if(this.ispPhotoUpload){
 				let that = this;
@@ -268,7 +174,7 @@
 						// console.log('uploadImage success, res is:', res);
 						/* 将图片id保存 */
 						let head = JSON.parse(res.data).obj
-						that.memberDetail.head = baseURL + '/fms/upload/resource/thumbnail/' + head
+						that.groupUsersInfo.head = baseURL + '/fms/upload/resource/thumbnail/' + head
 						uni.hideLoading()
 						that.changeMember()
 					}, 
@@ -287,9 +193,7 @@
 				/* 关闭图片更新指示 */
 				this.ispPhotoUpload = false
 			}
-			/* 刷新页面 */
-			this.getMemberDetail();
-			// console.log("~onShow")
+			
 		}
 	}
 </script>
@@ -324,10 +228,14 @@
 	}
 	.lf-content-head{
 		width: 100%;
-		height: 150upx;
+		height: 80upx;
+		font-size: 1rem;
+		
+		color: #fff;
+		text-align: right;
 		display: flex;
 		align-items: center;
-		justify-content: flex-start;
+		justify-content: flex-end;
 	}
 	.lf-head-img{
 		width: 110upx;
@@ -344,8 +252,7 @@
 		border-radius: 50%;
 	}
 	.lf-head-text{
-		width: 340upx;
-		height: 100upx;
+		
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
@@ -373,9 +280,9 @@
 		height: 40upx;
 	}
 	.lf-content-panel{
-		margin: 20upx 3%;
+		// margin: 0 3%;
 		width: 100%;
-		height: 400upx;
+		// height: 400upx;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -385,10 +292,10 @@
 		border-radius: 12upx;
 	}
 	.lf-content-panel > view{
-		width: 86%;
-		height: 220upx;
-		display: flex;
-		flex-wrap: wrap;
+		// width: 86%;
+		// height: 120upx;
+		// display: flex;
+		// flex-wrap: wrap;
 	}
 	.lf-panel-money{
 		width: 100%;
@@ -397,9 +304,11 @@
 		padding-right: 6%;
 		// border-bottom: 1upx solid #E6E6E6;
 		position: relative;
-		
 		text {
 			color: #666;
+		};
+		&__bottom{
+			border-bottom: 1upx solid #E6E6E6;
 		}
 	}
 	.lf-panel-money view{

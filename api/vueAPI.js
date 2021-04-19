@@ -43,7 +43,7 @@ export function login (mobile, password) {
 	})
 	/* return fly.request({
 		url : 'api/supervision/api/login', 
-		method: 'post',
+		method: 'post',0
 		data:{
 			mobile,
 			password
@@ -1353,4 +1353,13 @@ export function chanpayPreSignSure(accNo, captcha) {
 	}
 	return fly.post('/order/bank/chanpaySureSign', qs.stringify(data))
 }
+// 团队管理开始
+/**
+ * 团队列表信息
+ */
+export function getGroupUsersInfo() {
+	
+	return fly.get('/api/supervision/api/sys/user/getToC')
+}
 
+// 团队管理结束

@@ -8,7 +8,7 @@ fly.config.timeout = 10000
 
 // TODO
 
-const VERSION = getVersion() || '1.0.0'
+const VERSION = getVersion() || '1.0.1'
 
 // const API_TOKEN = getFirToken() || 'bf6322d6ccc3a74c123c1b61c31dc96e'
 

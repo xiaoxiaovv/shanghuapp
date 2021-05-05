@@ -124,7 +124,7 @@
 			<!-- 两行两个 -->
 			<view class="lf-cash-register padding-sm shadow align-center box">
 				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
-				<image class="ml-50" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
+				<image class="lf-cash-register__ml-90" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
 
 			</view>
 			<view class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box">
@@ -134,7 +134,7 @@
 						@click="shuaLian"/> -->
 				<image class='' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" />
 
-				<image class="ml-50" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
+				<image class="lf-cash-register__ml-90" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
 			</view>
 			<!-- 两行三个 -->
 			<!-- <view class="lf-cash-register padding-lg shadow  box">
@@ -2225,11 +2225,14 @@
 
 		image {
 			// 两个的尺寸
-			/* width: 240upx;
-			height: 100upx; */
+			width: 240upx;
+			height: 100upx;
 			// 三个的尺寸
-			width: 190upx;
-			height: 80upx;
+			/* width: 190upx;
+			height: 80upx; */
+		}
+		&__ml-90{
+			margin-left: 90upx;
 		}
 
 		.image {

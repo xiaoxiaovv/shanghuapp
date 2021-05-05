@@ -1,9 +1,9 @@
 {
-    "name" : "银通掌柜",
+    "name" : "收款呗",
     "appid" : "__UNI__A800EB7",
     "description" : "",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionName" : "1.0.1",
+    "versionCode" : 101,
     "transformPx" : false,
     "app-plus" : {
         "compatible" : {

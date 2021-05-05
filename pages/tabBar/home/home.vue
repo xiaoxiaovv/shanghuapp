@@ -131,7 +131,7 @@
 				
 				<image class='' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" />
 
-				<image class="ml-50" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
+				<image class="lf-cash-register__ml-90" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
 			</view>
 			<!-- 两行三个 -->
 			<!-- <view class="lf-cash-register padding-lg shadow  box">
@@ -2024,6 +2024,9 @@
 			&:active {
 				opacity: 0.8;
 			}
+		}
+		&__ml-90{
+			margin-left: 90upx;
 		}
 	}
 

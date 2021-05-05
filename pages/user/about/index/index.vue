@@ -30,6 +30,13 @@
 				edition: VERSION
 			}
 		},
+		onLoad(obj){
+			if(obj.from&&obj.from==='webView'){
+				uni.switchTab({
+					url: '/pages/tabBar/user/user'
+				})
+			}
+		},
 		methods: {
 			checkUpdate() {
 				// console.log('检查更新') 

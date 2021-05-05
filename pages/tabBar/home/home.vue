@@ -7,12 +7,12 @@
 				<image class='match-parent' src="../../../static/homev2/bg.png" mode="scaleToFill" />
 				<view class="cover box align-default plr-40" :style="[paddingTop ? paddingTop : '']">
 					<view class="title match-width align-center">
-						<view v-if="userType === 1" @click="storeSelect">
+						<!-- <view v-if="userType === 1" @click="storeSelect">
 							<text>{{storeName? storeName : '全部门店'}}</text>
 							<image class="ml-20" src="../../../static/tabBar/icon_black_arrow.png" />
-						</view>
-						<view v-else>
-							<text>{{storeName? storeName : '全部门店'}}</text>
+						</view> -->
+						<view>
+							<text>{{userInfo.realName  }}</text>
 						</view>
 					</view>
 					<view class='content box align-ver-center mtb-30'>
@@ -32,7 +32,7 @@
 							</view>
 							<!-- <view class="" @click="shuaLian">刷脸</view> -->
 							<!-- <view class="" @click="shuaLian">异步回调</view> -->
-							<!-- <view @click="posTest">手机pos下单；</view> -->
+							<view @click="posTest">手机pos下单；</view>
 							<!-- <view @click="orderSure">网联下单确认；</view>													 -->
 							<!-- <view @click="gotoNativePage">跳到原生1；</view> -->
 							<!-- <view @click="addOrEditBankCark">加卡；</view> -->
@@ -49,8 +49,8 @@
 							<text>{{paymentText}}</text>
 						</view>
 					</view>
-					<!-- 青蛙app入口 -->
-					<view class="icon-frog iconfont icon-richscan_icon" @click="frogJump"></view>
+					
+					
 				</view>
 
 				<!-- <view 
@@ -128,13 +128,10 @@
 
 			</view> -->
 			<view class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box">
-				<!-- <image
-						class=''
-						src="../../../static/home/btn_quickPay_click.png" 
-						@click="shuaLian"/> -->
-				<!-- <image class='' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" /> -->
+				
+				<image class='' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" />
 
-				<image class="" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
+				<image class="ml-50" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
 			</view>
 			<!-- 两行三个 -->
 			<!-- <view class="lf-cash-register padding-lg shadow  box">
@@ -145,47 +142,15 @@
 
 				<image class="margin-top-sm" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
 			</view> -->
-
-			<!-- 菜单 -->
-			<!-- <view :class="['page-home-x__menu align-left box plr-30', isSmall ? 'pt-30' : 'pt-50']">
-				<view
-					:class="['item align-default box',  isSmall ? 'mb-34' : 'mb-54']" 
-					v-for="menu in menuList"  
-					v-if="menu.isShow === 1" 
-					@click="menuJump(menu.url, menu.status)">
-					<image
-						:class="[('img_3')]"
-						mode='scaleToFill'
-						:src="menu.src" >
-					</image>
-					<text class='mt-20'>{{menu.name}}</text>
-				</view>
-			</view> -->
-
-			<!-- 轮播菜单 -->
-			<!-- <swiper
-				class='match-width mt-20'
-				style='height: 320upx;'
-				indicator-dots='true'
-				indicator-color='#F0F0F0'
-				indicator-active-color='#999'>
-				<swiper-item> -->
-			<view class='bar'></view>
-			<view :class="['page-home-x__menu align-left box plr-10 margin-top-lg', isSmall ? '': 'mt-20']">
+			<!-- <view class='bar'></view> -->
+			<!-- <view :class="['page-home-x__menu align-left box plr-10 margin-top-lg', isSmall ? '': 'mt-20']">
 				<view :class="['item align-ver-bet box']" v-for="(menu, index) in menuList" v-if="menu.isShow === 1" :key='index'
 				 @click="menuJump(menu.url, menu.status)">
 					<image :class="[('img_3')]" mode='scaleToFill' :src="menu.src">
 					</image>
 					<text>{{menu.name}}</text>
 				</view>
-				<!-- <web-view class="item align-ver-bet box" src="https://alitong.vip/ydh5/index.html?i=1#/yidu_tc/pages/tabbar/index">
-							<image
-								class="img_3"
-								mode='scaleToFill'
-								src="static/homev2/shop.png" >
-							</image>
-						</web-view> -->
-			</view>
+			</view> -->
 			<!-- </swiper-item>
 				<swiper-item> -->
 			<!-- <view :class="['page-home-x__menu align-left box plr-10']">
@@ -276,7 +241,8 @@
 		bankCarkList,
 		bankCardInfo,
 		delBankCard,
-		orderSure
+		orderSure,
+		regeditAndIncomeStatus
 	} from '../../../api/vueAPI.js'
 	// 检查更新
 	import {
@@ -350,130 +316,6 @@
 				paymentMoney: '0',
 				isNumberKeyboard: false, //是否打开键盘
 				isShowCashRegister: false, //是否显示收银
-				menuList: { //菜单
-					"memberCenter": {
-						src: '../../../static/homev2/hy.png',
-						name: '会员中心',
-						url: '/pages/home/memberCenter/index/index',
-						status: 1,
-						isShow: 1,
-						iconWidth: 44,
-						iconHeight: 38
-					},
-					"refund": {
-						src: '../../../static/homev2/sm.png',
-						name: '扫码退款',
-						url: 'refund',
-						status: 1,
-						isShow: 1,
-						iconWidth: 43,
-						iconHeight: 44
-					},
-					"statistics": {
-						src: '../../../static/homev2/tj.png',
-						name: '统计',
-						url: '/pages/home/statistics/index/index',
-						status: 1,
-						isShow: 1,
-						iconWidth: 40,
-						iconHeight: 36
-					},
-					"QRcodeAdministration": {
-						src: '../../../static/homev2/ewm.png',
-						name: '二维码管理',
-						url: '/pages/home/2DcodeAdministration/index/index',
-						status: 1,
-						isShow: 1,
-						iconWidth: 38,
-						iconHeight: 38
-					},
-					"storeAdministration": {
-						src: '../../../static/homev2/md.png',
-						name: '门店管理',
-						url: '/pages/home/storeAdministration/index/index',
-						status: 1,
-						isShow: 1,
-						iconWidth: 42,
-						iconHeight: 40
-					},
-					"staffManagement": {
-						src: '../../../static/homev2/yg.png',
-						name: '员工管理',
-						url: '/pages/home/staffManagement/index/index',
-						status: 1,
-						isShow: 1,
-						iconWidth: 43,
-						iconHeight: 42
-					},
-					"couponCancel": {
-						src: '../../../static/homev2/kq.png',
-						name: '卡券核销',
-						url: 'couponCancel',
-						// url: '/pages/home/couponCancel/couponCancel',
-						status: 1,
-						isShow: 1,
-						iconWidth: 47,
-						iconHeight: 43
-					},
-					"consumerAnalysis": {
-						src: '../../../static/homev2/xfz.png',
-						name: '客流统计',
-						// url: '/pages/home/consumerAnalysis/index/index',
-						url: 'consumerAnalysis',
-						status: 1,
-						isShow: 0,
-						iconWidth: 42,
-						iconHeight: 40
-					},
-					"classExchange": {
-						src: '../../../static/homev2/workinfo.png',
-						name: '交接班',
-						url: '/pages/home/classExchange/index/index',
-						status: 1,
-						isShow: 1,
-						iconWidth: 44,
-						iconHeight: 38
-					},
-					"depositManage": {
-						src: '../../../static/homev2/dm.png',
-						name: '押金管理',
-						url: '/pages/home/depositManage/index/index',
-						status: 1,
-						isShow: 1,
-						iconWidth: 44,
-						iconHeight: 38
-					}
-					/* ,
-										"depositManage":{
-											src: '../../../static/homev2/quickPay.png',
-											name: '快捷支付',
-											url: 'quickPayJump',
-											status: 1,
-											isShow: 1,
-											iconWidth: 44,
-											iconHeight: 38
-										} */
-					/* ,
-										"depositManage":{
-											src: '../../../static/homev2/shop.png',
-											name: '商城',
-											url: 'shop',
-											status: 1,
-											isShow: 1,
-											iconWidth: 200,
-											iconHeight: 200
-										} */
-					/* ,
-										"depositManage":{
-											src: '../../../static/homev2/dm.png',
-											name: '手机pos',
-											url: 'sjPosJump',
-											status: 1,
-											isShow: 1,
-											iconWidth: 44,
-											iconHeight: 38
-										} */
-				},
 				menuListTwo: { //菜单 2
 				},
 				keyMode: 'number', //键盘组件-类型	keyboard-普通键盘 car-汽车键盘 number-数字键盘
@@ -557,14 +399,16 @@
 			// 轮询最新一笔订单
 			// this.getLastOrder()
 
-			let uuid = plus.device.uuid
-			console.log('uuid', uuid)
+			
 			// showModal('uuid:'+ uuid)
 
 			// 重置开始时间
 			uni.setStorageSync("beginTime", '')
 			// this.interval.startInterval()
-
+			this.userInfo = uni.getStorageSync("userInfo")
+			// plus只有真机支持，方便调试，放最下边
+			let uuid = plus.device.uuid
+			console.log('uuid', uuid)
 
 		},
 
@@ -638,6 +482,7 @@
 			}
 		},
 		methods: {
+			
 			/**
 			 * addOrEditBankCark  添加和编辑银行卡
 			 * @param {Object} merchantId 商户ID
@@ -688,19 +533,13 @@
 					})
 			},
 			posTest() {
-				// 下单
-				let userId = uni.getStorageSync('userId') || ''
-				let merchantId = uni.getStorageSync('merchantId') || ''
-				// let merchantId = '123213123213'
-				let storeId = uni.getStorageSync('storeId') || ''
-				let customerInfo = uni.getStorageSync('customerCount')
-				let serviceId = customerInfo.serviceId
+				let params = {};
+				// 手机pos下单测试
 				// console.log('customerInfo==============',customerInfo)
-				let totalPrice = '1' //this.paymentMoney || '0.01'
-				let payWay = 8
-				let payChannel = 17 //17 pos  18 网联
-				let bankCardId = '1345981813639208960'
-				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, bankCardId).then(function(data) {
+				params.totalPrice = '10' //this.paymentMoney || '0.01'
+				params.payWay = 8
+				params.payChannel = 17 //17 pos  18 网联
+				webPay(params).then(function(data) {
 					console.log('sucess==========', JSON.stringify(data))
 				}, function(data) {
 					console.log('fail==========', JSON.stringify(data))
@@ -1264,7 +1103,7 @@
 					return
 				}
 				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
-				if (!nowStoreDetail.storeId) {
+				/* if (!nowStoreDetail.storeId) {
 					uni.showModal({
 						title: '提示',
 						content: '请选择门店',
@@ -1278,13 +1117,8 @@
 							}
 						}
 					})
-
-					/* uni.showToast({
-						title: '请选择门店',
-						icon: 'none'
-					}) */
 					return
-				}
+				} */
 
 				let userId = uni.getStorageSync('userId') || ''
 				let merchantId = uni.getStorageSync('merchantId') || ''
@@ -1308,10 +1142,7 @@
 					storeId = nowStoreDetail.storeId
 				}
 				let posDataObj = {
-					userId,
-					merchantId,
-					storeId,
-					serviceId,
+					token,
 					totalPrice
 				}
 				let posDataObjStr = JSON.stringify(posDataObj);
@@ -1330,7 +1161,7 @@
 					return
 				}
 				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
-				if (!nowStoreDetail.storeId) {
+				/* if (!nowStoreDetail.storeId) {
 					uni.showModal({
 						title: '提示',
 						content: '请选择门店',
@@ -1344,13 +1175,9 @@
 							}
 						}
 					})
-					// this.storeSelect()
-					/* uni.showToast({
-						title: '请选择门店',
-						icon: 'none'
-					}) */
+					
 					return
-				}
+				} */
 				uni.navigateTo({
 					url: '/pages/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=18'
 				})
@@ -1937,55 +1764,6 @@
 			onBannerChange(e) {
 				this.current = e.detail.current
 			},
-			// 青蛙APP
-			frogJump() {
-				uni.scanCode({
-					onlyFromCamera: true,
-					success: (res) => {
-						let codeResult = res.result
-						// console.log("扫码内容：" + res.result)
-						// console.log("扫码类型：" + res.scanType)
-						// console.log('扫码成功，青蛙app跳转。。。')
-
-						uni.showModal({
-							content: '是否登录？',
-							showCancel: true,
-							success: (res) => {
-								// console.log(res)
-								if (res.confirm) {
-									frogJump(codeResult).then((res) => {
-										// console.log('青蛙', res)
-										if (res.code === 200) {
-											uni.showToast({
-												title: '登录成功',
-												icon: 'none'
-											})
-										} else {
-											uni.showToast({
-												title: res.msg,
-												icon: 'none'
-											})
-										}
-									}).catch(err => {
-										uni.showToast({
-											title: '无效码！',
-											icon: 'none'
-										})
-									})
-								} else {
-									uni.showToast({
-										title: '取消授权',
-										icon: 'none'
-									})
-								}
-							}
-						})
-					},
-					fail: (err) => {
-						console.log(err)
-					}
-				})
-			},
 			// 检查更新
 			checkUpdate() {
 				// console.log('检查更新') 
@@ -2222,11 +2000,11 @@
 
 		image {
 			// 两个的尺寸
-			/* width: 240upx;
-			height: 100upx; */
+			width: 240upx;
+			height: 100upx;
 			// 三个的尺寸
-			width: 190upx;
-			height: 80upx;
+			/* width: 190upx;
+			height: 80upx; */
 		}
 
 		.image {

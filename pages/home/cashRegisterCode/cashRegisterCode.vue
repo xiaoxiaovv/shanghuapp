@@ -57,7 +57,7 @@
 			let systemInfo = uni.getSystemInfoSync()
 			let { screenWidth } = systemInfo
 			let size = screenWidth / 375 * 200
-			// console.log('systemInfo', systemInfo)
+			console.log('systemInfo,c=============================', systemInfo)
 			// 二维码插件
 			this.qrcode = new Qrcode({
 				'level': 'L',

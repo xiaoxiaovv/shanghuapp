@@ -71,7 +71,7 @@
 				cvv2: '',
 				mobile: '',
 				idCard: '',
-				id:'0', //添加时传随意值
+				id:null, 
 				merchantId:'',
 				showVerificationCodeModel:false,
 				captcha: ''//验证码
@@ -148,7 +148,10 @@
 			 * @param {Object} bankName 银行名称
 			 */
 			addOrEditBankCard() {
-				this.merchantId = uni.getStorageSync('merchantId')
+				
+				this.userInfo = uni.getStorageSync('userInfo')
+				this.userId = this.userInfo.id;
+				this.realName = this.userInfo.realName
 				/* let merchantId = uni.getStorageSync('merchantId')
 				let realName = '张国军'
 				let idCard = '130533198309185913'
@@ -197,13 +200,13 @@
 				this.realName = this.representativeName;
 				this.idCard = this.certificateNum;
 				console.log('2222222222',this.realName,this.idCard)
-				addOrEditBankCard(this.merchantId, this.realName, this.accNo, this.mobile, this.cvv2, this.validity, this.bankName,
+				addOrEditBankCard(this.userId, this.realName, this.accNo, this.mobile, this.cvv2, this.validity, this.bankName,
 					this.idCard, this.id).then(res=>{
 						uni.showToast({
 							title:'提交成功',
 							icon:'none'
 						})
-						uni.showModal({
+					/* 	uni.showModal({
 							content: '是否开通刷脸付？您也可以到卡管理列表开通',
 							success(res) {
 								if(res.confirm){
@@ -214,12 +217,12 @@
 									
 								}
 							}
-						})
+						}) */
 					})
 			},
 			bankCardInfo(bankCardId) {
 				bankCardInfo(bankCardId).then(res => {
-					let data = res.obj
+					let data = res.data
 					this.merchantId = data.merchantId;
 					this.realName = data.realName;
 					this.accNo = data.accNo;

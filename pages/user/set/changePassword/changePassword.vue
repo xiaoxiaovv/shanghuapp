@@ -49,7 +49,7 @@
 					// 	showCancel: false
 					// });
 					uni.showToast({
-						title: '不能有空',
+						title: '有内容未填入',
 						icon: 'none'
 					})
 					// uni.hideLoading();
@@ -93,7 +93,7 @@
 					// 	showCancel: false
 					// });
 					uni.showToast({
-						title: '两次密码输入不同',
+						title: '两次密码输入不一致',
 						icon: 'none',
 					})
 					// uni.hideLoading();

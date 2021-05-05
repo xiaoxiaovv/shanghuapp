@@ -14,7 +14,11 @@ const fly = new Fly;
  // const URL = getDomain() || "https://yt.hbpay.vip"	//全局总URL
  // const URL = getDomain() || "http://mamipay.com:41000"	//全局总URL
  // const URL = getDomain() || "https://mamipay.com"	//全局总URL
- const URL = getDomain() || "http://152.136.224.153:10003"	//全局总URL
+ // const URL = getDomain() || "http://152.136.224.153:10003"	//全局总URL
+ const URL = getDomain() || "http://test.fx.mamipay.com"	//全局总URL
+ 
+ 
+ 
  
  
  // const URL = getDomain() || "http://192.168.0.13"	//全局总URL
@@ -44,6 +48,11 @@ fly.config.baseURL = URL;
 fly.config.registerURL = 'https://hbpay.vip'
 //添加请求拦截器
 fly.interceptors.request.use((request)=>{
+	/* if(request.method === 'DELETE'){
+		request.headers['Content-Type'] = 'application/json'
+	} */
+	request.headers['Accept-Language'] = 'zh-CN,zh;q=0.9'
+	
     //给所有请求添加自定义header
 	const token = uni.getStorageSync('token')
     if (token) {

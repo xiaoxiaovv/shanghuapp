@@ -41,41 +41,23 @@
 						remarks: '',
 						url: '/pages/user/set/index/index'
 					},
-					'printer':{
-						image: '../../../static/tabBar/icon_print_bg.png',
-						name: '打印机',
+					'mendMerchant':{
+						image: '../../../static/tabBar/icon_pay_sign.png',
+						name: '完善/修改商户信息',
 						remarks: '',
-						url: '/pages/user/newPrinter/index/index'
+						url: '/pages/user/mendMerchant/mendMerchant'
 					},
-					// 'AlipaySigningPage':{
-					// 	image: '../../../static/tabBar/icon_pay_sign.png',
-					//  	name: '支付签约',
-					//  	remarks: '支付宝签约',
-					//  	url: '/pages/user/AlipaySigningPage/index/index'
-					// },
-					'vipSet':{
-						image: '../../../static/tabBar/icon_vip.png',
-						name: '会员支付设置',
-						remarks: '',
-						url: '/pages/user/vipSet/index/index'
-					},
-					'ticketSet':{
+					'enterChannel':{
 						image: '../../../static/tabBar/icon_ticket.png',
-						name: '电子发票设置',
+						name: '进件',
 						remarks: '',
-						url: '/pages/user/ticketSet/index/index'
+						url: '/pages/user/enterChannel/enterChannel'
 					},
-					// 'customerCount':{
-					// 	image: '../../../static/tabBar/icon_customer.png',
-					// 	name: '客流统计设置',
-					// 	remarks: '',
-					// 	url: ''
-					// },
-					'classReplace':{
+					'selectCard':{
 						image: '../../../static/tabBar/workinfo.png',
-						name: '交接班记录',
+						name: '卡管理',
 						remarks: '',
-						url: '/pages/user/classReplace/index/index'
+						url: '/pages/home/quickPay/selectCard'
 					},
 					'about':{
 						image: '../../../static/tabBar/icon_about.png',
@@ -98,7 +80,9 @@
 			}
 		},
 		onShow() {
-			getAccountInfo().then(res => {
+			this.userInfo = uni.getStorageSync('userInfo')
+			this.name = this.userInfo.realName
+			/* getAccountInfo().then(res => {
 				// console.log(res);
 				this.merchantName = res.obj.merchantName
 				this.name = res.obj.name
@@ -109,9 +93,16 @@
 			if(bluetoothOnLine){
 				// console.log("改变打印机名字")
 				this.menuList.printer.remarks = bluetoothOnLine.localName;
-			}
+			} */
 		},
 		methods:{
+			webViewMessage(e){
+				console.log(e.detail.data.msg);
+				if(e.detail.data.msg === close){
+					let currentWebview = this.$mp.page.$getAppWebview()
+					currentWebview.children()[0].close()
+				}				
+			},
 			/* 跳转消息中心 */
 			jumpMessageCenter() {
 				uni.showToast({
@@ -127,6 +118,21 @@
 			},
 			/* 菜单跳转 */
 			menuJump(key,url) {
+				if(key === 'mendMerchant'){
+					// console.log('0000000')
+					/* let wv = plus.webview.create( 'http://test.fx.mamipay.com/h5/#/clientEdit', 'mendMerchant', {
+						top:'26px',
+						height:'92%',
+					}) */
+					// let currentWebview = this.$mp.page.$getAppWebview()
+					// currentWebview.append(wv);
+					// console.log('22222222222',Json.stringify(currentWebview.children()[0]))
+					// currentWebview.children()[0].message = this.webViewMessage 
+					
+					
+					// console.log('1111111')
+				}
+				
 				if(key === 'AlipaySigningPage'){
 					uni.showToast({
 						title:"敬请期待",

@@ -45,7 +45,7 @@
 		methods: {
 			selectCard(item){
 				let that = this;
-				if(this.fromPayChannel==='20'&&item.chanpayStatus!==2){
+				/* if(this.fromPayChannel==='20'&&item.chanpayStatus!==2){
 					uni.showModal({
 										content: `该卡尚未开通刷脸付功能，点击“确定”到《卡管理》列表进行开通`,
 										success(res) {
@@ -59,7 +59,7 @@
 										}
 									})
 									rerurn
-				}
+				} */
 				let pages = getCurrentPages();
 				let currPage = pages[pages.length - 1]; //当前页面
 				let prevPage = pages[pages.length - 2]; //上一个页面
@@ -77,10 +77,10 @@
 				uni.navigateBack();
 			},
 			bankCarkList() {
-				let merchantId = uni.getStorageSync('merchantId')
+				// let merchantId = uni.getStorageSync('merchantId')
 				// console.log('merchantId==================', merchantId)
-				bankCarkList(merchantId).then(data => {
-					this.cardList = data.obj;
+				bankCarkList().then(data => {
+					this.cardList = data.data.list;
 				})
 			},
 			jumpAddOrEditCard() {

@@ -1,6 +1,6 @@
 <template>
-	<view  class="page-membership box align-default ">
-		<view class="user-info">
+	<view>
+		<view class="user-info" >
 			<view class="lf-member-bg">
 				<image 
 					class="match-parent" 
@@ -10,10 +10,10 @@
 			<view class="user-info__cover box align-default plr-30 ">
 				<view class="lf-content-head box ">
 					
-							<text class="">分享</text>
+							<text class="" @click="jumpToShare">分享</text>
 					
 				</view>
-				<view class="lf-content-panel ptb-30">
+				<view class="lf-content-panel ptb-30 mt-20">
 					<view>
 						<view class="lf-panel-money   align-center mb-20">
 							<view @click="jumpstorageDetails">
@@ -21,18 +21,21 @@
 								<text class="text-xxl mt-10">{{groupUsersInfo.countAll? groupUsersInfo.countAll:'0'}}</text>
 							</view>
 						</view>
-						<view class="lf-panel-money flex  mb-20">
+						<view class="lf-panel-money flex  mb-20 ">
 							<view @click="jumpstorageDetails">
 								<text class="text-gray">直接下级</text>
 								<text class="text-xxl mt-10">{{groupUsersInfo.countPush? groupUsersInfo.countPush:'0'}}</text>
 							</view>
-							
-							<view @click="jumpintegralDetails">
+							<view @click="jumpstorageDetails">
+								<text class="text-gray">间接下级</text>
+								<text class="text-xxl mt-10">{{groupUsersInfo.balance? groupUsersInfo.balance:'0'}}</text>
+							</view>
+							<!-- <view @click="jumpintegralDetails">
 								<text class="text-gray">直接推荐佣金（元）</text>
 								<text class=" text-xxl mt-10">{{groupUsersInfo.scores? groupUsersInfo.scores:'0'}}</text>
-							</view>
+							</view> -->
 						</view>
-						<view class="lf-panel-money flex lf-panel-money__bottom pb-10">
+						<!-- <view class="lf-panel-money flex lf-panel-money__bottom pb-10">
 							<view @click="jumpstorageDetails">
 								<text class="text-gray">间接下级</text>
 								<text class="text-xxl mt-10">{{groupUsersInfo.balance? groupUsersInfo.balance:'0'}}</text>
@@ -42,27 +45,52 @@
 								<text class="text-gray">间接推荐佣金（元）</text>
 								<text class="text-xxl mt-10">{{groupUsersInfo.scores? groupUsersInfo.scores:'0'}}</text>
 							</view>
-						</view>
+						</view> -->
 						<!-- 列表 -->
-						<view v-for="user in groupUsersInfo.userDetail" :key="user.id" class="lf-orderList match-width align-left ptb-10" >
-							<view class="match-left-space align-ver-left"> 			
-								<view class="match-width align-hor-bet">
-									<view>代理名称</view>
-									<view class="ly-font-weight-500 ly-font-size-28">注册时间：2021-04-18</view>
-								</view>
-								<view class="ly-font-color-9 ly-font-size-24 match-width mt-10 align-hor-bet">
-									<view>推广人数：0 人</view>
-									<view>15000000000</view>
-									<!-- <text class=""><text class="text-sm">订单号：</text>{{order.orderNumber}}</text> -->
-								</view>
-							</view>
-						</view>
+						
+						
 						
 					</view>
 				</view>
 			</view>
+			
+		</view>
+		<view class="match-width" style="height: 390upx;"></view>
+		<mescroll-uni class="plr-40"  @down="downCallback" :up="mescrollUp" @up="upCallback"  @init="mescrollInit">
+			<!-- <view class="" v-for="user in groupUsersInfo.userDetail" :key="user.id">
+				1233333
+			</view>
+			<view class="match-width" v-for="user in groupUsersInfo.userDetail" :key="user.id">
+				1233444
+			</view>
+			
+			<view class="match-width" v-for="user in groupUsersInfo.userDetail" :key="user.id">
+				1233555
+			</view>
+			<view class="match-width" v-for="user in groupUsersInfo.userDetail" :key="user.id">
+				1233555666
+			</view>
+			<view class="match-width" v-for="user in groupUsersInfo.userDetail" :key="user.id">
+				1233555666777
+			</view>
+			<view class="" v-for="user in groupUsersInfo.userDetail" :key="user.id">
+				1233555666777888
+			</view> -->
+		<view v-for="user in groupUsersInfo.userDetail" :key="user.id" class="lf-orderList match-width align-left ptb-10 border-bottom-line" >
+			<view class="match-left-space align-ver-left"> 			
+				<view class="match-width align-hor-bet">
+					<view>{{user.realName}}</view>
+					<view class="ly-font-weight-500 ly-font-size-28">等级：{{user.levelName}}</view>
+				</view>
+				<view class="ly-font-color-9 ly-font-size-24 match-width mt-10 align-hor-bet">
+					<view>{{user.pushType===1?'直推':'间推'}}</view>
+					<view>{{user.mobile}}</view>
+							
+				</view>
+			</view>
 		</view>
 		
+		</mescroll-uni>
 		<!-- 模态框 -->
 		<neil-modal :show="modalShow" @close="closeModal" title="昵称修改" auto-close="false" @confirm="bindBtn('confirm')">
 			<view style="min-height: 90upx;padding: 32upx 24upx;">
@@ -73,14 +101,23 @@
 </template>
 
 <script>
+	import MescrollUni from "mescroll-uni/mescroll-uni.vue";
 	import { changeMember, baseURL, userFilesUpload, getImgThumbnail, getGroupUsersInfo } from '../../../api/vueAPI.js'
 	import { uniList } from '@dcloudio/uni-ui'
 	import neilModal from '@/components/neil-modal/neil-modal.vue';
 	
 	export default {
-		components: {uniList, neilModal},
+	
+		components: {uniList, neilModal, MescrollUni},
 		data() {
 			return {
+				mescroll: null,
+				mescrollUp: {
+					empty: {
+						icon: "../../../static/order/no-data.png", //图标,默认null,支持网络图
+						tip: "暂无相关数据~" //提示
+					}
+				},
 				id: '',
 				nickname: '',
 				groupUsersInfo: '',
@@ -97,11 +134,35 @@
 				// this.groupUsersInfo();
 			}
 		},
+		onShow() {
+			mescroll.resetUpScroll()
+		},
 		methods: {
-			getGroupUsersInfo(){
+			// mescroll组件初始化的回调,可获取到mescroll对象
+			mescrollInit(mescroll) {
+				this.mescroll = mescroll;
+			},
+			/*下拉刷新的回调*/
+			downCallback(mescroll){
+				mescroll.resetUpScroll() // 重置列表为第一页 (自动执行 mescroll.num=1, 再触发upCallback方法 )
+			},
+			upCallback(mescroll) {
 				getGroupUsersInfo().then(res=>{
 					this.groupUsersInfo = res.data
+					mescroll.endBySize(res.data.userDetail.length, res.data.countAll)
 				});
+				
+				
+			},
+			jumpToShare(){
+				uni.navigateTo({
+					url: '/pages/group/share'
+				})
+			},
+			getGroupUsersInfo(){
+				/* getGroupUsersInfo().then(res=>{
+					this.groupUsersInfo = res.data
+				}); */
 			},
 			
 			
@@ -153,7 +214,7 @@
 		filters: {
 		},
 		onShow() {
-			this.getGroupUsersInfo();
+			
 			// console.log("onShow~")
 			if(this.ispPhotoUpload){
 				let that = this;
@@ -199,6 +260,20 @@
 </script>
 
 <style lang="scss">
+	.lf-time-show {
+		
+		width: 100%;
+		padding: 0 22upx;
+		font-size: 32upx;
+		color: #666;
+		background-color: #F8F9FD;
+		// background-color: rgba(100, 100, 100, 0.1);
+		
+		
+	}
+	.border-bottom-line{
+		border-bottom: 1upx solid #F1F1F3;
+	}
 	.page-membership {
 		width: 100%;
 		height: 100%;
@@ -210,8 +285,10 @@
 	.user-info {
 		width: 100%;
 		height: 550upx;
-		position: relative;
-		
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 100;
 		&__cover {
 			width: 100%;
 			position: absolute;

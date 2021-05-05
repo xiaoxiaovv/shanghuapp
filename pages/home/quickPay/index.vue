@@ -39,7 +39,7 @@
 		<neil-modal :show="showVerificationCodeModel" @close="closeVerificationCodeModel" title="验证码" @cancel="submitVerificationCodeBtn('cancel')" @confirm="submitVerificationCodeBtn('confirm')">
 			<view style="min-height: 90upx;padding: 32upx 24upx;">
 				<view>
-					<input class="lf-remarks-input" type="text" placeholder="请输入验证码" maxlength="10" v-model="verificationCodeModelContent">
+					<input class="lf-remarks-input" type="text" placeholder="验证码已发送, 点击此处输入" maxlength="10" v-model="verificationCodeModelContent">
 				</view>
 			</view>
 		</neil-modal>
@@ -77,7 +77,7 @@
 					cvv2: '',
 					mobile: '',
 					idCard: '',
-					id:'0', //添加时传随意值
+					id:'', //添加时传随意值
 					merchantId:'',
 					showVerificationCodeModel:false,
 					captcha: ''//验证码
@@ -178,7 +178,7 @@ similarity	String	相似度 1~100 (当validate_result>0时，本值才有效(相
 				 })
 			 },
 			 shuaLianTransaction(){
-			 	// 下单
+			 	// 畅捷下单
 			 	let userId = uni.getStorageSync('userId') || ''
 			 	let merchantId = uni.getStorageSync('merchantId') || ''
 			 	// let merchantId = '123213123213'
@@ -198,7 +198,7 @@ similarity	String	相似度 1~100 (当validate_result>0时，本值才有效(相
 			 	webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, id).then(
 			 	res=>{
 			 		showLoading(false)
-			 		let data = res.obj.jsPayResponse
+			 		let data = res.data
 			 		this.chSerialNo = data.chSerialNo;					
 			 		this.chMerCode = data.chMerCode;
 			 		this.orderCode = data.orderCode;
@@ -229,26 +229,22 @@ similarity	String	相似度 1~100 (当validate_result>0时，本值才有效(相
 			 */
 			transaction(){
 				// 下单
-				let userId = uni.getStorageSync('userId') || ''
-				let merchantId = uni.getStorageSync('merchantId') || ''
-				// let merchantId = '123213123213'
-				let storeId = uni.getStorageSync('storeId') || ''
-				let customerInfo = uni.getStorageSync('customerCount')
-				let serviceId = customerInfo.serviceId
-				// console.log('customerInfo==============',customerInfo)
-				let totalPrice = this.paymentMoney
-				let payWay = 8
-				let payChannel = 18 //17 pos  18 网联
-				/* let payWay = 10
-				let payChannel = 20 //17 pos  18 畅捷 */
-				let id = this.id
+				// this.showVerificationCodeModel = true;
+				let params = {};
+				params.totalPrice = this.paymentMoney
+				params.payWay = 8
+				params.payChannel = 18 //17 pos  18 网联
+				/* params.payWay = 10
+				params.payChannel = 20 //17 pos  18 畅捷 */
+				params.bankCardId = this.id //选择页面直接设置了该页面的属性
 				// console.log('this.id==============',this.id)
 				showLoading(true)
 				// return
-				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, id).then(
+				// webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, id).then(
+				webPay(params).then(
 				res=>{
 					showLoading(false)
-					let data = res.obj.jsPayResponse
+					let data = res.data
 					this.chSerialNo = data.chSerialNo;					
 					this.chMerCode = data.chMerCode;
 					this.orderCode = data.orderCode;
@@ -262,7 +258,7 @@ similarity	String	相似度 1~100 (当validate_result>0时，本值才有效(相
 				
 				let customerInfo = uni.getStorageSync('customerCount')
 				let serviceId = customerInfo.serviceId
-				transactionSure(this.chSerialNo,this.verificationCodeModelContent,serviceId,this.chMerCode,this.orderCode).then(res=>{
+				transactionSure(this.chSerialNo,this.verificationCodeModelContent, this.chMerCode,this.orderCode).then(res=>{
 					showLoading(false)
 					uni.navigateTo({
 						url: '/pages/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=1'

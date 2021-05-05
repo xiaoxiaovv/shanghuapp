@@ -10,7 +10,7 @@
 					<view>
 						<!-- <text class="edit ly-font-color-main" @click="jumpAddOrEditCard(item.id)">编辑</text> -->
 						<text class="ly-font-color-main" @click="delBankCard(item)">删除</text>
-						<text class="ly-font-color-main ml-30" @click="chanpayPreSign(item)" v-if="item.chanpayStatus !==2">开通刷脸付</text>
+						<!-- <text class="ly-font-color-main ml-30" @click="chanpayPreSign(item)" v-if="item.chanpayStatus !==2">开通刷脸付</text> -->
 					</view>
 				</view>
 			</view>
@@ -68,10 +68,10 @@
 		},
 		methods: {
 			bankCarkList() {
-				let merchantId = uni.getStorageSync('merchantId')
+				// let merchantId = uni.getStorageSync('userId')
 				// console.log('merchantId==================',merchantId)
-				bankCarkList(merchantId).then(data => {
-					this.cardList = data.obj;
+				bankCarkList().then(data => {
+					this.cardList = data.data.list;
 				})
 			},
 			jumpAddOrEditCard(id) {
@@ -86,7 +86,7 @@
 ${item.bankName}  ${cardFilter(item.accNo)}`,
 					success(res) {
 						if (res.confirm) {
-							delBankCard(item.id).then(res => {
+							delBankCard([item.id]).then(res => {
 								// 更新列表
 								that.bankCarkList()
 							})

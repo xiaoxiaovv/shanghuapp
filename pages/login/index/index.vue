@@ -171,8 +171,8 @@
 				}
 				this.btnLoading = true;
 				login( this.username.trim() , this.password.trim() ).then(res => {
-					console.log(444444444, res)
-					// console.log(JSON.stringify(res.data))
+					
+					console.log('登录信息============',res.data)
 					// return
 					/* 记住账户/密码 */
 					if(this.isRememberPassword){
@@ -184,21 +184,25 @@
 						url: '/pages/tabBar/home/home'
 					})
 					uni.setStorageSync('username', this.username);
-					uni.setStorageSync('namename', res.data.name);
+					// uni.setStorageSync('namename', res.data.name);
 					/* app中使用信息 */
-					uni.setStorageSync('token', res.data.token);
-					uni.setStorageSync('userId', res.data.userId);
-					uni.setStorageSync('userType', res.data.userType);
-					uni.setStorageSync('storeId', res.data.storeId || res.data.store_id)
+					/* uni.setStorageSync('token', res.data.token);
+					uni.setStorageSync('userId', res.data.id );
+					uni.setStorageSync('userType', res.data.levelType );
 					uni.setStorageSync('merchantId', res.data.merchantId)
-					uni.setStorageSync('equipmentId', res.data.equipmentId)
+					uni.setStorageSync('equipmentId', res.data.equipmentId) */
+					uni.setStorageSync('userInfo', res.data)
+					uni.setStorageSync('userId', res.data.id );
+					uni.setStorageSync('userType', res.data.levelType );
+					uni.setStorageSync('token', res.data.token);
+					
 					// uni.switchTab({
 					// 	url: '/pages/tabBar/home/home'
 					// });
 					// console.log("登录完成")
 					this.btnLoading = false;
 					// 缓存用户信息，客流统计用
-					res && res.data && uni.setStorageSync('customerCount', res.data)
+					/* res && res.data && uni.setStorageSync('customerCount', res.data)
 					getAccountInfo().then(res => {
 						if (res && res.data) {
 							let merchantName = res.data.merchantName || ''
@@ -210,11 +214,11 @@
 						}
 					}).catch(err => {
 						console.log(err)
-					})
+					}) */
 				},err => {
-					console.log(55555,err)
+					console.log('登录失败：：',err)
 				}).catch((err) => {	
-					console.log('11111112222222',err)
+					console.log('登录catch：：',err)
 					this.btnLoading = false;
 				})
 			},

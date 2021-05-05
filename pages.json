@@ -53,6 +53,15 @@
 			}
 		}
 		,{
+		    "path" : "pages/group/share",
+		    "style" : {
+				"navigationBarTitleText": "分享",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		/* ,{
 		    "path" : "pages/tabBar/shop/shop",
 		    "style" : {
 				"navigationBarTitleText": "商城",
@@ -60,6 +69,24 @@
 				"app-plus": {
 					"bounce": "none",
 					"titleNView": true
+				}
+			}
+		} */
+		,{
+		    "path" : "pages/user/mendMerchant/mendMerchant",
+		    "style" : {
+				"navigationBarTitleText": "商户信息",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
+		    "path" : "pages/user/enterChannel/enterChannel",
+		    "style" : {
+				"navigationBarTitleText": "进件",
+				"app-plus": {
+					"bounce": "none"
 				}
 			}
 		}
@@ -181,78 +208,6 @@
 				"navigationBarTitleText": "设置",
 				"app-plus": {
 					"bounce": "none"
-				}
-			}
-		}
-        ,{
-            "path" : "pages/user/printer/index/index",
-            "style" : {
-				"navigationBarTitleText": "打印设置",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-        }
-		,{
-		    "path" : "pages/user/ticketSet/index/index",
-			"style" : {
-				"navigationBarTitleText": "电子发票设置",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/user/ticketSet/query/index",
-			"style" : {
-				"navigationBarTitleText": "电子发票设置",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/user/vipSet/index/index",
-			"style" : {
-				"navigationBarTitleText": "会员支付设置",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/user/vipSet/pay/index",
-			"style" : {
-				"navigationBarTitleText": "会员支付设置",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/user/classReplace/index/index",
-			"style" : {
-				"navigationBarTitleText": "交接班记录",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/user/classReplace/details/index",
-			"style" : {
-				"navigationBarTitleText": "交接班记录详情",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [
-							{
-								"text": "\ue79e",
-								"fontSrc": "/static/assets/iconfont/iconfont.ttf",
-								"fontSize": "22px"
-							}
-						]
-					}
 				}
 			}
 		}
@@ -827,42 +782,7 @@
 				}
 			}
 		}
-		,{
-		    "path" : "pages/user/newPrinter/index/index",
-		    "style" : {
-				"navigationBarTitleText": "打印机",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/user/newPrinter/addPrinter/index",
-		    "style" : {
-				"navigationBarTitleText": "添加打印机",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						// "buttons": [
-						// 	{
-						// 		"text": "\ue661",
-						// 		"fontSrc": "/static/assets/iconfont/iconfont.ttf",
-						// 		"fontSize": "22px"
-						// 	}
-						// ]
-					}
-				}
-			}
-		}
-		,{
-		    "path" : "pages/user/newPrinter/printerList/index",
-		    "style" : {
-				"navigationBarTitleText": "打印机列表",
-				"app-plus": {
-					"bounce": "none"
-				}
-			}
-		}
+		
 		,{
 		    "path" : "pages/home/quickPay/index",
 		    "style" : {
@@ -875,7 +795,7 @@
 		,{
 		    "path" : "pages/home/quickPay/selectCard",
 		    "style" : {
-				"navigationBarTitleText": "选择支付卡",
+				"navigationBarTitleText": "支付卡",
 				"app-plus": {
 					"bounce": "none"
 				}
@@ -941,12 +861,12 @@
 			    "selectedIconPath" : "static/tabBar/btn_the_order_click.png",
 			    "text" : "团队管理"
 			},
-		    {
+		    /* {
 		        "pagePath" : "pages/tabBar/shop/shop",
 		        "iconPath" : "static/tabBar/btn_shop.png",
 		        "selectedIconPath" : "static/tabBar/btn_shop_click.png",
 		        "text" : "商城"
-		    },
+		    }, */
 		    {
 		        "pagePath" : "pages/tabBar/user/user",
 		        "iconPath" : "static/tabBar/btn_my.png",

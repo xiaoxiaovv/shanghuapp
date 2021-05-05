@@ -2,12 +2,14 @@ import fly from '../common/flyioRequest'
 import URL from '../common/flyioRequest'
 import qs from 'qs'
 
-import { getDeviceId } from '../common/appcommon'
+import {
+	getDeviceId
+} from '../common/appcommon'
 
-const base114 = "http://192.168.1.114:80";	//单次请求基底
-const base140 = "http://192.168.1.140:80";	//单次请求基底
-const base198 = "http://192.168.1.198:80";	//单次请求基底
-const base150 = "http://192.168.1.150:80";	//单次请求基底
+const base114 = "http://192.168.1.114:80"; //单次请求基底
+const base140 = "http://192.168.1.140:80"; //单次请求基底
+const base198 = "http://192.168.1.198:80"; //单次请求基底
+const base150 = "http://192.168.1.150:80"; //单次请求基底
 
 // export const baseURL = "https://test.pay.lingyundata.com"
 // export const baseURL = "http://192.168.1.198"
@@ -20,25 +22,25 @@ export const baseURL = URL.config.baseURL;
  */
 
 /*注册*/
-export function register(phone){
-	return fly.request( {
-		baseURL:URL.config.registerURL,
-		url : '/add', 
+export function register(phone) {
+	return fly.request({
+		baseURL: URL.config.registerURL,
+		url: '/add',
 		method: 'get',
 		params: {
 			phone,
-			channel:'zhangGui'
+			channel: 'zhangGui'
 		}
 	})
 }
 /* 登录 */
-export function login (mobile, password) {
+export function login(mobile, password) {
 	// let deviceId = getDeviceId()
-	return fly.request( 'api/supervision/api/login', {
+	return fly.request('api/supervision/api/login', {
 		mobile,
 		password,
-		
-	},{
+
+	}, {
 		method: 'post',
 	})
 	/* return fly.request({
@@ -51,9 +53,9 @@ export function login (mobile, password) {
 	}) */
 }
 /* 根据用户名查询手机号码 */
-export function getPhoneFindByUsername (username ) {
+export function getPhoneFindByUsername(username) {
 	return fly.request({
-		url : '/merchant/admin/app/phone_find_by_username', 
+		url: '/merchant/admin/app/phone_find_by_username',
 		method: 'get',
 		params: {
 			username
@@ -61,55 +63,56 @@ export function getPhoneFindByUsername (username ) {
 	})
 }
 /* 发送手机验证码 */
-export function sendSms ( phone) {
-	return fly.request( '/merchant/admin/app/send_sms', qs.stringify({
+export function sendSms(phone) {
+	return fly.request('/merchant/admin/app/send_sms', qs.stringify({
 		phone,
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 /* 校验手机验证码 */
-export function verifyCode ( phone, code) {
-	return fly.request( '/merchant/admin/app/verify_code', qs.stringify({
+export function verifyCode(phone, code) {
+	return fly.request('/merchant/admin/app/verify_code', qs.stringify({
 		phone,
 		code,
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 /* 重置密码 */
 //参数：只需要username和password
-export function resetStaffPassword( username, password) {
-	return fly.request( '/merchant/admin/app/reset_new_pwd', qs.stringify({
+export function resetStaffPassword(username, password) {
+	return fly.request('/merchant/admin/app/reset_new_pwd', qs.stringify({
 		username,
 		password,
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 /* 修改密码 */
 //参数：旧密码和新密码
-export function changePassword( password, newPassword) { 
-	return fly.request( '/merchant/management/app/edit_password', qs.stringify({
+export function changePassword(password, newPassword) {
+	return fly.request('/api/supervision/api/sys/user/password', {
 		password,
 		newPassword,
-	}),{
-		method: 'post',
+	}, {
+		method: 'put',
+		parseJson: true,
 	})
 }
 /* 查询账户信息 */
-export function getAccountInfo ( ) {
+export function getAccountInfo() {
 	return fly.request({
-		url : '/merchant/management/app/account_info', 
+		url: '/merchant/management/app/account_info',
 		method: 'get',
 		params: {
-			
+
 		}
 	})
 }
 
 /* 付款码支付 */
-export function scanPay (totalPrice, disCountPrice, authCode, storeId='', equipmentId) {
+export function scanPay(totalPrice, disCountPrice, authCode, storeId = '', equipmentId) {
 	// console.log("totalPrice="+totalPrice)
 	// console.log('scanPay xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 	// let equipmentId = uni.getStorageSync('equipmentId') || ''
@@ -119,14 +122,14 @@ export function scanPay (totalPrice, disCountPrice, authCode, storeId='', equipm
 		authCode,
 		storeId,
 		equipmentId
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 /* 轮询查询新订单 */
-export function queryNewOrder ( storeId, beginTime) {
+export function queryNewOrder(storeId, beginTime) {
 	return fly.request({
-		url : '/order/order/training/rotation', 
+		url: '/order/order/training/rotation',
 		method: 'get',
 		params: {
 			storeId,
@@ -137,19 +140,19 @@ export function queryNewOrder ( storeId, beginTime) {
 
 /* 退款 */
 export function refund(orderNumber, refundPayPrice, password) {
-	return fly.request( '/order/app/refund', qs.stringify({
+	return fly.request('/order/app/refund', qs.stringify({
 		orderNumber,
 		refundPayPrice,
 		password,
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 
 /* 获取订单列表 */
-export function getOrderList ( pageNumber, pageSize, start_payTime, end_payTime, payWay, status, storeId, orderNumber) {
+export function getOrderList(pageNumber, pageSize, start_payTime, end_payTime, payWay, status, storeId, orderNumber) {
 	return fly.request({
-		url : '/order/app/query_order', 
+		url: '/order/app/query_order',
 		method: 'get',
 		params: {
 			pageNumber,
@@ -164,21 +167,21 @@ export function getOrderList ( pageNumber, pageSize, start_payTime, end_payTime,
 	})
 }
 /* 获取订单详情 */
-export function getOrderDetails ( orderNumber) {
+export function getOrderDetails(orderNumber) {
 	return fly.request({
-		url : '/order/app/order_detail', 
+		url: '/order/app/order_detail',
 		method: 'get',
 		params: {
-			 orderNumber
+			orderNumber
 		}
 	})
 }
 /* 修改订单备注 */
 export function editOrderRemarks(orderNumber, remarks) {
-	return fly.request( '/order/app/edit_remarks', qs.stringify({
+	return fly.request('/order/app/edit_remarks', qs.stringify({
 		orderNumber,
 		remarks,
-	}),{
+	}), {
 		method: 'post',
 	})
 }
@@ -186,34 +189,34 @@ export function editOrderRemarks(orderNumber, remarks) {
 /* 获取门店列表（有门店详细信息） */
 //参数name：用于搜索
 //参数status： 1-启用,2-注销
-export function getStoreList ( pageNumber, pageSize, name='', status) {
+export function getStoreList(pageNumber, pageSize, name = '', status) {
 	return fly.request({
-		url : '/merchant/store/app/list', 
+		url: '/merchant/store/app/list',
 		method: 'get',
 		params: {
-			 pageNumber,
-			 pageSize,
-			 name,
-			 status
+			pageNumber,
+			pageSize,
+			name,
+			status
 		}
 	})
 }
 /* 获取选择门店列表*/
 //无额外参数
-export function getSelectStoreList ( name) {
+export function getSelectStoreList(name) {
 	return fly.request({
-		url : '/merchant/store/app/find_by_merchant_id', 
+		url: '/merchant/store/app/find_by_merchant_id',
 		method: 'get',
 		params: {
-			 name
+			name
 		}
 	})
 }
 /* 查看门店详情 */
 //门店id
-export function getStoreDetails (id) {
+export function getStoreDetails(id) {
 	return fly.request({
-		url : '/merchant/store/app/find_one', 
+		url: '/merchant/store/app/find_one',
 		method: 'get',
 		params: {
 			id
@@ -224,8 +227,8 @@ export function getStoreDetails (id) {
 //name -门店名称, storeNo -门店编号, province -省, city -市, address -门店地址, 
 //phone -门店电话, paymentDesciption -支付凭证描述, status -门店状态, photoId -logoId
 //参数status：门店状态 1-启用 2-注销，必填
-export function addStore( name, storeNo, province, city, address, phone, paymentDesciption, status, photoId) {
-	return fly.request( '/merchant/store/app/save', qs.stringify({
+export function addStore(name, storeNo, province, city, address, phone, paymentDesciption, status, photoId) {
+	return fly.request('/merchant/store/app/save', qs.stringify({
 		name,
 		storeNo,
 		province,
@@ -235,7 +238,7 @@ export function addStore( name, storeNo, province, city, address, phone, payment
 		paymentDesciption,
 		status,
 		photoId
-	}),{
+	}), {
 		method: 'post',
 	})
 }
@@ -243,8 +246,8 @@ export function addStore( name, storeNo, province, city, address, phone, payment
 //name -门店名称, storeNo -门店编号, province -省, city -市, address -门店地址, 
 //phone -门店电话, paymentDesciption -支付凭证描述, status -门店状态, photoId -图片Id, id -门店id
 //参数status：门店状态 1-启用 2-注销，必填
-export function changeStore( name, storeNo, province, city, address, phone, paymentDesciption, status, photoId, id) {
-	return fly.request( '/merchant/store/app/update', qs.stringify({
+export function changeStore(name, storeNo, province, city, address, phone, paymentDesciption, status, photoId, id) {
+	return fly.request('/merchant/store/app/update', qs.stringify({
 		name,
 		storeNo,
 		province,
@@ -255,7 +258,7 @@ export function changeStore( name, storeNo, province, city, address, phone, paym
 		status,
 		photoId,
 		id
-	}),{
+	}), {
 		method: 'post',
 	})
 }
@@ -264,17 +267,17 @@ export function changeStore( name, storeNo, province, city, address, phone, paym
 //参数userType：职位 2:店长,3:员工
 //参数status： 状态 1启用,2注销
 //参数name：搜索名字，可选
-export function getStaffList ( pageNumber, pageSize, userType, status, storeId, name) {
+export function getStaffList(pageNumber, pageSize, userType, status, storeId, name) {
 	return fly.request({
-		url : '/merchant/user/app/list', 
+		url: '/merchant/user/app/list',
 		method: 'get',
 		params: {
-			 pageNumber,
-			 pageSize,
-			 userType,
-			 status,
-			 storeId,
-			 name
+			pageNumber,
+			pageSize,
+			userType,
+			status,
+			storeId,
+			name
 		}
 	})
 }
@@ -284,8 +287,8 @@ export function getStaffList ( pageNumber, pageSize, userType, status, storeId, 
 //参数storeId：若是店长添加,不传
 //参数status：员工状态 1:启用  2：禁用
 //参数userType：角色 2:店长 3:店员
-export function addStaff( username, password, name, phone, storeId, status, userType, photoId, sex) {
-	return fly.request( '/merchant/user/app/save', qs.stringify({
+export function addStaff(username, password, name, phone, storeId, status, userType, photoId, sex) {
+	return fly.request('/merchant/user/app/save', qs.stringify({
 		username,
 		password,
 		name,
@@ -295,7 +298,7 @@ export function addStaff( username, password, name, phone, storeId, status, user
 		userType,
 		photoId,
 		sex
-	}),{
+	}), {
 		method: 'post',
 	})
 }
@@ -304,8 +307,8 @@ export function addStaff( username, password, name, phone, storeId, status, user
 //参数storeId：若是店长添加,不传
 //参数status：员工状态 1:启用  2：禁用
 //参数userType：角色 2:店长 3:店员
-export function changeStaff( id, name, phone, storeId, status, userType, photoId) {
-	return fly.request( '/merchant/user/app/update', qs.stringify({
+export function changeStaff(id, name, phone, storeId, status, userType, photoId) {
+	return fly.request('/merchant/user/app/update', qs.stringify({
 		id,
 		name,
 		phone,
@@ -313,14 +316,14 @@ export function changeStaff( id, name, phone, storeId, status, userType, photoId
 		status,
 		userType,
 		photoId
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 /* 查看员工详情 */
-export function getStaffDetails ( id) {
+export function getStaffDetails(id) {
 	return fly.request({
-		url : '/merchant/user/app/detail', 
+		url: '/merchant/user/app/detail',
 		method: 'get',
 		params: {
 			id
@@ -329,45 +332,45 @@ export function getStaffDetails ( id) {
 }
 
 /* 编辑订单备注 */
-export function editRemarks( orderNumber, remarks) {
-	return fly.request( '/order/app/edit_remarks', qs.stringify({
+export function editRemarks(orderNumber, remarks) {
+	return fly.request('/order/app/edit_remarks', qs.stringify({
 		orderNumber,
 		remarks
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 
 /* 门店图片上传 */
-export function storeFilesUpload( files) {
-	console.log("files==="+files)
-	return fly.request( '/fms/upload/files_upload/file/store', qs.stringify({
+export function storeFilesUpload(files) {
+	console.log("files===" + files)
+	return fly.request('/fms/upload/files_upload/file/store', qs.stringify({
 		files
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 /* 用户图片上传 */
-export function userFilesUpload( files) {
-	return fly.request( '/fms/upload/files_upload/file/user', qs.stringify({
+export function userFilesUpload(files) {
+	return fly.request('/fms/upload/files_upload/file/user', qs.stringify({
 		files
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 /* 图片回显 */
-export function getImgThumbnail ( photoId) {
+export function getImgThumbnail(photoId) {
 	return fly.request({
-		url : '/fms/upload/resource/thumbnail/'+ photoId, 
+		url: '/fms/upload/resource/thumbnail/' + photoId,
 		method: 'get',
 	})
 }
 
 /* 二维码管理部分 */
 /* 简易员工列表（无参数） */
-export function getstaffListSelectItem (storeId) {
+export function getstaffListSelectItem(storeId) {
 	return fly.request({
-		url : '/merchant/qrcode/app/user/select_item/find_by_user_id', 
+		url: '/merchant/qrcode/app/user/select_item/find_by_user_id',
 		method: 'get',
 		params: {
 			storeId
@@ -376,9 +379,9 @@ export function getstaffListSelectItem (storeId) {
 }
 
 /* 二维码列表 */
-export function getQRcodeList (pageNumber, pageSize, storeId, status, userId, name) {
+export function getQRcodeList(pageNumber, pageSize, storeId, status, userId, name) {
 	return fly.request({
-		url : '/merchant/qrcode/app/list', 
+		url: '/merchant/qrcode/app/list',
 		method: 'get',
 		params: {
 			pageNumber,
@@ -392,8 +395,8 @@ export function getQRcodeList (pageNumber, pageSize, storeId, status, userId, na
 }
 
 /* 添加二维码 */
-export function addQRcode (name, storeId, userId, money, description, flag, blankQrCodeId) {
-	return fly.request( '/merchant/qrcode/app/save', qs.stringify({
+export function addQRcode(name, storeId, userId, money, description, flag, blankQrCodeId) {
+	return fly.request('/merchant/qrcode/app/save', qs.stringify({
 		name,
 		storeId,
 		userId,
@@ -401,29 +404,29 @@ export function addQRcode (name, storeId, userId, money, description, flag, blan
 		description,
 		flag,
 		blankQrCodeId
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 
 /* 修改二维码 */
-export function changeQRcode (name, storeId, userId, money, description, id) {
-	return fly.request( '/merchant/qrcode/app/update', qs.stringify({
+export function changeQRcode(name, storeId, userId, money, description, id) {
+	return fly.request('/merchant/qrcode/app/update', qs.stringify({
 		name,
 		storeId,
 		userId,
 		money,
 		description,
 		id
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 
 /* 二维码详情 */
-export function getQRcodeDetail (id) {
+export function getQRcodeDetail(id) {
 	return fly.request({
-		url : '/merchant/qrcode/app/detail', 
+		url: '/merchant/qrcode/app/detail',
 		method: 'get',
 		params: {
 			id
@@ -434,9 +437,9 @@ export function getQRcodeDetail (id) {
 /* 扫描空二维码 */
 //作用：1.扫描的二维码未激活时，将其激活。2.扫描的二维码已激活时，跳转至二维码重定向的支付页面
 //参数：扫描的二维码中的id
-export function scanBlankQRcode (blankQrCodeId) {
+export function scanBlankQRcode(blankQrCodeId) {
 	return fly.request({
-		url : '/merchant/store/qrcode/scan_blank_qrcode', 
+		url: '/merchant/store/qrcode/scan_blank_qrcode',
 		method: 'get',
 		params: {
 			blankQrCodeId
@@ -446,11 +449,11 @@ export function scanBlankQRcode (blankQrCodeId) {
 
 /* 统计-首页 */
 /* 查询统计页面基本数据 */
-export function getStatistics (start_payTime, end_payTime, storeId, userId) {
+export function getStatistics(start_payTime, end_payTime, storeId, userId) {
 	return fly.request({
-		url : '/order/app/statistics', 
+		url: '/order/app/statistics',
 		method: 'get',
-		params:{
+		params: {
 			start_payTime,
 			end_payTime,
 			storeId,
@@ -458,36 +461,39 @@ export function getStatistics (start_payTime, end_payTime, storeId, userId) {
 		}
 	})
 }
-/* 支付方式 *//* 饼图 */
-export function getStatisticsWayPieChart (start_payTime, end_payTime, storeId) {
+/* 支付方式 */
+/* 饼图 */
+export function getStatisticsWayPieChart(start_payTime, end_payTime, storeId) {
 	return fly.request({
-		url : '/order/app/way_pie_chart', 
+		url: '/order/app/way_pie_chart',
 		method: 'get',
-		params:{
+		params: {
 			start_payTime,
 			end_payTime,
 			storeId
 		}
 	})
 }
-/* 支付终端 *//* 饼图 */
-export function getStatisticsClientPieChart (start_payTime, end_payTime, storeId) {
+/* 支付终端 */
+/* 饼图 */
+export function getStatisticsClientPieChart(start_payTime, end_payTime, storeId) {
 	return fly.request({
-		url : '/order/app/client_pie_chart', 
+		url: '/order/app/client_pie_chart',
 		method: 'get',
-		params:{
+		params: {
 			start_payTime,
 			end_payTime,
 			storeId
 		}
 	})
 }
-/* 近5日订单金额趋势 *//* 折线图 */
-export function getStatisticsFiveDayOrderMoneyTrend (start_payTime, end_payTime, storeId) {
+/* 近5日订单金额趋势 */
+/* 折线图 */
+export function getStatisticsFiveDayOrderMoneyTrend(start_payTime, end_payTime, storeId) {
 	return fly.request({
-		url : '/order/app/five_day_order_money_trend', 
+		url: '/order/app/five_day_order_money_trend',
 		method: 'get',
-		params:{
+		params: {
 			start_payTime,
 			end_payTime,
 			storeId
@@ -498,11 +504,11 @@ export function getStatisticsFiveDayOrderMoneyTrend (start_payTime, end_payTime,
 /* 会员部分 */
 /* 获取会员列表 */
 //参数phoneOrNum：电话号码或会员号
-export function getMemberList (phoneOrNum, pageNum, pageSize) {
+export function getMemberList(phoneOrNum, pageNum, pageSize) {
 	return fly.request({
-		url : '/member/member/app/find_member_list', 
+		url: '/member/member/app/find_member_list',
 		method: 'get',
-		params:{
+		params: {
 			phoneOrNum,
 			pageNum,
 			pageSize,
@@ -510,62 +516,62 @@ export function getMemberList (phoneOrNum, pageNum, pageSize) {
 	})
 }
 /* 会员详情 */
-export function getMemberDetail (id ) {
+export function getMemberDetail(id) {
 	return fly.request({
-		url : '/member/member/app/member_detail', 
+		url: '/member/member/app/member_detail',
 		method: 'get',
-		params:{
+		params: {
 			id
 		}
 	})
 }
 /* 会员手机验证码 */
-export function getMemberPhoneCode (phone ) {
+export function getMemberPhoneCode(phone) {
 	return fly.request({
-		url : '/member/admin/phone_verification_code', 
+		url: '/member/admin/phone_verification_code',
 		method: 'get',
-		params:{
+		params: {
 			phone
 		}
 	})
 }
 /* 会员注册 */
 // export function addMember (phone, nickname, birthday, sex, code) {
-export function addMember (phone, nickname, birthday, sex) {
-	return fly.request( '/member/admin/register', qs.stringify({
+export function addMember(phone, nickname, birthday, sex) {
+	return fly.request('/member/admin/register', qs.stringify({
 		phone,
 		nickname,
 		birthday,
 		sex
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 /* 会员修改 */
-export function changeMember (id, nickname, birthday, head) {
-	return fly.request( '/member/member/update', qs.stringify({
+export function changeMember(id, nickname, birthday, head) {
+	return fly.request('/member/member/update', qs.stringify({
 		id,
 		nickname,
 		birthday,
 		head,
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 /* 获取商户储值规则 */
 //只需要token
-export function getStoreMerchantId () {
+export function getStoreMerchantId() {
 	return fly.request({
-		url : '/member/store_rule/app/find_by_merchant_id', 
+		url: '/member/store_rule/app/find_by_merchant_id',
 		method: 'get',
 		params: {
-			
+
 		}
 	})
 }
 /* 会员储值 */
 //参数：memberId：会员id、storeRuleId：储值规则id、authCode：付款码
-export function storeMoney (memberId, storeRuleId, authCode, money, merchantId, storeId) {
+export function storeMoney(memberId, storeRuleId, authCode, money, merchantId, storeId) {
 	// return fly.request( '/member/store/app/store_money', qs.stringify({
 	// 	memberId,
 	// 	storeRuleId,
@@ -573,7 +579,7 @@ export function storeMoney (memberId, storeRuleId, authCode, money, merchantId, 
 	// }),{
 	// 	method: 'post',
 	// })
-	return fly.request( '/member/pay/applet/store_money_member', qs.stringify({
+	return fly.request('/member/pay/applet/store_money_member', qs.stringify({
 		memberId,
 		storeRuleId,
 		authCode,
@@ -584,14 +590,14 @@ export function storeMoney (memberId, storeRuleId, authCode, money, merchantId, 
 		rechargeFlag: 2,
 		disCountPrice: 0,
 		payWay: 2
-	}),{
+	}), {
 		method: 'get',
 	})
 }
 /* 会员优惠券列表 */
-export function getCouponList (pageNumber, pageSize, memberId, status=1) {
+export function getCouponList(pageNumber, pageSize, memberId, status = 1) {
 	return fly.request({
-		url : '/member/person_coupon/app/find_person_coupon', 
+		url: '/member/person_coupon/app/find_person_coupon',
 		method: 'get',
 		params: {
 			pageNumber,
@@ -602,9 +608,9 @@ export function getCouponList (pageNumber, pageSize, memberId, status=1) {
 	})
 }
 /* 会员积分明细列表 */
-export function getIntegralList (pageNumber, pageSize, start_tradeTime, end_tradeTime, storeId, infoType, memberNum) {
+export function getIntegralList(pageNumber, pageSize, start_tradeTime, end_tradeTime, storeId, infoType, memberNum) {
 	return fly.request({
-		url : 'member/credits_info/app/find_list', 
+		url: 'member/credits_info/app/find_list',
 		method: 'get',
 		params: {
 			pageNumber,
@@ -618,9 +624,9 @@ export function getIntegralList (pageNumber, pageSize, start_tradeTime, end_trad
 	})
 }
 /* 会员积分详情 */
-export function getIntegralDetail (id) {
+export function getIntegralDetail(id) {
 	return fly.request({
-		url : 'member/credits_info/app/find_detail', 
+		url: 'member/credits_info/app/find_detail',
 		method: 'get',
 		params: {
 			id
@@ -629,9 +635,9 @@ export function getIntegralDetail (id) {
 }
 /* 会员积分商城 */
 /* 积分商城商品列表（含查找） */
-export function getGoodsList (status, productName, pageNumber, pageSize) {
+export function getGoodsList(status, productName, pageNumber, pageSize) {
 	return fly.request({
-		url : '/member/credits_product/app/list_re', 
+		url: '/member/credits_product/app/list_re',
 		method: 'get',
 		params: {
 			status,
@@ -642,9 +648,9 @@ export function getGoodsList (status, productName, pageNumber, pageSize) {
 	})
 }
 /* 商品详细 */
-export function getGoodsDetail (id) {
+export function getGoodsDetail(id) {
 	return fly.request({
-		url : '/member/credits_product/app/search', 
+		url: '/member/credits_product/app/search',
 		method: 'get',
 		params: {
 			id,
@@ -652,38 +658,38 @@ export function getGoodsDetail (id) {
 	})
 }
 /* 兑换商品 */
-export function exchangeGoods (operator, phone, productId, memberId, app, storeid) {
-	return fly.request( '/member/exchange_product/app/exchange', qs.stringify({
+export function exchangeGoods(operator, phone, productId, memberId, app, storeid) {
+	return fly.request('/member/exchange_product/app/exchange', qs.stringify({
 		operator,
 		phone,
 		productId,
 		memberId,
 		app,
 		storeid
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 /* 扫码核销卡券 */
-export function checkCoupon (code) {
-	return fly.request( '/member/person_coupon/check_code', qs.stringify({
+export function checkCoupon(code) {
+	return fly.request('/member/person_coupon/check_code', qs.stringify({
 		code
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 /* 扫码核销商品 */
-export function checkStatusGoods (code) {
-	return fly.request( '/member/exchange_product/app/check_status', qs.stringify({
+export function checkStatusGoods(code) {
+	return fly.request('/member/exchange_product/app/check_status', qs.stringify({
 		code
-	}),{
+	}), {
 		method: 'post',
 	})
 }
 /* 会员手机查找会员 */
-export function findMember (phone) {
+export function findMember(phone) {
 	return fly.request({
-		url : '/member/member/app/find_member_by_phone', 
+		url: '/member/member/app/find_member_by_phone',
 		method: 'get',
 		params: {
 			phone,
@@ -693,55 +699,58 @@ export function findMember (phone) {
 
 /* 会员分析部分 */
 /* 会员分析 */
-export function getMemberAnalyseConsumeActivityLevel (startTime, endTime) {
+export function getMemberAnalyseConsumeActivityLevel(startTime, endTime) {
 	return fly.request({
-		url : '/member/member/app/member_analyse_consume_activity_level', 
+		url: '/member/member/app/member_analyse_consume_activity_level',
 		method: 'get',
-		params:{
+		params: {
 			startTime,
 			endTime,
 		}
 	})
 }
 /* 新增会员数量和会员总量 */
-export function getMemberAnalyseCard (startTime, endTime) {
+export function getMemberAnalyseCard(startTime, endTime) {
 	return fly.request({
-		url : '/member/member/app/member_analyse_card', 
+		url: '/member/member/app/member_analyse_card',
 		method: 'get',
-		params:{
+		params: {
 			startTime,
 			endTime,
 		}
 	})
 }
-/* 新增会员数量和会员总量 *//* 按时间 */
-export function getMemberAnalyseChartByTime (startTime, endTime) {
+/* 新增会员数量和会员总量 */
+/* 按时间 */
+export function getMemberAnalyseChartByTime(startTime, endTime) {
 	return fly.request({
-		url : '/member/member/app/member_analyse_chart_by_time', 
+		url: '/member/member/app/member_analyse_chart_by_time',
 		method: 'get',
-		params:{
+		params: {
 			startTime,
 			endTime,
 		}
 	})
 }
-/* 新增会员数量和会员总量 *//* 按渠道 */
-export function getMemberAnalyseChartByChannel (startTime, endTime) {
+/* 新增会员数量和会员总量 */
+/* 按渠道 */
+export function getMemberAnalyseChartByChannel(startTime, endTime) {
 	return fly.request({
-		url : '/member/member/app/member_analyse_chart_by_channel', 
+		url: '/member/member/app/member_analyse_chart_by_channel',
 		method: 'get',
-		params:{
+		params: {
 			startTime,
 			endTime,
 		}
 	})
 }
-/* 新增会员数量和会员总量 *//* 按性别 */
-export function getMemberAnalyseChartBySex (startTime, endTime) {
+/* 新增会员数量和会员总量 */
+/* 按性别 */
+export function getMemberAnalyseChartBySex(startTime, endTime) {
 	return fly.request({
-		url : '/member/member/app/member_analyse_chart_by_sex', 
+		url: '/member/member/app/member_analyse_chart_by_sex',
 		method: 'get',
-		params:{
+		params: {
 			startTime,
 			endTime,
 		}
@@ -749,11 +758,11 @@ export function getMemberAnalyseChartBySex (startTime, endTime) {
 }
 /* 会员消费记录列表-总 */
 //参数：startTime和endTime必须存在
-export function getMemberRecord (pageNumber, pageSize, storeId, payStatus, payWay, startTime, endTime, orderNumber) {
+export function getMemberRecord(pageNumber, pageSize, storeId, payStatus, payWay, startTime, endTime, orderNumber) {
 	return fly.request({
-		url : '/member/store_record/app/consume/all/list', 
+		url: '/member/store_record/app/consume/all/list',
 		method: 'get',
-		params:{
+		params: {
 			pageNumber,
 			pageSize,
 			storeId,
@@ -767,11 +776,11 @@ export function getMemberRecord (pageNumber, pageSize, storeId, payStatus, payWa
 }
 /* 会员消费记录列表-单会员(储值记录) */
 //参数：startTime和endTime必须存在
-export function getMemberRecordOne (pageNumber, pageSize, payWay, startTime, endTime, memberId) {
+export function getMemberRecordOne(pageNumber, pageSize, payWay, startTime, endTime, memberId) {
 	return fly.request({
-		url : '/member/store_record/app/consume/customer/list', 
+		url: '/member/store_record/app/consume/customer/list',
 		method: 'get',
-		params:{
+		params: {
 			pageNumber,
 			pageSize,
 			payWay,
@@ -782,11 +791,11 @@ export function getMemberRecordOne (pageNumber, pageSize, payWay, startTime, end
 	})
 }
 /* 会员消费记录详情 */
-export function getRecordDetail (id) {
+export function getRecordDetail(id) {
 	return fly.request({
-		url : '/member/store_record/app/consume/detail', 
+		url: '/member/store_record/app/consume/detail',
 		method: 'get',
-		params:{
+		params: {
 			id
 		}
 	})
@@ -798,7 +807,7 @@ export function getRecordDetail (id) {
  * @param {Object} merchantId			商户id
  * @param {Object} fromRange			1平台所有商户 2一级代理所有商户 3二级代理所有商户 4指定商户 5指定城市 6客户小程序 7客户付完款页面 8启动页 9会员支付页 10支付成功页
  */
-export function getAdvertises (merchantId, fromRange = 1) {
+export function getAdvertises(merchantId, fromRange = 1) {
 	return fly.get('/advertise/advertise/view', qs.stringify({
 		merchantId,
 		fromRange
@@ -811,7 +820,7 @@ export function getAdvertises (merchantId, fromRange = 1) {
  * @param {Object} advertiseId			广告id
  * @param {Object} fromRange			1平台所有商户 2一级代理所有商户 3二级代理所有商户 4指定商户 5指定城市 6客户小程序 7客户付完款页面 8启动页 9会员支付页 10支付成功页
  */
-export function clickAdvertise (advertiseId, merchantId, fromRange = 1) {
+export function clickAdvertise(advertiseId, merchantId, fromRange = 1) {
 	return fly.get('/advertise/advertise/click', qs.stringify({
 		merchantId,
 		advertiseId,
@@ -841,47 +850,57 @@ export function frogJump(url) {
 }
 
 /* 随行付支付 */
-export function webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, bankCardId) {
+export function webPay(params) {
 	// payChannel, serviceId, bankCardId  手机pos用的字段，其他业务可不加
-	return fly.request({
-		url : '/order/app/web_pay', 
+	return fly.post('/api/supervision/api/busiorder', params, {parseJson: true})
+	/* return fly.request({
+		url: '/api/supervision/api/busiorder',
 		method: 'POST',
+		params: params,
+		parseJson:true,
 		params: {
 			userId,
 			merchantId,
 			storeId,
-			totalPrice ,
+			totalPrice,
 			payWay,
-			payChannel, 
-			serviceId, 
-			bankId:bankCardId
+			payChannel,
+			serviceId,
+			bankId: bankCardId
 		}
-	})
+	}) */
 }
 
 /* 下单确认 */
-export function transactionSure(chSerialNo, checkCode, serviceId, chMerCode, orderCode) {
+export function transactionSure(chSerialNo, checkCode, chMerCode, orderCode) {
+	let params = {
+		chSerialNo, 
+		checkCode, 
+		chMerCode, 
+		orderCode
+	}
+	
 	// chSerialNo第三方下单返回的交易流水号
 	// checkCode短信验证码
 	// serviceId服务商id
 	// chMerCode通道商户编号
-	return fly.request({
-		url : '/order/app/quickPayConfirmApi', 
+	return fly.post('/api/supervision/api/busiorder/quickPayConfirm', params, {parseJson: true})
+	/* return fly.request({
+		url: '/api/supervision/api/busiorder/quickPayConfirm',
 		method: 'POST',
 		params: {
 			chSerialNo,
 			checkCode,
-			serviceId, 
 			chMerCode,
 			orderCode
 		}
-	})
+	}) */
 }
 
 /* 获取域名 */
 export function getDomain() {
 	return fly.request({
-		url: '/auth/admin/app/user/domain', 
+		url: '/auth/admin/app/user/domain',
 		method: 'GET'
 	})
 }
@@ -918,7 +937,10 @@ export function getTicketSetting() {
  */
 export function getClassifyData(likeName, name, parentCode, level) {
 	return fly.get('/billing/backend/goods_codes', qs.stringify({
-		likeName, name, parentCode, level
+		likeName,
+		name,
+		parentCode,
+		level
 	}))
 }
 
@@ -945,7 +967,8 @@ export function updateTicketSetting(id, name, vatRate, lowerLimit, upperLimit, i
 /**
  * 创建开票设置
  */
-export function createTicketSetting(taxpayerIdentificationNum, lowerLimit, upperLimit, name, goodsCode, vatRate, issuer, defaultSetting = true) {
+export function createTicketSetting(taxpayerIdentificationNum, lowerLimit, upperLimit, name, goodsCode, vatRate, issuer,
+	defaultSetting = true) {
 	return fly.post('/billing/backend/create', qs.stringify({
 		defaultSetting,
 		goodsCode,
@@ -1004,7 +1027,7 @@ export function createOrder(merchantId, storeId, totalPrice) {
  */
 export function updateOrder(order) {
 	return fly.post('/order/app/pos_update_order', order)
-} 
+}
 
 /**
  * pos机退款校验
@@ -1029,7 +1052,7 @@ export function posRefundValid(orderNumber, refundPayPrice, password) {
 export function posRefund(orderNumber, refundPayPrice, password) {
 	return fly.post('/order/app/pos_refund', {
 		orderNumber,
-		refundPayPrice, 
+		refundPayPrice,
 		password
 	})
 }
@@ -1279,7 +1302,7 @@ export function getUserInfo(id) {
 
 /**
  * addOrEditBankCark  添加和编辑银行卡
- * @param {Object} merchantId 商户ID
+ * @param {Object} userId 用户ID
  * @param {Object} realName 开户人名称
  * @param {Object} idCard  身份证号
  * @param {Object} accNo  支付卡号
@@ -1288,9 +1311,9 @@ export function getUserInfo(id) {
  * @param {Object} validity 有效期 格式： MMYY
  * @param {Object} id bankid  银行卡id
  */
-export function addOrEditBankCard(merchantId, realName, accNo, mobile, cvv2, validity, bankName, idCard, id) {
+export function addOrEditBankCard(userId, realName, accNo, mobile, cvv2, validity, bankName, idCard, id) {
 	let data = {
-		merchantId,
+		userId,
 		realName,
 		accNo,
 		mobile,
@@ -1298,40 +1321,55 @@ export function addOrEditBankCard(merchantId, realName, accNo, mobile, cvv2, val
 		validity,
 		bankName,
 		idCard,
-		id
 	}
-	return fly.post('/order/bank/saveAndFlush', qs.stringify(data))
+	if (id) {
+		data.id = id
+		return fly.put('/api/supervision/api/databandpaycard', data, {
+			method: 'put',
+			parseJson: true,
+		})
+	} else {
+		return fly.post('/api/supervision/api/databandpaycard', data, {
+
+			parseJson: true,
+		})
+	}
+
+
 }
 /**
  * bankCarkList  查询商户的银行卡列表
- * @param {Object} merchantId 商户ID
+ * @param {Object}  limit 每页显示记录数
+ *  page 当前页码，从1开始
  */
-export function bankCarkList(merchantId) {
+export function bankCarkList() {
 	let data = {
-		merchantId
+		limit: 100,
+		page: 1
 	}
-	return fly.post('/order/bank/getBankList', qs.stringify(data))
+	return fly.get('/api/supervision/api/databandpaycard/page', data)
 }
 /**
- * bankCarkList  查询银行卡信息
+ * 修改卡信息用，暂时修改功能已下架
+ * bankCarkList  查询银行卡信息  
  * @param {Object} id 银行卡id
  */
 export function bankCardInfo(id) {
 	let data = {
 		id
 	}
-	return fly.post('/order/bank/getOne', qs.stringify(data))
-}		
+	return fly.get(`/api/supervision/api/databandpaycard/${id}`)
+}
 /**
  * bankCarkList  删除银行卡
  * @param {Object} id 银行卡id
  */
-export function delBankCard(id) {
-	let data = {
-		id
-	}
-	return fly.post('/order/bank/delete', qs.stringify(data))
-}					
+export function delBankCard(ids) {
+	
+	// let idsStr = JSON.stringify(ids)
+	// return fly.request("/api/supervision/api/databandpaycard", ids, {method:"delete"})
+	return fly.post('/api/supervision/api/databandpaycard/delete', ids, {parseJson: true})
+}
 /**
  * chanpayPreSign  畅捷预授权
  * @param {Object} id 银行卡号
@@ -1358,8 +1396,16 @@ export function chanpayPreSignSure(accNo, captcha) {
  * 团队列表信息
  */
 export function getGroupUsersInfo() {
-	
+
 	return fly.get('/api/supervision/api/sys/user/getToC')
 }
 
-// 团队管理结束
+
+/**
+ * 判断是否已经注册商户和进件
+ */
+export function regeditAndIncomeStatus() {
+
+	return fly.get('/api/supervision/api/public/regeditAndIncomeStatus')
+}
+

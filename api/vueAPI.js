@@ -150,20 +150,12 @@ export function refund(orderNumber, refundPayPrice, password) {
 }
 
 /* 获取订单列表 */
-export function getOrderList(pageNumber, pageSize, start_payTime, end_payTime, payWay, status, storeId, orderNumber) {
+export function getOrderList(params) {
 	return fly.request({
-		url: '/order/app/query_order',
+		// url: '/order/app/query_order',
+		url: '/api/supervision/api/busiorder/page',
 		method: 'get',
-		params: {
-			pageNumber,
-			pageSize,
-			start_payTime,
-			end_payTime,
-			payWay,
-			status,
-			storeId,
-			orderNumber
-		}
+		params:params
 	})
 }
 /* 获取订单详情 */

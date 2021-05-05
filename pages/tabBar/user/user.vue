@@ -54,10 +54,16 @@
 						url: '/pages/user/enterChannel/enterChannel'
 					},
 					'selectCard':{
-						image: '../../../static/tabBar/workinfo.png',
+						image: '../../../static/tabBar/icon_card.png',
 						name: '卡管理',
 						remarks: '',
 						url: '/pages/home/quickPay/selectCard'
+					},
+					'cashOut':{
+						image: '../../../static/tabBar/icon_money.png',
+						name: '钱包',
+						remarks: '',
+						url: '/pages/user/cashOut/cashOut'
 					},
 					'about':{
 						image: '../../../static/tabBar/icon_about.png',

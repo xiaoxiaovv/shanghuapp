@@ -14,22 +14,14 @@
 			</view>
 			<view>
 				<text class="ly-font-color-9">订单状态</text>
-				<text>{{orderDetails.status | orderStatusFilters}}</text>
-			</view>
-			<view>
-				<text class="ly-font-color-9">门店</text>
-				<text>{{orderDetails.storeName || ''}}</text>
-			</view>
-			<view>
-				<text class="ly-font-color-9">收银员</text>
-				<text>{{orderDetails.username || ''}}</text>
+				<text>{{orderDetails.state | orderStatusFilters}}</text>
 			</view>
 		</view>
 		<view class="ly-gray-height"></view>
 		<view class="lf-list">
 			<view>
 				<text class="ly-font-color-9">订单编号</text>
-				<text>{{orderDetails.orderNumber || ''}}</text>
+				<text>{{orderDetails.id || ''}}</text>
 			</view>
 			<view>
 				<text class="ly-font-color-9">支付方式</text>
@@ -40,36 +32,32 @@
 					<text class="meat">{{orderDetails.payWay | payWayFilters}}</text>
 				</text>
 			</view>
-			<view>
+			<!-- <view>
 				<text class="ly-font-color-9">支付终端</text>
 				<text>{{orderDetails.payClient | payClientFilters}}</text>
-			</view>
+			</view> -->
 			<view>
 				<text class="ly-font-color-9">支付渠道</text>
 				<text>{{orderDetails.payChannel | payChannelFilters}}</text>
 			</view>
-			<view>
+			<!-- <view>
 				<text class="ly-font-color-9">支付时间</text>
 				<text>{{orderDetails.payTime || ''}}</text>
-			</view>
+			</view> -->
 			<view>
 				<text class="ly-font-color-9">创建时间</text>
-				<text>{{orderDetails.createTime || ''}}</text>
+				<text>{{orderDetails.createDate || ''}}</text>
 			</view>
-			<view>
-				<text class="ly-font-color-9">参考号</text>
-				<text v-if="orderDetails.payClient == 4">{{orderDetails.transactionId ? orderDetails.transactionId : ''}}</text>
-				<text v-else></text>
-			</view>
+			
 		</view>
 		<view class="ly-gray-height"></view>
-		<view class="lf-list">
+		<!-- <view class="lf-list">
 			<view>
 				<text class="ly-font-color-9">退款金额</text>
 				<text>
-					<!-- <text>{{ (orderDetails.actPayPrice - orderDetails.remainPrice) | dealWithMoney }}</text> -->
+					
 					<text>{{ (orderDetails.refundPayPrice) | dealWithMoney }}</text>
-					<!-- <text class="icon-unfold"></text> -->
+					
 				</text>
 			</view>
 			<view v-if="orderDetails.refundTime">
@@ -84,8 +72,8 @@
 				<text class="ly-font-color-9">订单备注</text>
 				<text>{{orderDetails.remarks | remarksFilters}}</text>
 			</view>
-		</view>
-		<view class="lf-btn">
+		</view> -->
+		<!-- <view class="lf-btn">
 			<view class="bg-ff8800" 
 				  @click="showRefundModal" 
 				  v-if="orderDetails.status == 2 && orderDetails.payWay !=8 || orderDetails.status == 6 && orderDetails.payWay !=8 || orderDetails.status === 7 && orderDetails.payWay !=8">
@@ -97,7 +85,7 @@
 			<view @click="showEditRemarksModel">
 				<text class="ly-font-color-main">编辑备注</text>
 			</view>
-		</view>
+		</view> -->
 		<!-- 退款 -->
 		<neil-modal 
 			:show="showModal" 
@@ -222,8 +210,9 @@
 		},
 		
 		onLoad(obj) {
-			this.orderNumber = obj.orderNumber;
-			this.getOrderDetail()
+			// this.orderNumber = obj.orderNumber;
+			this.orderDetails = JSON.parse(obj.orderInfoJsonStr)
+			// this.getOrderDetail()
 			// console.log(encodeToGb2312("一二三四1234"))
 		},
 		
@@ -259,32 +248,20 @@
 			payWayFilters,
 			orderStatusFilters(val) {
 				switch(parseInt(val)){
+					case 0:
+						return '已下单未确认';
+						break;
 					case 1:
-						return '未支付';
-						break;
-					case 2:
-						return '支付成功';
-						break;
-					case 3:
-						return '支付失败';
-						break;
-					case 4:
-						return '已撤销';
-						break;
-					case 5:
-						return '全额退款成功';
-						break;
-					case 6:
-						return '部分退款成功';
-						break;
-					case 7:
-						return '退款失败';
-						break;
-					case 8:
-						return '退款中';
+						return '订单确认成功';
 						break;
 					case 9:
-						return '撤销失败';
+						return '支付成功';
+						break;
+					case -1:
+						return '订单确认失败';
+						break;
+					case -9:
+						return '拒绝支付(支付失败)';
 						break;
 					default:
 						console.log("异常状态值："+val);

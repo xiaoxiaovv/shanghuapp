@@ -2,44 +2,25 @@
 	<view @click="closeCover">
 		<view class="lf-nav">
 			<view class="lf-nav-order">
-				<view class="lf-cover" v-if="isCover"></view>
-				<view class="lf-nav-mat"></view>
+				
+				
 				<!-- 导航栏-正常 -->
 				<view class="lf-nav-content padding" v-if="isShowSearch === false">
-					<image src="../../../static/order/icon_search_black.png" @click.stop="ShowSearch"></image>
-					<view>
-						<text v-if="isMerchant" class="text-weight" @click="jumpStoreSelect">
-							<text class="text-lg">{{storeName? storeName:'全部门店'}}</text>
-							<text class="icon-unfold"></text>
-						</text>
-						<text v-else class="text-weight">
-							<text class="text-lg">{{storeName? storeName:''}}</text>
-							<!-- <text class=""></text> -->
-						</text>
-					</view>
-					<view class="relative">
-						<!-- <image class="relative" src="../../../static/order/icon_jiahao.png" @click.stop="showMenu"></image>
-						<view class="lf-menu-popup" v-if="isShowMenu">
-							<view v-for="(menu,key) in addMenuList" @click="menuClick(menu.do)">
-								<image :src="menu.img"></image>
-								<view :class="{'lf-menu-text-line': key != addMenuList.length -1}">
-									<text>{{menu.text}}</text>
-								</view>
-							</view>
-						</view> -->
-					</view>
+					<!-- <image src="../../../static/order/icon_search_black.png" @click.stop="ShowSearch"></image> -->
+					
+					
 				</view>
 				<!-- 导航-搜索框 -->
-				<view class="lf-nav-content padding" v-else>
+				<!-- <view class="lf-nav-content padding" v-else>
 					<view class="lf-search-bg">
 						<image src="../../../static/order/icon_search.png"></image>
 						<input type="number" v-model="searchOrderId" :focus="isSearchInputFocus"/>
 					</view>
 					<text @click="closeSearch">取消</text>
-				</view>
+				</view> -->
 			</view>
 			<!-- 筛选栏 -->
-			<view class="lf-screen shadow">
+			<!-- <view class="lf-screen shadow">
 				<view class="lf-cover" v-if="isCover"></view>
 				<view class="view" @click.stop="onShowDatePicker('rangetime')">
 					<text>时间</text><text class="icon-unfold"></text>
@@ -69,24 +50,20 @@
 						</view>
 					</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<!-- <view class="lf-mat"></view> -->
 		
 		<!-- 顶部间隔 -->
-		<view 
-			class="match-width" 
-			style="height:390upx"
-			v-if="start_payTime && end_payTime">
-		</view>
+		
 		<view
 			class="match-width" 
-			style="height:210upx"
-			v-else>
+			style="height:116upx"
+			>
 		</view>
 		
-		<!-- 时间段展示 -->
-		<view
+		<!-- 按时间搜索结果 时间段展示 -->
+		<!-- <view
 			class="lf-time-show active box plr-30 ptb-10"
 			v-if="start_payTime && end_payTime">
 			<view class="match-width pt-20 pb-10">
@@ -101,7 +78,7 @@
 							@click="onQuestionClick"/>
 						订单金额：{{yenSymbol}} {{totalSummary['allPrice'] | dealWithMoney}}
 					</view>
-					<!-- <image src='/static/assets/images/q.png' style="width: 30upx;height: 30upx;"/> -->
+					
 				</view>
 				<view class="match-width align-left">
 					<view class="match-left-space">商户实收：{{yenSymbol}} {{totalSummary['actPrice'] | dealWithMoney}}</view>
@@ -111,59 +88,33 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		
 		<!-- 订单详情 -->
 		<mescroll-uni @down="downCallback" :up="mescrollUp" @up="upCallback" @init="mescrollInit">
 			<view 
-				class="match-width" 
-				v-for="(timeList, index) in orderList" 
-				:key="index">
-				<view class="lf-time-show box plr-30">
-					<view class="match-width pt-20 pb-10">
-						{{index}}
-					</view>
-					<view class="small match-width pb-20">
-						<view class="match-width align-left">
-							<view class="match-left-space">订单总数：{{timeList['orderCount'] || 0}}笔</view>
-							<view class="match-left-space align-left">
-								<view 
-									class="iconfont icon-wenhao mr-10"
-									@click="onQuestionClick"/>
-								订单金额：{{yenSymbol}} {{timeList['allPrice'] | dealWithMoney}}
-							</view>
-						</view>
-						<view class="match-width align-left">
-							<view class="match-left-space">商户实收：{{yenSymbol}} {{timeList['actPrice'] | dealWithMoney}}</view>
-							<view class="match-left-space align-left">
-								<view class="mr-36"></view>
-								商户实退：{{yenSymbol}} {{timeList['refundPrice'] | dealWithMoney}}
-							</view>
-						</view>
-					</view>
-				</view>
-				<view v-for="order in timeList.orders" :key="order.id" class="lf-orderList match-width align-left ptb-10" @click="jumpOrderDetails(order.orderNumber)">
-					<!-- <image :src="order.payWay === 1? '../../../static/order/icon_wechat_list.png': 
-						order.payWay === 2?'../../../static/order/icon_zhifubao_list.png':
-						order.payWay === 3? '../../../static/order/icon_unionpay_list.png':order.payChannel === 17? '../../../static/order/icon_pos_list.png':order.payChannel === 18? '../../../static/order/icon_quick_pay_list.png':'../../../static/order/icon_receive_money.png'"/>		 -->				
+				class="match-width" >
+					
+				<view v-for="order in orderList" :key="order.id" class="lf-orderList match-width align-left ptb-10" @click="jumpOrderDetails(order)">
+									
 					<image :src="order | payWayImgFilters"/>		
 					<view class="match-left-space align-ver-left"> 			
 						<view class="match-width align-hor-bet">
-							<view>{{yenSymbol}} {{(order.actPayPrice)}}</view>
+							<view>{{yenSymbol}} {{(order.totalPrice)}}</view>
 							<view class="ly-font-weight-500 ly-font-size-28">{{
-								order.status === 1? "未支付" : order.status === 2? "支付成功" : order.status === 3? "支付失败" :
-								order.status === 4? "已撤销" : order.status === 5? "全额退款成功" : order.status === 6? "部分退款成功" : 
-								order.status === 7? "退款失败" : order.status === 8? "退款中" : order.status === 9? "撤销失败" : "未知状态码"
+								order.state === 0? "已下单未确认" : order.state === 1? "订单确认成功" : order.state === 9? "支付成功" : order.state === -1? "订单确认失败" :
+								order.state === -9? "拒绝支付(支付失败)": "未知状态码"
 							}}</view>
 						</view>
 						<view class="ly-font-color-9 ly-font-size-24 match-width mt-10">
 							<text>{{
-								order.payTime[11]+order.payTime[12]+order.payTime[13]+order.payTime[14]+order.payTime[15]+order.payTime[16]+order.payTime[17]+order.payTime[18]
+								order.createDate
 							}}</text>
-							<!-- <text class=""><text class="text-sm">订单号：</text>{{order.orderNumber}}</text> -->
+							
 						</view>
 					</view>
 				</view>
+			
 			</view>
 		</mescroll-uni>
 		<!-- 日期picker插件 -->
@@ -648,9 +599,10 @@
 				})
 			},
 			/* 跳转订单详情（附订单号） */
-			jumpOrderDetails (orderNumber) {
+			jumpOrderDetails (orderInfo) {
+				let orderInfoJsonStr = JSON.stringify(orderInfo)
 				uni.navigateTo({
-					url: '/pages/order/orderDetails/orderDetails?orderNumber='+ orderNumber
+					url: '/pages/order/orderDetails/orderDetails?orderInfoJsonStr='+ orderInfoJsonStr
 				})
 			},
 			// mescroll组件初始化的回调,可获取到mescroll对象
@@ -667,7 +619,7 @@
 				this.getOrderLists( mescroll.num, mescroll.size, (res) => {
 					console.log("测试点1");
 					console.log(res);
-					let nowList = res.content;
+					let nowList = res.list;
 					// console.log(nowList);
 					// this.orderList = [];
 					let number = 0;		//本次数据数
@@ -676,67 +628,13 @@
 					if(mescroll.num == 1) {
 						this.orderList = nowList; //如果是第一页需手动制空列表
 					}else{
-						let key_index = 0;	//key指示位-是否完成相同天键值匹配
-								//想法优化，有漏洞：只判断新数据的第一条键值天（漏洞：可能会因自动排序问题，使最近一天变为最远一天。需测试）
-						for (let key in nowList) {
-							// console.log(key,this.orderList[key].orders,this.orderList)
-							// console.log(nowList[key])
-							//判断新数据的第一条键值天
-							if(key_index === 0){
-								// console.log("测试点2.1：进入新数据第一条键值判断",key,this.orderList)
-								let orderListKey_index = 1;		//指示位：1-第一条键值无匹配 | 0-已匹配
-								for (let orderListKey in this.orderList) {
-									// console.log(key,orderListKey)
-									if(key === orderListKey){
-										let tmpArr = nowList[key].orders
-										// 请求的数据可能发生变动
-										// nowList[key].orders = nowList[key].orders.filter((item) => {
-										// 	return (this.orderList[orderListKey].orders.filter((value) => {
-										// 		return value['id'] === item['id']
-										// 	}).length > 0)
-										// })
-										this.orderList[orderListKey].orders = this.orderList[orderListKey].orders.concat(nowList[key].orders);
-										nowList[key].orders = tmpArr
-										orderListKey_index = 0;
-									}
-								}
-								//无匹配时，直接插入后面
-								if(orderListKey_index){
-									this.orderList[key] = nowList[key];
-								}
-								key_index = 1;	//已处理完第一条键值
-							}else{//添加其他天的数据
-								this.orderList[key] = nowList[key];
-							}
-							// console.log("测试点2.2：添加完毕数据的列表",this.orderList)
-						}
+						this.orderList.push(nowList)
 					}
+					number = nowList.length;
 					
-					// let this.orderList
 					
-					// console.log(6666666, this.orderList)
-					for (let i in this.orderList) {
-						this.orderList[i].orders = this.orderList[i].orders.map((item) => {
-							if (/^[0-9]+\.[0-9]$/.test(item.actPayPrice)) {
-								item.actPayPrice = item.actPayPrice + '0'
-							} else if (/^[0-9]+$/.test(item.actPayPrice)) {
-								item.actPayPrice = item.actPayPrice + '.00'
-							}
-							return item
-						})
-					}
-					for(let i in nowList){
-						number += nowList[i].orders.length;
-					}
-					// 增加每个时间点实时统计
-					for (let time in this.orderList) {
-						this.getCountInfo(time)
-					}
-					if (this.start_payTime && this.end_payTime) {
-						this.getCountInfo(this.start_payTime, this.end_payTime)
-					}
 					//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
-					mescroll.endBySize(number, res.totalElements); //必传参数(当前页的数据个数, 总数据量)
+					mescroll.endBySize(number, res.total); //必传参数(当前页的数据个数, 总数据量)
 				}, (err) => {
 					// console.log('error！！');
 					console.log("错误测试点",err)
@@ -753,13 +651,16 @@
 				if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail){
 					storeId = nowStoreDetail.storeId
 				}
-				getOrderList( pageNumber, pageSize, this.start_payTime, this.end_payTime, this.payWay, this.status, storeId, this.orderNumber).then((res) => {
+				let params = {};
+				params.limit = pageSize;
+				params.page = pageNumber;
+				getOrderList( params).then((res) => {
 					// console.log(res);
-					// console.log(res.obj);
-					// this.orderList = res.obj;
+					// console.log(res.data);
+					// this.orderList = res.data;
 					// console.log("测试点0.5")
 					//联网成功的回调
-					successCallback && successCallback(res.obj);
+					successCallback && successCallback(res.data);
 				}).catch(err => {
 					console.log('error！！');
 					console.log(err);
@@ -860,7 +761,7 @@
 				if (timeEnd) {
 					this.queryOrderSummarySingle(time, timeEnd).then((res) => {
 						if (res && res.code === 200) {
-							this.totalSummary = res.obj || {}
+							this.totalSummary = res.data || {}
 						}
 					})
 				} else {
@@ -869,7 +770,7 @@
 						let ttt = time + ' 00:00:00'
 						this.queryOrderSummarySingle(ttt).then(res => {
 							if (res && res.code === 200) {
-								let { actPrice, refundPrice, allPrice, orderCount } = res.obj
+								let { actPrice, refundPrice, allPrice, orderCount } = res.data
 								this.orderList[time].actPrice = actPrice || ''
 								this.orderList[time].refundPrice = refundPrice || ''
 								this.orderList[time].allPrice = allPrice || ''

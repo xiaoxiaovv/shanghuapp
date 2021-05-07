@@ -1,5 +1,5 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [  //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 		    "path" : "pages/login/index/index",
 		    "style" : {
@@ -118,6 +118,15 @@
 				}
 			}
         }
+		,{
+		    "path" : "pages/home/joinUs/joinUs",
+		    "style" : {
+				"navigationBarTitleText": "加入我们",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
         ,{
             "path" : "pages/home/storeAdministration/index/index",
             "style" : {

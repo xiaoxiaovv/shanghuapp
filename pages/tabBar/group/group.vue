@@ -55,7 +55,7 @@
 			</view>
 			
 		</view>
-		<view class="match-width" style="height: 390upx;"></view>
+		<view class="match-width" style="height: 440upx;"></view>
 		<mescroll-uni class="plr-40"  @down="downCallback" :up="mescrollUp" @up="upCallback"  @init="mescrollInit">
 			<!-- <view class="" v-for="user in groupUsersInfo.userDetail" :key="user.id">
 				1233333
@@ -292,7 +292,7 @@
 		&__cover {
 			width: 100%;
 			position: absolute;
-			top: 0;
+			top: 40upx;
 				
 			.mark {
 				color: #4BA8FF;

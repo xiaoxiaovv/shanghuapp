@@ -55,7 +55,7 @@
 					},
 					'selectCard':{
 						image: '../../../static/tabBar/icon_card.png',
-						name: '卡管理',
+						name: '快捷支付卡管理',
 						remarks: '',
 						url: '/pages/home/quickPay/selectCard'
 					},

@@ -121,6 +121,8 @@
 			</view>
 
 			<view v-if="lastOrder && lastOrder.actPayPrice != 0" class='bar'></view>
+			<view :class="['page-home-x__menu align-left box plr-10', isSmall ? '': 'mt-20']">
+				
 			<!-- 两行两个 -->
 			<!-- <view class="lf-cash-register padding-sm shadow align-center box">
 				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
@@ -189,7 +191,21 @@
 
 			<!-- 补白 -->
 			<!-- <view class='match-left-space bg-white align-default'></view> -->
+			<view
+				:class="['item align-ver-bet box']" 
+				v-for="(menu, index) in menuList"  
+				v-if="menu.isShow === 1" 
+				:key='index'
+				@click="menuJump(menu.url, menu.status)">
+				<image
+					:class="[('img_3')]"
+					mode='scaleToFill'
+					:src="menu.src" >
+				</image>
+				<text>{{menu.name}}</text>
+			</view>
 		</view>
+		
 
 		<!-- 广告 -->
 		<view :class="['page-home-x__banner_x align-center', isSmall ? 'active' : '']" v-if="bannerData && bannerData.length">
@@ -316,7 +332,27 @@
 				paymentMoney: '0',
 				isNumberKeyboard: false, //是否打开键盘
 				isShowCashRegister: false, //是否显示收银
+				menuList: { //菜单 2
+				"memberCenter":{
+					src: '../../../static/homev2/hy.png',
+					name: '申请合作商',
+					url: '/pages/home/joinUs/joinUs',
+					status: 1,
+					isShow: 1,
+					iconWidth: 44,
+					iconHeight: 38
+				}
+				},
 				menuListTwo: { //菜单 2
+			/* 	"memberCenter":{
+					src: '../../../static/homev2/hy.png',
+					name: '会员中心',
+					url: '/pages/home/memberCenter/index/index',
+					status: 1,
+					isShow: 1,
+					iconWidth: 44,
+					iconHeight: 38
+				} */
 				},
 				keyMode: 'number', //键盘组件-类型	keyboard-普通键盘 car-汽车键盘 number-数字键盘
 				keyType: 0, //键盘组件-使用状态  0-全部可用||number类型时 1-全部禁用
@@ -1145,8 +1181,9 @@
 					token,
 					totalPrice
 				}
+				
 				let posDataObjStr = JSON.stringify(posDataObj);
-				// console.log('posDataObjStr=========================',posDataObjStr)
+				console.log('posDataObjStr=========================',posDataObjStr)
 				posModule.pos(posDataObjStr)
 			},
 			shopJump() {

@@ -1347,3 +1347,17 @@ export function chanpayPreSignSure(accNo, captcha) {
 	return fly.post('/order/bank/chanpaySureSign', qs.stringify(data))
 }
 
+/**
+ * @param {Object} serviceId	服务商id
+ * @param {Object} merchantNo	支付宝商户号2088开头
+ */
+export function ruyiSubmit(serviceId, merchantNo,alipayAccount,merchantId,deviceSn) {
+	let data = {
+		serviceId,
+		merchantNo,
+		alipayAccount,
+		merchantId,
+		deviceSn
+	}
+	return fly.post('/zfb/getOperationQrcode', qs.stringify(data))
+}

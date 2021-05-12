@@ -442,7 +442,16 @@
 						isShow: 1,
 						iconWidth: 44,
 						iconHeight: 38
-					}
+					},
+					"ruyi": {
+						src: '../../../static/homev2/zfb.png',
+						name: '如意设备',
+						url: '/pages/home/ruyi/ruyi',
+						status: 1,
+						isShow: 1,
+						iconWidth: 44,
+						iconHeight: 38
+					},
 					/* ,
 										"depositManage":{
 											src: '../../../static/homev2/quickPay.png',

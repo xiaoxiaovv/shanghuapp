@@ -131,11 +131,7 @@
 		components: {
 			MescrollUni, MxDatePicker
 		},
-		// {
-		// 	img: '../../../static/order/icon_saoma.png',
-		// 	text: '查询订单',
-		// 	do: 'scanCode',
-		// },
+		
 		data() {
 			return {
 				mescroll: null,
@@ -153,11 +149,7 @@
 				searchOrderId: '',
 				codeResult: '',
 				addMenuList: [
-					{
-						img: '../../../static/order/icon_print_bg.png',
-						text: '打印流水',
-						do: 'print',
-					},
+					
 				],
 				orderList: {},		//订单列表
 				pageNumber: 1,		//查询页码
@@ -482,122 +474,10 @@
 					this.isCover = false;
 				}
 			},
-			/* 右上菜单 */
-			menuClick(menuDo) {
-				switch(menuDo) {
-					case 'scanCode':
-						this.scanCode();
-						break;
-					case 'print':
-						this.print();
-						break;
-				}
-			},
-			/* 右上菜单-查询订单 */
-			scanCode() {
-				uni.scanCode({
-					success(res) {
-						this.codeResult = res.result
-						// console.log("扫码内容："+res.result)
-						// console.log("扫码类型："+res.scanType)
-						// console.log('扫码成功，进行订单查询。。。');
-					}
-				})
-			},
-			/* 右上菜单-打印流水 */
-			print() {
-				// console.log("点击了打印按钮")
-				let that = this;
-				/* 查询是否有已绑定设备 */
-				let bindedEquipmentOne = uni.getStorageSync('bindedEquipment')
-				if(bindedEquipmentOne && bindedEquipmentOne !== {}){
-					this.bindedEquipment = bindedEquipmentOne;
-					// console.log("获取了已绑定设备："+this.bindedEquipment);
-					// console.log(JSON.stringify(this.bindedEquipment));
-					/* 存在已绑定设备，获取其信息 */
-					this.nowBuletoothIdObj = uni.getStorageSync("nowBuletoothIdObj");
-					// console.log(this.nowBuletoothIdObj)
-				}else{
-					uni.showToast({
-						icon: 'none',
-						title: "未绑定相应的打印设备"
-					})
-					return
-				}
-				uni.showLoading({
-					title: "loading..."
-				})
-				/* 初始化蓝牙（检查是否打开手机蓝牙） */
-				setTimeout(() => {
-					uni.hideLoading()
-					uni.openBluetoothAdapter({
-						success() {
-							uni.showLoading({
-								title: "loading..."
-							})
-							/* 连接绑定打印机 */
-							setTimeout(() => {
-								uni.hideLoading()
-								uni.createBLEConnection({
-									deviceId: that.nowBuletoothIdObj.connectedDeviceId,
-									success() {
-										// console.log("连接成功")
-										/* 询问是否打印 */
-										uni.showModal({
-											content: '是否进行打印',
-											success(res) {
-												uni.showToast({
-													title:"敬请期待"
-												})
-												if(res.confirm){
-													// console.log("确认进行打印")
-													/* 进行打印 */
-													// uni.writeBLECharacteristicValue({
-													// 	deviceId: that.nowBuletoothIdObj.connectedDeviceId,
-													// 	serviceId: that.nowBuletoothIdObj.notifyServiceId,
-													// 	characteristicId: that.nowBuletoothIdObj.characteristicId,
-													// 	value: "",
-													// 	success() {
-													// 		
-													// 	}
-													// })
-													/* 关闭连接 */
-													that.closeBluetooth();
-												}else{
-													console.log("取消了打印")
-												}
-											}
-										})
-									},
-									fail(err) {
-										uni.showToast({
-											title:"连接失败，可能是您没有开启对应打印机"
-										})
-									}
-								})
-							},1000)
-						},
-						fail(err) {
-							uni.hideLoading()
-							if(parseInt(err.errCode) === 10001){
-								uni.showToast({
-									title:"请打开蓝牙"
-								})
-							}
-						}
-					})
-				},1000)
-			},
-			/* 关闭蓝牙连接 */
-			closeBluetooth() {
-				let that = this;
-				uni.closeBLEConnection({
-					deviceId:that.nowBuletoothIdObj.connectedDeviceId,
-					success() {
-						uni.closeBluetoothAdapter()
-					}
-				})
-			},
+			
+		
+			
+			
 			/* 跳转订单详情（附订单号） */
 			jumpOrderDetails (orderInfo) {
 				let orderInfoJsonStr = JSON.stringify(orderInfo)
@@ -628,8 +508,9 @@
 					if(mescroll.num == 1) {
 						this.orderList = nowList; //如果是第一页需手动制空列表
 					}else{
-						this.orderList.push(nowList)
+						this.orderList = this.orderList.concat(nowList)
 					}
+					console.log('orders==============',this.orderList)
 					number = nowList.length;
 					
 					

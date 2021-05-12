@@ -1401,3 +1401,12 @@ export function regeditAndIncomeStatus() {
 	return fly.get('/api/supervision/api/public/regeditAndIncomeStatus')
 }
 
+/* 佣金列表 */
+export function getcommissionList(params) {
+	return fly.request({
+		// url: '/order/app/query_order',
+		url: '/api/supervision/api/busicommissionitem/commpage',
+		method: 'get',
+		params:params
+	})
+}

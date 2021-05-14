@@ -1,11 +1,13 @@
 <template>
 	<view>
-		
-		<view  class="lf-phone-frame padding">
-			<input type="text" placeholder="输入支付宝账号" maxlength="30" v-model="alipayAccount">
-		</view>
 		<view  class="lf-phone-frame padding">
 			<input type="text" placeholder="输入设备SN" maxlength="30" v-model="deviceSn">
+			<view class="img-login" @click="getCode">
+				<text>扫码</text>
+			</view>
+		</view>
+		<view  class="lf-phone-frame padding">
+			<input type="text" placeholder="输入支付宝账号" maxlength="30" v-model="alipayAccount">
 			<view class="img-login" @click="submit">
 				<text>查询</text>
 			</view>
@@ -60,6 +62,32 @@
 			// uni.removeStorageSync("loginDetail");
 		},
 		methods:{
+			//扫码获取SN
+			getCode(){
+				console.log("开始扫码");
+				uni.scanCode({
+					onlyFromCamera: true,
+					success: (res) => {
+						this.deviceSn = res.result;
+						console.log("扫码内容："+res.result)
+						// console.log("扫码类型："+res.scanType)
+						// console.log('扫码成功，进行退款。。。');
+						// if ('CODE_128' === res.scanType || 'QR_CODE' === res.scanType) {
+						// 	getOrderDetails(res.result).then(res => {
+						// 		// console.log('uuuuuuuuuu', res)
+						// 		uni.navigateTo({
+						// 			url: '/pages/order/orderDetails/orderDetails?orderNumber=' + res.obj.orderNumber
+						// 		})
+						// 	}).catch(err => {
+						// 		console.log('yyyyyyyyyyyyyyy', err)
+						// 	})
+						// }
+					},
+					fail: (res) => {
+						console.log(err)
+					}
+				});
+			},
 			//查询代运营授权码
 			submit() {
 				if(!this.alipayAccount){

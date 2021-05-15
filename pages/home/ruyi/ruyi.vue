@@ -139,6 +139,7 @@
 	.lf-phone-frame .img-login{
 		width: 120upx;
 		height: 60upx;
+		border-radius: 10upx;
 		color: #FFF;
 		display: flex;
 		justify-content: center;

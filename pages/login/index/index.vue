@@ -22,14 +22,16 @@
 					<view class="lf-btn-empty__transparent" v-if="!password"></view>
 				</view>
 				<view class="psd match-width box ptb-50 align-hor-bet">
-					<view
+					<view 
 						class="checkbox align-left"
 						@click="changeRememberPassword">
 						<view class="checkbox__inner align-center">
-							<view
-								class="iconfont icon-gou"
+							<view 
+								class="iconfont icon-gou" 
 								v-if="isRememberPassword">
 							</view>
+							<!-- <i class="iconfont icon-gou" 
+								v-if="isRememberPassword"></i> -->
 						</view>
 						<view class="ml-20">
 							记住密码
@@ -39,20 +41,20 @@
 						@click="register">
 						注册
 					</view>
-					<view
+					<view 
 						@click="forgetPassword">
 						忘记密码
 					</view>
-
+					
 					<!-- <navigator :url="'/pages/login/forgetPassword/forgetPassword?username=' + username"><text>忘记密码</text></navigator> -->
 				</view>
 			</view>
-			<view
+			<view 
 				ref="login"
-				class="lf-btn-login color-white"
-				type="default"
-				:loading="btnLoading"
-				:disabled="btnLoading"
+				class="lf-btn-login color-white" 
+				type="default" 
+				:loading="btnLoading" 
+				:disabled="btnLoading"  
 				@click="login">
 				登录
 			</view>
@@ -64,18 +66,18 @@
 		<view class="lf-mat"></view>
 		<view class="lf-mat"></view>
 		<view class="match-width align-default">
-			<view
+			<view 
 				class="comment-box match-width align-center"
 				v-if="phone">
 				联系电话：{{phone}}
 			</view>
-			<view
+			<view 
 				class="comment-box match-width align-center mt-10 mb-30 active"
 				v-if="privacy || agreement">
 				登录代表您同意<text @click="onShowPrivacy('privacy')" class="ml-10" v-if="privacy">隐私政策</text><text @click="onShowPrivacy('agreement')" class="ml-10" v-if="agreement">用户协议</text>
 			</view>
 		</view>
-
+		
 	</view>
 </template>
 
@@ -100,10 +102,10 @@
 			console.log('我来到木木木木木木木木的世界x1', LoginCache)
 			LoginCache.state = true
 			console.log('我来到木木木木木木木木的世界x2', LoginCache)
-
+			
 			// 获取站点信息
 			this.getSiteInfo()
-
+			
 			uni.getSystemInfo({
 				success: (res) => {
 					/* 屏幕高度设置 */
@@ -130,7 +132,7 @@
 				this.login()
 			}
 			uni.setStorageSync('isLogin', false)
-
+			
 			// TODO
 			// uni.setStorageSync('storeId', '1146454986568908800')
 		},
@@ -151,14 +153,16 @@
 			/* 登录 */
 			login() {
 				/* 接口 */
+				// console.log('用户名==========',this.username,'密码=========',this.password)
 				if( this.username.trim() === '' || this.password.trim() === '' ) {
+					
 					uni.showToast({
 						title: '用户名或密码不能为空',
 						icon: 'none'
 					})
 					return
 				}
-				console.log(this.username, typeof this.username)
+				// console.log(this.username, typeof this.username)
 				if (!/^\d{5,15}$/.test(this.username)) {
 					return uni.showToast({
 						title: '用户名仅限5-15位数字',
@@ -167,8 +171,9 @@
 				}
 				this.btnLoading = true;
 				login( this.username.trim() , this.password.trim() ).then(res => {
-					// console.log(777, res)
+					console.log(444444444, res)
 					// console.log(JSON.stringify(res.obj))
+					// return
 					/* 记住账户/密码 */
 					if(this.isRememberPassword){
 						uni.setStorageSync('password', this.password);
@@ -203,8 +208,10 @@
 					}).catch(err => {
 						console.log(err)
 					})
-				}).catch((err) => {
-					console.log(err)
+				},err => {
+					console.log(55555,err)
+				}).catch((err) => {	
+					console.log('11111112222222',err)
 					this.btnLoading = false;
 				})
 			},
@@ -229,7 +236,7 @@
 						this.phone = phone || ''
 						this.privacy = privacy || ''
 						this.agreement = agreement || ''
-					}
+					}	
 				})
 			},
 			// 显示隐私政策
@@ -270,7 +277,7 @@
 	.relative{
 		position: relative;
 	}
-
+	
 	.lf-login-box{
 		width: 750upx;
 		display: flex;
@@ -318,7 +325,7 @@
 		height: 30upx;
 		background-image: url('../../../static/login/icon_cross.png');
 		background-repeat: no-repeat;
-		background-size: cover;
+		background-size: cover; 
 	}
 	.lf-btn-empty__transparent {
 		width: 30upx;
@@ -330,14 +337,14 @@
 		border-radius: 100upx;
 		// background-image: url('../../../static/login/ok_btn_bg.png');
 		// background-repeat: no-repeat;
-		// background-size: 100% 100upx;
+		// background-size: 100% 100upx; 
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		color: #FFF;
 		font-size: 38upx;
 		background-color: #4BA8FF;
-
+		
 		&:active {
 			opacity: 0.8;
 		}
@@ -345,13 +352,13 @@
 	.color-white {
 		color: #FFF !important;
 	}
-
+	
 	.psd {
 		color: #333;
 		font-size: 28upx !important;
-
+		
 		.checkbox {
-
+			
 			&__inner {
 				width: 40upx;
 				height: 40upx;
@@ -361,18 +368,18 @@
 			}
 		}
 	}
-
+	
 	.comment-box {
 		box-sizing: border-box;
 		font-size: 24upx;
 		font-family: 500;
 		color: #999;
 		line-height: 1.8;
-
+	
 		text {
 			color: #4BA8FF;
 			text-decoration: underline;
-
+			
 			&.active {
 				opacity: 0.8;
 				color: #4BA8FF;

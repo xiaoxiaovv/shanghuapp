@@ -102,10 +102,10 @@ export function getAccountInfo ( ) {
 }
 
 /* 付款码支付 */
-export function scanPay (totalPrice, disCountPrice, authCode, storeId='') {
+export function scanPay (totalPrice, disCountPrice, authCode, storeId='', equipmentId) {
 	// console.log("totalPrice="+totalPrice)
 	// console.log('scanPay xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-	let equipmentId = uni.getStorageSync('equipmentId') || ''
+	// let equipmentId = uni.getStorageSync('equipmentId') || ''
 	return fly.request('/order/app/scan_pay', qs.stringify({
 		totalPrice,
 		disCountPrice,
@@ -834,7 +834,8 @@ export function frogJump(url) {
 }
 
 /* 随行付支付 */
-export function webPay(userId, merchantId, storeId, totalPrice, payWay) {
+export function webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, bankCardId) {
+	// payChannel, serviceId, bankCardId  手机pos用的字段，其他业务可不加
 	return fly.request({
 		url : '/order/app/web_pay', 
 		method: 'POST',
@@ -843,7 +844,29 @@ export function webPay(userId, merchantId, storeId, totalPrice, payWay) {
 			merchantId,
 			storeId,
 			totalPrice ,
-			payWay
+			payWay,
+			payChannel, 
+			serviceId, 
+			bankId:bankCardId
+		}
+	})
+}
+
+/* 下单确认 */
+export function transactionSure(chSerialNo, checkCode, serviceId, chMerCode, orderCode) {
+	// chSerialNo第三方下单返回的交易流水号
+	// checkCode短信验证码
+	// serviceId服务商id
+	// chMerCode通道商户编号
+	return fly.request({
+		url : '/order/app/quickPayConfirmApi', 
+		method: 'POST',
+		params: {
+			chSerialNo,
+			checkCode,
+			serviceId, 
+			chMerCode,
+			orderCode
 		}
 	})
 }
@@ -1234,4 +1257,107 @@ export function queryOrderSummary(createTime, storeId, status, payWay, endCreate
 		data['endCreateTime'] = endCreateTime
 	}
 	return fly.get('/order/app/query_order/summary', qs.stringify(data))
+}
+// 获取商户的进件信息
+/**
+ * @param {Object} id   商户id
+ */
+export function getUserInfo(id) {
+	let data = {
+		id
+	}
+	return fly.get('/merchant/mch_info/feedDetail', qs.stringify(data))
+}
+// 手机pos-网联卡管理
+
+/**
+ * addOrEditBankCark  添加和编辑银行卡
+ * @param {Object} merchantId 商户ID
+ * @param {Object} realName 开户人名称
+ * @param {Object} idCard  身份证号
+ * @param {Object} accNo  支付卡号
+ * @param {Object} mobile  手机号
+ * @param {Object} cvv2 银行卡背面 后三位
+ * @param {Object} validity 有效期 格式： MMYY
+ * @param {Object} id bankid  银行卡id
+ */
+export function addOrEditBankCard(merchantId, realName, accNo, mobile, cvv2, validity, bankName, idCard, id) {
+	let data = {
+		merchantId,
+		realName,
+		accNo,
+		mobile,
+		cvv2,
+		validity,
+		bankName,
+		idCard,
+		id
+	}
+	return fly.post('/order/bank/saveAndFlush', qs.stringify(data))
+}
+/**
+ * bankCarkList  查询商户的银行卡列表
+ * @param {Object} merchantId 商户ID
+ */
+export function bankCarkList(merchantId) {
+	let data = {
+		merchantId
+	}
+	return fly.post('/order/bank/getBankList', qs.stringify(data))
+}
+/**
+ * bankCarkList  查询银行卡信息
+ * @param {Object} id 银行卡id
+ */
+export function bankCardInfo(id) {
+	let data = {
+		id
+	}
+	return fly.post('/order/bank/getOne', qs.stringify(data))
+}		
+/**
+ * bankCarkList  删除银行卡
+ * @param {Object} id 银行卡id
+ */
+export function delBankCard(id) {
+	let data = {
+		id
+	}
+	return fly.post('/order/bank/delete', qs.stringify(data))
+}					
+/**
+ * chanpayPreSign  畅捷预授权
+ * @param {Object} id 银行卡号
+ */
+export function chanpayPreSign(accNo) {
+	let data = {
+		accNo
+	}
+	return fly.post('/order/bank/chanpayPreSign', qs.stringify(data))
+}
+/**
+ * chanpayPreSign  畅捷预授权确认
+ * @param {Object} accNo 银行卡号
+ */
+export function chanpayPreSignSure(accNo, captcha) {
+	let data = {
+		accNo,
+		captcha
+	}
+	return fly.post('/order/bank/chanpaySureSign', qs.stringify(data))
+}
+
+/**
+ * @param {Object} serviceId	服务商id
+ * @param {Object} merchantNo	支付宝商户号2088开头
+ */
+export function ruyiSubmit(serviceId, merchantNo,alipayAccount,merchantId,deviceSn) {
+	let data = {
+		serviceId,
+		merchantNo,
+		alipayAccount,
+		merchantId,
+		deviceSn
+	}
+	return fly.post('/zfb/getOperationQrcode', qs.stringify(data))
 }

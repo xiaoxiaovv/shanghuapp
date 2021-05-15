@@ -14,12 +14,12 @@
 			:key="key" 
 			@click="menuJump(key,menu.url)">
 			<view class="title">
-				<view class="prod height"></view>
+				<!-- <view class="prod height"></view> -->
 				<image class="left meat" :src="menu.image"></image>
 				<text class="meat">{{menu.name}}</text>
 			</view>
 			<view>
-				<view class="prod height"></view>
+				<!-- <view class="prod height"></view> -->
 				<text class="text-grey meat ly-font-color-6" :class="menu.remarks=='支付宝签约'?'ly-font-color-main':''">{{menu.remarks}}</text>
 				<image class="right meat" src="../../../static/tabBar/icon_the_arrow.png"></image>
 			</view>

@@ -1,27 +1,32 @@
 import { Base64 } from 'js-base64'
 
 function getAppMetaData(key) {	
-	try {
+	return ''
+	/* try {
 		return plus.bridge.execSync('AppCommon', "getAppMetaData", [key])
 	} catch(e) {
 		// nothing to do
-	}
+	} */
 }
 
 function getDomain() {
-	return getAppMetaData('APP_DOMAIN')
+	// return getAppMetaData('APP_DOMAIN')
+	return ''
 }
 
 function getFirID() {
-	return getAppMetaData('FIR_ID')
+	// return getAppMetaData('FIR_ID')
+	return ''
 }
 
 function getFirToken() {
-	return getAppMetaData('FIR_API_TOKEN')
+	// return getAppMetaData('FIR_API_TOKEN')
+	return ''
 }
 
 function getVersion() {
 	return getAppMetaData('VER')
+	
 }
 
 function getPackageName(packageName) {
@@ -29,11 +34,12 @@ function getPackageName(packageName) {
 }
 
 function jump2Dkm(key, serviceProviderId, shopAccount, token, userType, storeId) {
-	try {
+	return ''
+	/* try {
 		return plus.bridge.execSync('AppCommon', "jump2Dkm", [key, serviceProviderId, shopAccount, token, userType, storeId])
 	} catch(e) {
 		// nothing to do
-	}
+	} */
 }
 
 function jump2DkmMain(serviceProviderId, shopAccount, token, userType, storeId) {
@@ -45,11 +51,12 @@ function jump2DkmShopManager(serviceProviderId, shopAccount, token, userType, st
 }
 
 function getFuiouInfo(key) {
-	try {
+	return ''
+	/* try {
 		return plus.bridge.execSync('AppCommon', "getFuiouInfo", [key])
 	} catch(e) {
 		// nothing to do
-	}
+	} */
 }
 
 function getFuiouPackage() {

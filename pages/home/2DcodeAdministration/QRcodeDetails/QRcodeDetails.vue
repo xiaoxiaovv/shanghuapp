@@ -2,7 +2,8 @@
 	<view>
 		<view class="lf-mat"></view>
 		<view class="lf-staff-head flex justify-center align-center">
-			<image :src=" imgSrc? imgSrc : '../../../../static/home/icon_qrcode.png'"></image>
+			<image class="qrImg-box" src="../../../../static/home/qrImg_box.png"></image>
+			<image class="qrImg" :src=" imgSrc? imgSrc : '../../../../static/home/icon_qrcode.png'"></image>
 		</view>
 		<view class="lf-mat"></view>
 		<view class="lf-list">
@@ -127,9 +128,16 @@
 		padding: 0 20px;
 		background-color: #FFF;
 	}
-	.lf-staff-head image{
+	.lf-staff-head .qrImg{
 		width: 350upx;
 		height: 350upx;
+		position: relative;
+		top:-560upx;
+	}
+	.lf-staff-head .qrImg-box{
+		
+		height: 880upx;
+		
 	}
 	.lf-list{
 		width: 750upx;
@@ -138,6 +146,8 @@
 		justify-content: flex-end;
 		align-items: center;
 		background-color: #FFF;
+		position: relative;
+		top:500upx
 	}
 	.lf-list view{
 		width: 720upx;

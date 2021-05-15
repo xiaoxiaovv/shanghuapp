@@ -3865,8 +3865,8 @@ scroll-view.cu-steps .cu-item {
 
 .text-price::before {
 	content: "¥";
-	font-size: 80%;
-	margin-right: 4upx;
+	/* font-size: 80%; */
+	margin-right: 8upx;
 }
 
 .text-cut {

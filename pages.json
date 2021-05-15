@@ -41,6 +41,17 @@
 				}
 			}
         }
+		,{
+		    "path" : "pages/tabBar/shop/shop",
+		    "style" : {
+				"navigationBarTitleText": "商城",
+				"onReachBottomDistance" : 100,		//mescroll
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": true
+				}
+			}
+		}
         ,{
             "path" : "pages/tabBar/user/user",
             "style" : {
@@ -806,6 +817,15 @@
 			}
 		}
 		,{
+		    "path" : "pages/home/ruyi/ruyi",
+		    "style" : {
+				"navigationBarTitleText": "如意设备",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
 		    "path" : "pages/user/newPrinter/index/index",
 		    "style" : {
 				"navigationBarTitleText": "打印机",
@@ -841,6 +861,51 @@
 				}
 			}
 		}
+		,{
+		    "path" : "pages/home/quickPay/index",
+		    "style" : {
+				"navigationBarTitleText": "",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
+		    "path" : "pages/home/quickPay/selectCard",
+		    "style" : {
+				"navigationBarTitleText": "选择支付卡",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
+		    "path" : "pages/home/quickPay/manageCard",
+		    "style" : {
+				"navigationBarTitleText": "管理支付卡",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
+		    "path" : "pages/home/quickPay/addOrEditCard",
+		    "style" : {
+				"navigationBarTitleText": "添加 / 编辑支付卡",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
+		    "path" : "pages/home/quickPay/result",
+		    "style" : {
+				"navigationBarTitleText": "支付结果",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -867,6 +932,12 @@
 		        "iconPath" : "static/tabBar/btn_the_order.png",
 		        "selectedIconPath" : "static/tabBar/btn_the_order_click.png",
 		        "text" : "订单"
+		    },
+		    {
+		        "pagePath" : "pages/tabBar/shop/shop",
+		        "iconPath" : "static/tabBar/btn_shop.png",
+		        "selectedIconPath" : "static/tabBar/btn_shop_click.png",
+		        "text" : "商城"
 		    },
 		    {
 		        "pagePath" : "pages/tabBar/user/user",

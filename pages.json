@@ -41,7 +41,7 @@
 				}
 			}
         }
-		,{
+		/* ,{
 		    "path" : "pages/tabBar/shop/shop",
 		    "style" : {
 				"navigationBarTitleText": "商城",
@@ -51,7 +51,7 @@
 					"titleNView": true
 				}
 			}
-		}
+		} */
         ,{
             "path" : "pages/tabBar/user/user",
             "style" : {
@@ -933,12 +933,12 @@
 		        "selectedIconPath" : "static/tabBar/btn_the_order_click.png",
 		        "text" : "订单"
 		    },
-		    {
+		  /*  {
 		        "pagePath" : "pages/tabBar/shop/shop",
 		        "iconPath" : "static/tabBar/btn_shop.png",
 		        "selectedIconPath" : "static/tabBar/btn_shop_click.png",
 		        "text" : "商城"
-		    },
+		    }, */
 		    {
 		        "pagePath" : "pages/tabBar/user/user",
 		        "iconPath" : "static/tabBar/btn_my.png",

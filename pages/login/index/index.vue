@@ -41,6 +41,10 @@
 						@click="register">
 						注册
 					</view>
+					<!-- <view
+						@click="pos">
+						pos
+					</view> -->
 					<view 
 						@click="forgetPassword">
 						忘记密码
@@ -84,6 +88,7 @@
 <script>
 	import { login, getAccountInfo, getSiteInfo } from '@/api/vueAPI.js'
 	import { LoginCache } from '../../../utils/cache/index.js'
+	var posModule = uni.requireNativePlugin("DCloud-PosMoudle")
 	export default {
 		data() {
 			return {
@@ -227,6 +232,12 @@
 				uni.navigateTo({
 					url: '/pages/login/register/register'
 				})
+			},
+			// pos测试
+			pos() {
+				// testModule.gotoNativePage()
+				posModule.toast()
+				// testModule.pay('{"a":1}',this.posCallFn);
 			},
 			// 获取站点信息
 			getSiteInfo() {

@@ -121,15 +121,30 @@
 			</view>
 
 			<view v-if="lastOrder && lastOrder.actPayPrice != 0" class='bar'></view>
+			<!-- 两行两个 -->
+			<view class="lf-cash-register padding-sm shadow align-center box">
+				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
+				<image class="lf-cash-register__ml-90" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
 
-			<view class="lf-cash-register padding-lg shadow  box">
+			</view>
+			<view class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box">
+				<!-- <image
+						class=''
+						src="../../../static/home/btn_quickPay_click.png" 
+						@click="shuaLian"/> -->
+				<image class='' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" />
+
+				<image class="lf-cash-register__ml-90" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
+			</view>
+			<!-- 两行三个 -->
+			<!-- <view class="lf-cash-register padding-lg shadow  box">
 				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
 				<image class="ml-50" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
 				<image class='ml-50' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" />
 				<image class='margin-top-sm' src="../../../static/home/btn_shualian_click.png" @click="shuaLian" />
 
-				<image class="ml-50" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
-			</view>
+				<image class="margin-top-sm" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
+			</view> -->
 
 			<!-- 菜单 -->
 			<!-- <view :class="['page-home-x__menu align-left box plr-30', isSmall ? 'pt-30' : 'pt-50']">
@@ -427,7 +442,16 @@
 						isShow: 1,
 						iconWidth: 44,
 						iconHeight: 38
-					}
+					},
+					"ruyi": {
+						src: '../../../static/homev2/zfb.png',
+						name: '如意设备',
+						url: '/pages/home/ruyi/ruyi',
+						status: 1,
+						isShow: 1,
+						iconWidth: 44,
+						iconHeight: 38
+					},
 					/* ,
 										"depositManage":{
 											src: '../../../static/homev2/quickPay.png',
@@ -2210,11 +2234,11 @@
 
 		image {
 			// 两个的尺寸
-			/* width: 240upx;
-			height: 100upx; */
+			width: 240upx;
+			height: 100upx;
 			// 三个的尺寸
-			width: 190upx;
-			height: 80upx;
+			/* width: 190upx;
+			height: 80upx; */
 		}
 
 		.image {
@@ -2235,6 +2259,10 @@
 				opacity: 0.8;
 			}
 		}
+		&__ml-90{
+			margin-left: 90upx;
+		}
+		
 	}
 
 	///*浮动收款样式开始 ***************** */

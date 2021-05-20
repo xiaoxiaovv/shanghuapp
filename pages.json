@@ -817,6 +817,15 @@
 			}
 		}
 		,{
+		    "path" : "pages/home/ruyi/ruyi",
+		    "style" : {
+				"navigationBarTitleText": "如意设备",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
 		    "path" : "pages/user/newPrinter/index/index",
 		    "style" : {
 				"navigationBarTitleText": "打印机",

@@ -72,6 +72,9 @@ export const payWayFilters = (val) => {
 		case 7:		//现金支付
 			return '会员+支付宝';
 			break;
+		case 8:		//现金支付
+			return '手机pos';
+			break;
 		case 99:	//未知支付
 			return '未知支付';
 			break;
@@ -155,7 +158,7 @@ export const dealWithMoney = (money) => {
 }
 
 /**
- * 订单支付渠道过滤
+ * 订单支付渠道过滤   应该是没有使用，导入的函数在过滤中引用不到，如果定义一个空函数再赋值估计可以
  */
 export const payChannelFilters = (channel) => {
 	if (channel === 1) {
@@ -186,7 +189,13 @@ export const payChannelFilters = (channel) => {
 		channel = '易生'
 	} else if (channel === 14) {
 		channel = '新大陆'
-	} 
+	} else if (channel === 17) {
+		channel = '手机pos'
+	}else if (channel === 18) {
+		channel = '快捷支付'
+	}else if (channel === 19) {
+		channel = '开店宝'
+	}
 	return channel
 }
 

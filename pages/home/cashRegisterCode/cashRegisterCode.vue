@@ -68,7 +68,7 @@
 			this.paymentMoney = obj.paymentMoney
 			this.payWay = obj.payWay
 			
-			// 首次生成二维码
+			// 
 			this.getUUID().then(uuid => {
 				this.uuid = uuid
 				this.getDomain().then(domain => {
@@ -123,13 +123,18 @@
 			createBarCode() {
 				let userId = uni.getStorageSync('userId')
 				let storeId = ''
+				let isOpen = -1
 				let nowStoreDetail = uni.getStorageSync('nowStoreDetail')
 				if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail){
 					storeId = nowStoreDetail.storeId
+					isOpen = nowStoreDetail.isOpen
 				}
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				let merchantId = uni.getStorageSync('merchantId')
 				let equipmentId = uni.getStorageSync('equipmentId') || ''
 				// console.log('getDomain')
-				let val = this.domain + '/web/pay/index.html#/?totalPrice='+ this.paymentMoney +'&userId='+userId + '&storeId=' + storeId + '&equipmentId=' + equipmentId + '&uuid=' + this.uuid
+				let val = this.domain + '/web/pay/index.html#/?totalPrice='+ this.paymentMoney +'&userId='+userId + '&storeId=' + storeId + '&equipmentId=' + equipmentId + '&uuid=' + this.uuid + '&fence=' + isOpen + '&serviceId=' + serviceId + '&merchantId=' + merchantId
 				// console.log(val)
 				this.qrcode.draw('myCanvas', val)
 				return Promise.resolve()

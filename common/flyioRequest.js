@@ -10,9 +10,15 @@ const fly = new Fly;
  // const URL = getDomain() || "http://pay.ydcyd.cn"	//全局总URL
  // const URL = getDomain() || "http://pay-adm.h5h5h5.cn"	//全局总URL
  // const URL = getDomain() || "https://pay.oem.51hbpay.com"	//全局总URL
- // const URL = getDomain() || "http://pay.ytpay.vip"	//全局总URL
- const URL = getDomain() || "http://pay.oem.test.mamipay.com:41000"	//全局总URL
  // const URL = getDomain() || "http://pay.oem.test.mamipay.com:41000"	//全局总URL
+ // const URL = getDomain() || "https://yt.hbpay.vip"	//全局总URL
+ // const URL = getDomain() || "http://mamipay.com:41000"	//全局总URL
+ const URL = getDomain() || "https://mamipay.com"	//全局总URL
+ // const URL = getDomain() || "http://192.168.0.13"	//全局总URL
+ // const URL = getDomain() || "https://yt.hbpay.vip"	//全局总URL
+ // const URL = getDomain() || "http://yt.hbpay.vip:41000"	//全局总URL
+ // const URL = getDomain() || "https://lsy.skmpos.com"	//乐收银
+ // const URL = getDomain() || "https://www.zhizpay.com"	//赵建华
  // const URL = getDomain() || "http://pay.glaimb.com"	//全局总URL
  // const URL = getDomain() || "http://pay.yyvvv.net"	//全局总URL
  // const URL = getDomain() || "http://pay.shempay.com"	//全局总URL
@@ -62,14 +68,14 @@ fly.interceptors.response.use(
 			uni.setStorageSync('token', token);
 		}
         //只将请求结果的data字段返回
-		console.log('ccccccccccccccccccccccccccccccccc========',response)
+		// console.log('ccccccccccccccccccccccccccccccccc========',response)
 		let data = response.data
 		
 		if (data.code === 200) {
-			console.log('1111111111111',data.code)
+			// console.log('1111111111111',data.code)
 			 return data
 		} else {
-			console.log('2222222222222222',data.code)
+			// console.log('2222222222222222',data.code)
 			if (data.code === 401 || data.code === 422) {	/* 未登录/token错误失效 */
 				uni.removeStorageSync('token');
 				uni.removeStorageSync('userId');
@@ -80,7 +86,7 @@ fly.interceptors.response.use(
 			} else {
 				data.msg && textToast(data.msg)
 			}
-			return Promise.reject(new Error('error'))
+			return Promise.reject(data)
 		}
     },
     (err) => {

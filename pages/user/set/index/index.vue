@@ -20,7 +20,7 @@
 					class='match-width'
 					@click="jumpMessageNotification">
 					<view>
-						<view class="prod prod-height"></view>
+						<!-- <view class="prod prod-height"></view> -->
 						<image class="meat" src="/static/user/icon_message_bg.png"></image>
 						<text class="text-lg">消息通知</text>
 					</view>
@@ -41,7 +41,7 @@
 					class='match-width'
 					@click="jumpChangePassword">
 					<view>
-						<view class="prod prod-height"></view>
+						<!-- <view class="prod prod-height"></view> -->
 						<image class="meat" src="/static/user/icon_xiugaimima.png"></image>
 						<text class="text-lg">修改密码</text>
 					</view>
@@ -176,16 +176,22 @@
 			closePopup(){
 				this.isPopupShow = false
 			},
-			onConfirm () {
+			onConfirm () {				
+					uni.removeStorageSync('token')
+					uni.removeStorageSync('userId')
+					uni.removeStorageSync('userType')
+					uni.removeStorageSync('beginTime')
+					uni.setStorageSync('remember', true)
+					uni.setStorageSync('isLogin', true)				
 				uni.reLaunch({
 					url: '/pages/login/index/index',
 					success() {
-						uni.removeStorageSync('token')
+						/* uni.removeStorageSync('token')
 						uni.removeStorageSync('userId')
 						uni.removeStorageSync('userType')
 						uni.removeStorageSync('beginTime')
 						uni.setStorageSync('remember', true)
-						uni.setStorageSync('isLogin', true)
+						uni.setStorageSync('isLogin', true) */
 						// uni.setStorageSync('setVoice', uni.getStorageSync('setVoice'))
 						// uni.setStorageSync('setKeyboardVoice', uni.getStorageSync('setKeyboardVoice'))
 					}

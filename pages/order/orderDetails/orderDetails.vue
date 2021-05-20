@@ -88,7 +88,7 @@
 		<view class="lf-btn">
 			<view class="bg-ff8800" 
 				  @click="showRefundModal" 
-				  v-if="orderDetails.status == 2 || orderDetails.status == 6 || orderDetails.status === 7">
+				  v-if="orderDetails.status == 2 && orderDetails.payWay !=8 || orderDetails.status == 6 && orderDetails.payWay !=8 || orderDetails.status === 7 && orderDetails.payWay !=8">
 				<text class="text-white">退款</text>
 			</view>
 			<view class="bg-ffcb90 disabled" v-else>
@@ -197,8 +197,10 @@
 	// pos接口
 	import { isFuiouPlatform, onFuiouBankRefund } from '../../../api/fuiouApi.js'
 	import { showToast, showLoading } from '../../../common/wxapi.js'
+	import { payWayFilters } from '../../../common/utils.js'
+	
 	import { print, isPrinterExist } from '../../../api/printApi.js'
-	import { getPrintOrderDetailAndPrint, getOrderDetailsAndPrint } from '../../../api/orderApi.js'
+	import { getPrintOrderDetailAndPrint, getOrderDetailsAndPrint} from '../../../api/orderApi.js'
 	
 	export default {
 		components: { neilModal, HMmessages, 'vma-modal': VmaModal },
@@ -254,6 +256,7 @@
 		},
 		
 		filters:{
+			payWayFilters,
 			orderStatusFilters(val) {
 				switch(parseInt(val)){
 					case 1:
@@ -287,46 +290,16 @@
 						console.log("异常状态值："+val);
 				}
 			},
-			payWayFilters(val) {
-				switch(parseInt(val)){
-					case 1:		//微信支付
-						return '微信';
-						break;
-					case 2:		//支付宝支付
-						return '支付宝';
-						break;
-					case 3:		//银行卡支付
-						return '银行卡';
-						break;
-					case 4:		//会员卡支付
-						return '会员卡';
-						break;
-					case 5:		//现金支付
-						return '现金';
-						break;
-					case 6:		//现金支付
-						return '会员+微信';
-						break;
-					case 7:		//现金支付
-						return '会员+支付宝';
-						break;
-					case 99:	//未知支付
-						return '未知支付';
-						break;
-					default:
-						console.log("异常支付码："+val)
-				}
-			},
 			payWayImgFilters(val) {
 				switch(parseInt(val)){
 					case 1:		//微信支付
-						return '../../../static/order/icon_wechat_list.png';
+						return '../../../static/order/icon_wechat.png';
 						break;
 					case 2:		//支付宝支付
-						return '../../../static/order/icon_zhifubao_list.png';
+						return '../../../static/order/icon_zhifubao.png';
 						break;
 					case 3:		//银行卡支付
-						return '../../../static/order/icon_unionpay_list.png';
+						return '../../../static/order/icon_unionpay_little.png';
 						break;
 					case 4:		//会员卡支付
 						return '../../../static/home/icon_king.png';
@@ -340,6 +313,15 @@
 					case 7:		//会员+支付宝
 						return '../../../static/home/icon_king.png';
 						break;
+					case 8:		//手机pos和快捷支付（网联）
+						return '../../../static/order/icon_pos.png';
+						break;
+					case 9:		//云闪付
+						return '../../../static/order/icon_yunshanfu.png';
+						break;
+					case 10:		//刷脸付
+						return '../../../static/order/icon_shualianfu.png';
+						break;			
 					case 99:	//未知支付
 						return '../../../static/order/icon_receive_money.png';
 						break;
@@ -403,7 +385,15 @@
 					channel = '易生'
 				} else if (channel === 14) {
 					channel = '新大陆'
-				} 
+				} else if (channel === 17) {
+					channel = '手机pos'
+				}else if (channel === 18) {
+					channel = '快捷支付'
+				}else if (channel === 19) {
+					channel = '开店宝'
+				}else if (channel === 20) {
+					channel = '畅捷'
+				}
 				return channel
 			}
 		},
@@ -507,7 +497,8 @@
 			/* 订单详情 */
 			getOrderDetail(){
 				getOrderDetails(this.orderNumber).then(res => {
-					// console.log('xxxxxxxxxxxxxxx', res)
+					console.log('xxxxxxxxxxxxxxx', res)
+					console.log('xxxxxxxxxxxxxxxaaaaaaaaaaaaaaaaaaaaa', JSON.stringify(res.obj))
 					this.orderDetails = res.obj
 				}).catch(err => {
 					console.log(err)

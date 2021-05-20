@@ -1,25 +1,15 @@
 <template>
 	<view class='macth-wdith'>
-		
-		<view 
-			class='page-home-x'>
-			
+
+		<view class='page-home-x'>
+
 			<view class='page-home-x__banner box align-default'>
-				<image
-					class='match-parent'
-					src="../../../static/homev2/bg.png"
-					mode="scaleToFill"
-				/>
-				<view 
-					class="cover box align-default plr-40"
-					:style="[paddingTop ? paddingTop : '']">
+				<image class='match-parent' src="../../../static/homev2/bg.png" mode="scaleToFill" />
+				<view class="cover box align-default plr-40" :style="[paddingTop ? paddingTop : '']">
 					<view class="title match-width align-center">
 						<view v-if="userType === 1" @click="storeSelect">
-							<text >{{storeName? storeName : '全部门店'}}</text>
-							<image
-								class="ml-20"
-								src="../../../static/tabBar/icon_black_arrow.png"
-							/>
+							<text>{{storeName? storeName : '全部门店'}}</text>
+							<image class="ml-20" src="../../../static/tabBar/icon_black_arrow.png" />
 						</view>
 						<view v-else>
 							<text>{{storeName? storeName : '全部门店'}}</text>
@@ -40,78 +30,81 @@
 							<view class='match-left-space align-left ml-50'>
 								新增会员<view class='mlr-10 darker'>{{realOrder && realOrder.memberTotalToday? realOrder.memberTotalToday : 0}}</view>人
 							</view>
+							<!-- <view class="" @click="shuaLian">刷脸</view> -->
+							<!-- <view class="" @click="shuaLian">异步回调</view> -->
+							<!-- <view @click="posTest">手机pos下单；</view> -->
+							<!-- <view @click="orderSure">网联下单确认；</view>													 -->
+							<!-- <view @click="gotoNativePage">跳到原生1；</view> -->
+							<!-- <view @click="addOrEditBankCark">加卡；</view> -->
+							<!-- <view @click="bankCarkList">卡表；</view> -->
+							<!-- <view @click="bankCardInfo">查卡；</view> -->
+							<!-- <view @click="delBankCard">删卡；</view> -->
 						</view>
 					</view>
 					<!-- 收银栏 -->
 					<view class='keyboard-box match-width box plr-30 align-hor-bet'>
 						<view>收银金额</view>
 						<text v-if="isNumberKeyboard" @click.stop="">{{paymentMoney}}<text class="fade-cursor-icon">|</text></text>
-						<view
-							v-else
-							class='keyboard-box__inner align-right'
-							@click.stop="showNumberKeyboard">
+						<view v-else class='keyboard-box__inner align-right' @click.stop="showNumberKeyboard">
 							<text>{{paymentText}}</text>
 						</view>
 					</view>
 					<!-- 青蛙app入口 -->
 					<view class="icon-frog iconfont icon-richscan_icon" @click="frogJump"></view>
 				</view>
-				
-				<view 
-					class="lf-cash-register padding shadow align-center box" 
+
+				<!-- <view 
+					class="lf-cash-register padding-sm shadow align-center box" 
 					v-show="isShowCashRegister && !isRich">
 					<image 
 						class=''
 						src="../../../static/home/btn_shoukuanma_click.png" 
 						@click="jumpPaymentCode"/>
 					<image 
-						class="ml-30"
+						class="ml-50"
 						src="../../../static/home/btn_shouyin_click.png" 
 						@click="cashierScan"/>
+					<image
+						class='ml-50'
+						src="../../../static/home/btn_quickPay_click.png" 
+						@click="quickPayJump"/>	
 				</view>
-				
 				<view
-					class="lf-cash-register padding shadow align-center box" 
-					style='padding-left: 0; padding-right: 0;'
-					v-show="isShowCashRegister && isRich">
-					<swiper 
-						class='match-width' style='height: 140upx;'
-						@change='onSwiperChange'>
+					class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box" 
+					v-show="isShowCashRegister && !isRich">
+					<image
+						class=''
+						src="../../../static/home/btn_quickPay_click.png" 
+						@click="shuaLian"/>
+		
+					
+					<image
+							class="ml-50"
+							src="../../../static/home/btn_shoujipos_click.png" 
+							@click="shouJiPosPay"/>
+				</view> -->
+
+
+				<view class="lf-cash-register padding shadow align-center box" style='padding-left: 0; padding-right: 0;' v-show="isShowCashRegister && isRich">
+					<swiper class='match-width' style='height: 140upx;' @change='onSwiperChange'>
 						<swiper-item class='align-hor-bet box plr-40'>
-							<image
-								class="image"
-								style='margin-top: 0'
-								src="../../../static/home/btn_bank_click.png" 
-								mode='scaleToFill'
-								@click="bankAppJump"/>
-							<image
-								class=''
-								src="../../../static/home/btn_shoukuanma_click.png" 
-								@click="jumpPaymentCode"/>
+							<image class="image" style='margin-top: 0' src="../../../static/home/btn_bank_click.png" mode='scaleToFill'
+							 @click="bankAppJump" />
+							<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
 						</swiper-item>
-						<swiper-item class='align-hor-bet box plr-40'>							
-							<image
-								class="ml-30"
-								src="../../../static/home/btn_shouyin_click.png" 
-								@click="cashierScan"/>
+						<swiper-item class='align-hor-bet box plr-40'>
+							<image class="ml-30" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
 						</swiper-item>
 					</swiper>
 				</view>
-				
+
 			</view>
-			
+
 			<view class='bar'></view>
-			
-			<view
-				v-if="lastOrder && lastOrder.actPayPrice != 0"
-				class='page-home-x__message box plr-50 align-left'
-				@click="jumpOrderDetails(lastOrder.orderNumber)">
+
+			<view v-if="lastOrder && lastOrder.actPayPrice != 0" class='page-home-x__message box plr-50 align-left' @click="jumpOrderDetails(lastOrder.orderNumber)">
 				<view class='icon'>
-					<image
-						class='match-parent'
-						src='../../../static/homev2/tongzhi.png'
-						mode='scaleToFill'
-					/>
+					<image class='match-parent' src='../../../static/homev2/tongzhi.png' mode='scaleToFill' />
 				</view>
 				<view class='circle align-ver-bet box pl-24'>
 					<view></view>
@@ -123,16 +116,36 @@
 					<view class='darker mt-10'>{{lastOrder.payWay | payWayFilter}}收款{{lastOrder.actPayPrice | dealWithMoneyFilter}}元</view>
 				</view>
 				<view class="arrow">
-					<image
-						class='match-parent'
-						src='../../../static/homev2/right.png'
-						mode='scaleToFill'
-					/>
+					<image class='match-parent' src='../../../static/homev2/right.png' mode='scaleToFill' />
 				</view>
 			</view>
-			
+
 			<view v-if="lastOrder && lastOrder.actPayPrice != 0" class='bar'></view>
-			
+			<!-- 两行两个 -->
+			<view class="lf-cash-register padding-sm shadow align-center box">
+				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
+				<image class="lf-cash-register__ml-90" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
+
+			</view>
+			<view class="lf-cash-register lf-cash-register-bottom padding-sm shadow align-center box">
+				<!-- <image
+						class=''
+						src="../../../static/home/btn_quickPay_click.png" 
+						@click="shuaLian"/> -->
+				<image class='' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" />
+
+				<image class="lf-cash-register__ml-90" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
+			</view>
+			<!-- 两行三个 -->
+			<!-- <view class="lf-cash-register padding-lg shadow  box">
+				<image class='' src="../../../static/home/btn_shoukuanma_click.png" @click="jumpPaymentCode" />
+				<image class="ml-50" src="../../../static/home/btn_shouyin_click.png" @click="cashierScan" />
+				<image class='ml-50' src="../../../static/home/btn_quickPay_click.png" @click="quickPayJump" />
+				<image class='margin-top-sm' src="../../../static/home/btn_shualian_click.png" @click="shuaLian" />
+
+				<image class="margin-top-sm" src="../../../static/home/btn_shoujipos_click.png" @click="shouJiPosPay" />
+			</view> -->
+
 			<!-- 菜单 -->
 			<!-- <view :class="['page-home-x__menu align-left box plr-30', isSmall ? 'pt-30' : 'pt-50']">
 				<view
@@ -148,7 +161,7 @@
 					<text class='mt-20'>{{menu.name}}</text>
 				</view>
 			</view> -->
-			
+
 			<!-- 轮播菜单 -->
 			<!-- <swiper
 				class='match-width mt-20'
@@ -157,24 +170,25 @@
 				indicator-color='#F0F0F0'
 				indicator-active-color='#999'>
 				<swiper-item> -->
-					<view :class="['page-home-x__menu align-left box plr-10', isSmall ? '': 'mt-20']">
-						<view
-							:class="['item align-ver-bet box']" 
-							v-for="(menu, index) in menuList"  
-							v-if="menu.isShow === 1" 
-							:key='index'
-							@click="menuJump(menu.url, menu.status)">
+			<view class='bar'></view>
+			<view :class="['page-home-x__menu align-left box plr-10 margin-top-lg', isSmall ? '': 'mt-20']">
+				<view :class="['item align-ver-bet box']" v-for="(menu, index) in menuList" v-if="menu.isShow === 1" :key='index'
+				 @click="menuJump(menu.url, menu.status)">
+					<image :class="[('img_3')]" mode='scaleToFill' :src="menu.src">
+					</image>
+					<text>{{menu.name}}</text>
+				</view>
+				<!-- <web-view class="item align-ver-bet box" src="https://alitong.vip/ydh5/index.html?i=1#/yidu_tc/pages/tabbar/index">
 							<image
-								:class="[('img_3')]"
+								class="img_3"
 								mode='scaleToFill'
-								:src="menu.src" >
+								src="static/homev2/shop.png" >
 							</image>
-							<text>{{menu.name}}</text>
-						</view>
-					</view>
-				<!-- </swiper-item>
+						</web-view> -->
+			</view>
+			<!-- </swiper-item>
 				<swiper-item> -->
-					<!-- <view :class="['page-home-x__menu align-left box plr-10']">
+			<!-- <view :class="['page-home-x__menu align-left box plr-10']">
 						<view
 							:class="['item align-default box']" 
 							v-for="(menu, index) in menuListTwo"  
@@ -189,10 +203,10 @@
 							<text class='mt-20'>{{menu.name}}</text>
 						</view>
 					</view> -->
-				<!-- </swiper-item>
+			<!-- </swiper-item>
 			</swiper>
 			 -->
-			
+
 			<!-- <view :class="['page-home-x__menu align-left box plr-30']">
 				<view
 					:class="['item align-default pt-50']" 
@@ -207,86 +221,137 @@
 					<text class='mt-20'>{{menu.name}}</text>
 				</view>
 			</view> -->
-			
+
 			<!-- 补白 -->
 			<!-- <view class='match-left-space bg-white align-default'></view> -->
 		</view>
-		
+
 		<!-- 广告 -->
-		<view 
-			:class="['page-home-x__banner_x align-center', isSmall ? 'active' : '']" 
-			v-if="bannerData && bannerData.length">
-			<swiper 
-				class="match-parent" 
-				indicator-dots="true" 
-				autoplay="true" 
-				interval="3000" 
-				duration="500"
-				indicator-color="#DDD"
-				indicator-active-color="#FFF"
-				:current="current"
-				@change="onBannerChange">
-				<swiper-item 
-					v-for="(item, index) in bannerData" 
-					v-if="index < showNum"
-					:key="index">
-					<view 
-						class="match-parent"
-						@click="onBannerClick(item.id)">
-						<image
-							class="match-parent"
-							:src="item.imageUrl"
-							mode="scaleToFill"/>
+		<view :class="['page-home-x__banner_x align-center', isSmall ? 'active' : '']" v-if="bannerData && bannerData.length">
+			<swiper class="match-parent" indicator-dots="true" autoplay="true" interval="3000" duration="500" indicator-color="#DDD"
+			 indicator-active-color="#FFF" :current="current" @change="onBannerChange">
+				<swiper-item v-for="(item, index) in bannerData" v-if="index < showNum" :key="index">
+					<view class="match-parent" @click="onBannerClick(item.id)">
+						<image class="match-parent" :src="item.imageUrl" mode="scaleToFill" />
 					</view>
 				</swiper-item>
 			</swiper>
 		</view>
-		
+		<!-- 手写签名 -->
+		<!-- <signature></signature> -->
 		<!-- 键盘-组件 -->
-		<tki-float-keyboard
-			ref="keyb" 
-			:mode="keyMode" 
-			:type="keyType" 
-			:title="keyTitle" 
-			@del="keyDel" 
-			@val="keyVal" 
-			@show="keyShow" 
-			@hide="keyHide">
+		<tki-float-keyboard ref="keyb" :mode="keyMode" :type="keyType" :title="keyTitle" @del="keyDel" @val="keyVal" @show="keyShow"
+		 @hide="keyHide">
 		</tki-float-keyboard>
-		
+
 	</view>
-		
+
 	</view>
 </template>
 
 <script>
+	// import signature from '@/components/signature/signature.vue'
 	import tkiFloatKeyboard from '@/components/tki-float-keyboard/tki-float-keyboard.vue'
 	// 后台接口
-	import {scanPay, refund, queryNewOrder, baseURL, getStoreDetails, getAdvertises, clickAdvertise, getAccountInfo, checkCoupon, frogJump, webPay, getStatistics, getOrderList, getOrderDetails, createOrder, updateOrder, invalidOrderDel, adClick } from '../../../api/vueAPI.js'
+	import {
+		scanPay,
+		refund,
+		queryNewOrder,
+		baseURL,
+		getStoreDetails,
+		getAdvertises,
+		clickAdvertise,
+		getAccountInfo,
+		checkCoupon,
+		frogJump,
+		webPay,
+		getStatistics,
+		getOrderList,
+		getOrderDetails,
+		createOrder,
+		updateOrder,
+		invalidOrderDel,
+		adClick,
+		addOrEditBankCark,
+		bankCarkList,
+		bankCardInfo,
+		delBankCard,
+		orderSure
+	} from '../../../api/vueAPI.js'
 	// 检查更新
-	import { checkApp, VERSION, compareAppVersion } from '../../../api/updateApi.js'
+	import {
+		checkApp,
+		VERSION,
+		compareAppVersion
+	} from '../../../api/updateApi.js'
 	// 客流统计
-	import { jump2DkmMain } from '../../../common/appcommon.js'
+	import {
+		jump2DkmMain
+	} from '../../../common/appcommon.js'
 	// pos接口
-	import { isFuiouPlatform, onFuiouBankPay } from '../../../api/fuiouApi.js'
+	import {
+		isFuiouPlatform,
+		onFuiouBankPay
+	} from '../../../api/fuiouApi.js'
 	// wxapi
-	import { Interval, showModal } from '../../../common/wxapi.js'
-	import { getOrderDetailsAndPrint } from '../../../api/orderApi.js'
-	
+	import {
+		Interval,
+		showModal
+	} from '../../../common/wxapi.js'
+	import {
+		getOrderDetailsAndPrint
+	} from '../../../api/orderApi.js'
+
 	// utils
-	import { setInterval, setTimeout } from '../../../utils/adapter/index.js'
-	import { LoginCache } from '../../../utils/cache/index.js'
-	
+	import {
+		setInterval,
+		setTimeout
+	} from '../../../utils/adapter/index.js'
+	import {
+		LoginCache
+	} from '../../../utils/cache/index.js'
+
+	var posModule = uni.requireNativePlugin('DCloud-PosMoudle')
+	// var shuaLianModule = uni.requireNativePlugin('DCloud-ShuaLianMoudle')
+
 	export default {
-		components: { tkiFloatKeyboard },
+		components: {
+			tkiFloatKeyboard
+		},
 		data() {
 			return {
+				/* msg: {
+					header: {
+						connection: keep - alive
+						content - length: 0
+						content - type: application / oct - stream
+						date: Fri,
+						12 Mar 2021 07
+						keep - alive: timeout = 25
+						server: Kaede / 3.5 .3 .523(zb001t4h6)
+						x - ca - error - code: B403MQ
+						x - ca - error - message: Api Market Subscription quota exhausted
+						x - ca - request - id: A77CDCA5 - CC79 - 46E2 - 863 A - 7 B2871B7F520
+					},
+					body: {
+						"error_code": 0,
+						"reason": "成功",
+						"result": {
+							"IdCardNo": "6101*********",
+							// 用户传入的参数脱敏原封返回
+							"Name": "李*",
+							// 用户传入的参数脱敏原封返回
+							"Validate_Result": 1,
+							"Similarity": 92
+						}
+					}
+				} */
 				paymentText: '请输入金额',
 				paymentMoney: '0',
-				isNumberKeyboard: false,	//是否打开键盘
-				isShowCashRegister: false, 		//是否显示收银
-				menuList: {		//菜单
-					"memberCenter":{
+				isNumberKeyboard: false, //是否打开键盘
+				isShowCashRegister: false, //是否显示收银
+				menuList: { //菜单
+					"memberCenter": {
 						src: '../../../static/homev2/hy.png',
 						name: '会员中心',
 						url: '/pages/home/memberCenter/index/index',
@@ -295,7 +360,7 @@
 						iconWidth: 44,
 						iconHeight: 38
 					},
-					"refund":{
+					"refund": {
 						src: '../../../static/homev2/sm.png',
 						name: '扫码退款',
 						url: 'refund',
@@ -304,7 +369,7 @@
 						iconWidth: 43,
 						iconHeight: 44
 					},
-					"statistics":{
+					"statistics": {
 						src: '../../../static/homev2/tj.png',
 						name: '统计',
 						url: '/pages/home/statistics/index/index',
@@ -313,7 +378,7 @@
 						iconWidth: 40,
 						iconHeight: 36
 					},
-					"QRcodeAdministration":{
+					"QRcodeAdministration": {
 						src: '../../../static/homev2/ewm.png',
 						name: '二维码管理',
 						url: '/pages/home/2DcodeAdministration/index/index',
@@ -322,7 +387,7 @@
 						iconWidth: 38,
 						iconHeight: 38
 					},
-					"storeAdministration":{
+					"storeAdministration": {
 						src: '../../../static/homev2/md.png',
 						name: '门店管理',
 						url: '/pages/home/storeAdministration/index/index',
@@ -331,7 +396,7 @@
 						iconWidth: 42,
 						iconHeight: 40
 					},
-					"staffManagement":{
+					"staffManagement": {
 						src: '../../../static/homev2/yg.png',
 						name: '员工管理',
 						url: '/pages/home/staffManagement/index/index',
@@ -340,7 +405,7 @@
 						iconWidth: 43,
 						iconHeight: 42
 					},
-					"couponCancel":{
+					"couponCancel": {
 						src: '../../../static/homev2/kq.png',
 						name: '卡券核销',
 						url: 'couponCancel',
@@ -350,7 +415,7 @@
 						iconWidth: 47,
 						iconHeight: 43
 					},
-					"consumerAnalysis":{
+					"consumerAnalysis": {
 						src: '../../../static/homev2/xfz.png',
 						name: '客流统计',
 						// url: '/pages/home/consumerAnalysis/index/index',
@@ -360,7 +425,7 @@
 						iconWidth: 42,
 						iconHeight: 40
 					},
-					"classExchange":{
+					"classExchange": {
 						src: '../../../static/homev2/workinfo.png',
 						name: '交接班',
 						url: '/pages/home/classExchange/index/index',
@@ -369,7 +434,7 @@
 						iconWidth: 44,
 						iconHeight: 38
 					},
-					"depositManage":{
+					"depositManage": {
 						src: '../../../static/homev2/dm.png',
 						name: '押金管理',
 						url: '/pages/home/depositManage/index/index',
@@ -378,36 +443,75 @@
 						iconWidth: 44,
 						iconHeight: 38
 					},
+					"ruyi": {
+						src: '../../../static/homev2/zfb.png',
+						name: '如意设备',
+						url: '/pages/home/ruyi/ruyi',
+						status: 1,
+						isShow: 1,
+						iconWidth: 44,
+						iconHeight: 38
+					},
+					/* ,
+										"depositManage":{
+											src: '../../../static/homev2/quickPay.png',
+											name: '快捷支付',
+											url: 'quickPayJump',
+											status: 1,
+											isShow: 1,
+											iconWidth: 44,
+											iconHeight: 38
+										} */
+					/* ,
+										"depositManage":{
+											src: '../../../static/homev2/shop.png',
+											name: '商城',
+											url: 'shop',
+											status: 1,
+											isShow: 1,
+											iconWidth: 200,
+											iconHeight: 200
+										} */
+					/* ,
+										"depositManage":{
+											src: '../../../static/homev2/dm.png',
+											name: '手机pos',
+											url: 'sjPosJump',
+											status: 1,
+											isShow: 1,
+											iconWidth: 44,
+											iconHeight: 38
+										} */
 				},
-				menuListTwo: {		//菜单 2
+				menuListTwo: { //菜单 2
 				},
-				keyMode: 'number',		//键盘组件-类型	keyboard-普通键盘 car-汽车键盘 number-数字键盘
-				keyType: 0,		//键盘组件-使用状态  0-全部可用||number类型时 1-全部禁用
-				keyTitle: ''	,	//键盘组件-
-				codeResult: '',		//扫码信息
+				keyMode: 'number', //键盘组件-类型	keyboard-普通键盘 car-汽车键盘 number-数字键盘
+				keyType: 0, //键盘组件-使用状态  0-全部可用||number类型时 1-全部禁用
+				keyTitle: '', //键盘组件-
+				codeResult: '', //扫码信息
 				scanPayMoney: '0',
 				storeId: '',
 				storeName: '',
 				userType: '',
-				webviewStyle:{
-					progress:{
-						color:'#000',
+				webviewStyle: {
+					progress: {
+						color: '#000',
 					},
 				},
-				isKeyboardVoice: false,		//键盘按键音效
+				isKeyboardVoice: false, //键盘按键音效
 				isVoice: '',
-				isPush:'',
-				beginTime:'',
+				isPush: '',
+				beginTime: '',
 				bannerData: [],
-				showNum: 4,							// 要展示的广告数量
+				showNum: 4, // 要展示的广告数量
 				current: 0,
-				polling: 1,							//报错后轮询指示位
-				fromRange: 5,						// 广告相关
+				polling: 1, //报错后轮询指示位
+				fromRange: 5, // 广告相关
 				isFrogAuthorized: false,
-				payWay: 1,							// 支付方式
-				payWayShow: true,					// 控制显隐
-				lastOrder: null,						// 最新订单
-				realOrder: null,						// 实收情况
+				payWay: 1, // 支付方式
+				payWayShow: true, // 控制显隐
+				lastOrder: null, // 最新订单
+				realOrder: null, // 实收情况
 				start_payTime: '',
 				end_payTime: '',
 				paddingTop: null,
@@ -424,12 +528,15 @@
 				pausePoll: false
 			};
 		},
-		
+
 		onLoad() {
 			// 调整样式
 			let systemInfo = uni.getSystemInfoSync()
 			// console.log('systemInfo', systemInfo)
-			let { windowHeight, windowWidth } = systemInfo
+			let {
+				windowHeight,
+				windowWidth
+			} = systemInfo
 			// if (375 / windowWidth * windowHeight < 667) {
 			// 	this.isSmall = true
 			// }
@@ -437,7 +544,7 @@
 				this.paddingTop = systemInfo['pixelRatio'] * systemInfo['statusBarHeight'] + 'px'
 			}
 			// 版本更新检测
-			this.checkUpdate()
+			// this.checkUpdate()
 			// 获取当前时间
 			// this.getCurrentTime()
 			// 登录者身份验证
@@ -452,93 +559,167 @@
 			// }			
 			// 富有平台判断
 			this.isRich = isFuiouPlatform()
+			// console.log('this.isRich============',this.isRich)
 			this.isShow = true
-			
-			
+
+
 			// 轮询最新一笔订单
 			// this.getLastOrder()
-			
+
 			let uuid = plus.device.uuid
 			console.log('uuid', uuid)
 			// showModal('uuid:'+ uuid)
-			
+
 			// 重置开始时间
 			uni.setStorageSync("beginTime", '')
 			// this.interval.startInterval()
-			
-			
+
+
 		},
-		
+
 		onReady() {
-			console.log('我来到火星的世界x1', LoginCache)
+			// console.log('我来到火星的世界x1', LoginCache)
 			// 存储登录页的状态
 			LoginCache.state = false
-			console.log('我来到火星的世界x2', LoginCache)
+			// console.log('我来到火星的世界x2', LoginCache)
 			// 轮询查询新订单
 			this.queryNewOrder()
-			
+
 		},
-		
-		onShow() {	
-			
+
+		onShow() {
+
 			this.isHomeSelf = true
 			// 轮询实时收入金额
 			this.getStatistics()
 			this.getStatisticsDate()
-			
+
 			// 获取门店名称
 			let storeDetail = uni.getStorageSync("nowStoreDetail")
-			if(storeDetail != '' && storeDetail != null && storeDetail != undefined && storeDetail){
+			if (storeDetail != '' && storeDetail != null && storeDetail != undefined && storeDetail) {
 				this.storeName = storeDetail.storeName
 			}
 			// 检查音效设置
 			let isKeyboardVoice = parseInt(uni.getStorageSync("setKeyboardVoice"))
-			if(isKeyboardVoice === 1){
+			if (isKeyboardVoice === 1) {
 				this.isKeyboardVoice = true
-			}else{
+			} else {
 				this.isKeyboardVoice = false
 			}
-			
+
 			// 启动定时器
 			// this.getLastOrderInterval.openInterval()
-			
+
 			// 启动定时器
 			// this.getLastOrderInterval.startInterval()
 			// this.getRealInterval.startInterval()
-			
+
 			// this.getRealInterval.closeInterval()
 			// this.interval.closeInterval()
-			
+
 			// this.getRealInterval.pauseInterval()
 			// this.getRealInterval.restartInterval()
-			// this.interval.restartInterval()
+			// this.interval.restartInterval()sss
 		},
-		
+
 		onHide() {
-			
+
 			this.isHomeSelf = false
-			
+
 			// 失焦关闭键盘
 			// this.$refs.keyb._keyHide()
 			// this.isShow = false
-			
+
 			// this.getRealInterval.pauseInterval()
 			// this.interval.pauseInterval()
 		},
-		
-		watch:{
-			paymentMoney(newValue, oldValue){
+
+		watch: {
+			paymentMoney(newValue, oldValue) {
 				// if(!newValue.match(/^[0-9]+([.]{1}[0-9]{1,2})?$/)){
 				// 	/* 隐藏收银栏 */
 				// 	this.isShowCashRegister = false;
 				// }
 			},
-			storeId(val,oldVal){
+			storeId(val, oldVal) {
 				/* 广告 */
 				// this.getAppAdvertisement();
 			}
 		},
-		methods:{
+		methods: {
+			/**
+			 * addOrEditBankCark  添加和编辑银行卡
+			 * @param {Object} merchantId 商户ID
+			 * @param {Object} realName 开户人名称
+			 * @param {Object} idCard  身份证号
+			 * @param {Object} accNo  支付卡号
+			 * @param {Object} mobile  手机号
+			 * @param {Object} cvv2 银行卡背面 后三位
+			 * @param {Object} validity 有效期 格式： MMYY
+			 */
+			addOrEditBankCark() {
+				let merchantId = uni.getStorageSync('merchantId')
+				let realName = '张国军'
+				let idCard = '130533198309185913'
+				let accNo = '6226880385610282'
+				let mobile = '15803196620'
+				let cvv2 = '947'
+				let validity = '0523'
+				addOrEditBankCark(merchantId, realName, idCard, accNo, mobile, cvv2, validity)
+			},
+			bankCarkList() {
+				let merchantId = uni.getStorageSync('merchantId')
+				bankCarkList(merchantId)
+			},
+			bankCardInfo(bankCardId) {
+				bankCardInfo('1345981813639208960')
+			},
+			delBankCard(bankCardId) {
+				delBankCard('1345981813639208960')
+			},
+			shuaLian() {
+				uni.showToast({
+					title: '已开始调取',
+					icon: 'none'
+
+				})
+				// 调用异步方法
+				posModule.postest({
+						'name': 'unimp',
+						'age': 1
+					},
+					(ret) => {
+						uni.showToast({
+							title: ret,
+							icon: 'none'
+
+						})
+					})
+			},
+			posTest() {
+				// 下单
+				let userId = uni.getStorageSync('userId') || ''
+				let merchantId = uni.getStorageSync('merchantId') || ''
+				// let merchantId = '123213123213'
+				let storeId = uni.getStorageSync('storeId') || ''
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				// console.log('customerInfo==============',customerInfo)
+				let totalPrice = '1' //this.paymentMoney || '0.01'
+				let payWay = 8
+				let payChannel = 17 //17 pos  18 网联
+				let bankCardId = '1345981813639208960'
+				webPay(userId, merchantId, storeId, totalPrice, payWay, payChannel, serviceId, bankCardId).then(function(data) {
+					console.log('sucess==========', JSON.stringify(data))
+				}, function(data) {
+					console.log('fail==========', JSON.stringify(data))
+				})
+			},
+			orderSure(bankCardId) {
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				orderSure('20210104143544242783', '332633', serviceId, 'C070820113023698', '202101041435446833')
+			},
 			// 获取当前时间
 			getCurrentTime() {
 				let date = new Date()
@@ -547,7 +728,7 @@
 				MM = MM < 10 ? ('0' + MM) : MM
 				let d = date.getDate()
 				d = d < 10 ? ('0' + d) : d
-				let today =  y + '-' + MM + '-' + d
+				let today = y + '-' + MM + '-' + d
 				this.start_payTime = today
 				this.end_payTime = today
 			},
@@ -556,21 +737,22 @@
 				// 获取用户类型
 				this.userType = parseInt(uni.getStorageSync('userType'))
 				// console.log(this.userType)
-				switch(parseInt(this.userType)){
+				switch (parseInt(this.userType)) {
 					case 1:
-						uni.setStorageSync('nowStoreDetail',{
+						uni.setStorageSync('nowStoreDetail', {
 							storeId: '',
 							storeName: '',
 							status: false
 						})
 						this.storeName = ''
+						this.storeNameGet()
 						break
-					/* 登录者-店长 */
+						/* 登录者-店长 */
 					case 2:
 						this.menuList.storeAdministration.isShow = 0;
 						this.storeNameGet()
 						break;
-					/* 登录者-店员 */
+						/* 登录者-店员 */
 					case 3:
 						this.menuList.storeAdministration.isShow = 0;
 						this.menuList.staffManagement.isShow = 0;
@@ -581,7 +763,7 @@
 						this.menuList.refund.isShow = 0;
 						this.storeNameGet()
 						break;
-				}	
+				}
 			},
 			// 滑动组件change事件
 			onSwiperChange(e) {
@@ -618,21 +800,51 @@
 			},
 			/* 广告跳转 */
 			srcJump(url, id) {
-				if(url){
+				if (url) {
 					// console.log("广告跳转啦~",url)
 					uni.navigateTo({
-						url: '/pages/home/advertisement/advertisement?id='+id+'&url=' + url
+						url: '/pages/home/advertisement/advertisement?id=' + id + '&url=' + url
 					})
-				}else{
+				} else {
 					console.log("没有url")
 				}
 			},
-			/* 登陆者为店长/店员，获取门店名称 */
+			/* 登陆者为店长/店员，获取门店名称  新增：如果登录这为商户本人，并且只有一个商铺，加上全部门店项，共两个，则该商户为默认选择商铺，如果有多个商铺，付款时需要手动选择 */
 			storeNameGet() {
 				getAccountInfo().then(res => {
 					// console.log("信息");
 					// console.log(res);
-					if(!res.obj.storeId){
+					this.userType = parseInt(uni.getStorageSync('userType'))
+					// 商户登录
+					if (this.userType === 1) {
+						let storeSelectItemArr = res.obj.storeSelectItem
+						// 只有一个门店的时候设置为默认门店（加上全部门店项，共两个）
+						if (storeSelectItemArr.length === 2) {
+							this.storeId = storeSelectItemArr[1].storeId;
+							this.storeName = storeSelectItemArr[1].storeName;
+							// uni.setStorageSync('storeId', this.storeId)				
+							uni.setStorageSync('nowStoreDetail', {
+								storeId: this.storeId,
+								storeName: this.storeName,
+								// todo status卡券核销记录页面用到了，不太清楚区别，商户手动选择是true，店长店员登录自动获取的是false
+								status: true
+							})
+						}
+					} else {
+						if (!res.obj.storeId) {
+							this.storeName = res.obj.merchantName
+							this.storeId = ''
+							return
+						}
+						this.storeName = res.obj.storeName
+						this.storeId = res.obj.storeId
+						uni.setStorageSync('nowStoreDetail', {
+							storeId: this.storeId,
+							storeName: this.storeName,
+							status: false
+						})
+					}
+					/* if(!res.obj.storeId){
 						this.storeName = res.obj.merchantName
 						this.storeId = ''
 						return
@@ -643,7 +855,10 @@
 						storeId: this.storeId,
 						storeName: this.storeName,
 						status: false
-					})
+					}) */
+
+
+
 				}).catch(err => {
 					// console.log(err)
 				})
@@ -656,9 +871,9 @@
 				this.$refs.keyb._keyShow()
 				// 检查音效设置
 				let isKeyboardVoice = parseInt(uni.getStorageSync("setKeyboardVoice"))
-				if(isKeyboardVoice === 1){
+				if (isKeyboardVoice === 1) {
 					this.isKeyboardVoice = true
-				}else{
+				} else {
 					this.isKeyboardVoice = false
 				}
 				// 创建键盘音效音频实例
@@ -674,9 +889,9 @@
 						console.log(res.errMsg)
 						console.log(res.errCode)
 						uni.showToast({
-							title:res.errMsg,
-							icon:'none'
-					
+							title: res.errMsg,
+							icon: 'none'
+
 						})
 					})
 					// console.log('开始音频')
@@ -707,10 +922,10 @@
 			/* 菜单功能跳转 */
 			menuJump(url, status) {
 				// console.log('点击', url, status)
-				if(status === 0){
+				if (status === 0) {
 					uni.showToast({
-						title:"敬请期待",
-						icon:"none"
+						title: "敬请期待",
+						icon: "none"
 					})
 					// console.log('更新留余区域')
 					return
@@ -721,15 +936,30 @@
 					return
 				}
 				/* 扫码退款 */
-				if(url === 'refund'){
+				if (url === 'refund') {
 					this.showRefund();
 					return
 				}
 				/* 扫码核销卡券 */
-				if(url === 'couponCancel'){
+				if (url === 'couponCancel') {
 					this.checkCoupon();
 					return
 				}
+				// 商城
+				if (url === 'shop') {
+					this.shopJump();
+					return
+				}
+				// 网联，快捷支付
+				if (url === 'quickPayJump') {
+					this.quickPayJump();
+					return
+				}
+				/* // 手机pos调取原生页面
+				if(url === 'sjPosJump'){
+					this.sjPosJump();
+					return
+				} */
 				// console.log('跳转页面：'+url)
 				/* 保留页面栈进行跳转 */
 				uni.navigateTo({
@@ -738,7 +968,7 @@
 			},
 			/* 键盘组件回调函数~ */
 			// 返回键盘输入内容 
-			keyVal(val){
+			keyVal(val) {
 				// console.log(777, val)
 				// 防止用户超快速点击
 				if (this.keyboardLock) {
@@ -754,7 +984,7 @@
 				let flag = this.validKeyboardInput()
 				this.isShowCashRegister = flag
 				/* 键盘音效 */
-				if(this.isKeyboardVoice === true){
+				if (this.isKeyboardVoice === true) {
 					// 键盘播报
 					this.startKeyboardAudio()
 				}
@@ -780,18 +1010,18 @@
 								this.paymentMoney = val
 							}
 						} else {
-							this.paymentMoney = tmpPaymentMoney +  val
+							this.paymentMoney = tmpPaymentMoney + val
 						}
 					}
 				} else if (tmpPaymentMoney.length === 2) {
 					if (/^\d\.$/.test(tmpPaymentMoney)) {
 						if (val !== '.') {
-							this.paymentMoney = tmpPaymentMoney +  val
+							this.paymentMoney = tmpPaymentMoney + val
 						} else if (/^\d\d$/.test(tmpPaymentMoney)) {
-							this.paymentMoney = tmpPaymentMoney +  val
+							this.paymentMoney = tmpPaymentMoney + val
 						}
 					} else {
-						this.paymentMoney = tmpPaymentMoney +  val
+						this.paymentMoney = tmpPaymentMoney + val
 					}
 				} else if (tmpPaymentMoney.length === 3) {
 					if (/^\d\.\d$/.test(tmpPaymentMoney)) {
@@ -809,7 +1039,7 @@
 							this.paymentMoney = tmpPaymentMoney + val
 						}
 					} else {
-						this.paymentMoney = tmpPaymentMoney +  val
+						this.paymentMoney = tmpPaymentMoney + val
 					}
 				} else if (tmpPaymentMoney.length >= 4) {
 					let firstRegExp = ""
@@ -829,13 +1059,13 @@
 							this.paymentMoney = tmpPaymentMoney + val
 						}
 					} else if (secondRegExp.test(tmpPaymentMoney)) {
-						
+
 						if (val !== '.') {
 							this.paymentMoney = tmpPaymentMoney + val
 						}
 					} else {
 						if (tmpPaymentMoney.indexOf('.') !== (tmpPaymentMoney.length - 3)) {
-							this.paymentMoney = tmpPaymentMoney +  val
+							this.paymentMoney = tmpPaymentMoney + val
 						}
 					}
 				}
@@ -846,12 +1076,13 @@
 				if (tmpPaymentMoney >= this.maxPaymentMoney) {
 					this.showToast('最大金额不能超过1亿元')
 				}
-				return !(/\d\.$/.test(tmpPaymentMoney) || ('0' === tmpPaymentMoney) || ('0.0' === tmpPaymentMoney) || ('0.00' === tmpPaymentMoney)|| (+tmpPaymentMoney < 0.01) || (+tmpPaymentMoney >= this.maxPaymentMoney))
+				return !(/\d\.$/.test(tmpPaymentMoney) || ('0' === tmpPaymentMoney) || ('0.0' === tmpPaymentMoney) || ('0.00' ===
+					tmpPaymentMoney) || (+tmpPaymentMoney < 0.01) || (+tmpPaymentMoney >= this.maxPaymentMoney))
 			},
 			// 键盘退格时回调 
-			keyDel(){
+			keyDel() {
 				/* 当仅剩一位数时退格判断 */
-				if(this.paymentMoney.length === 1){
+				if (this.paymentMoney.length === 1) {
 					/* 金额初始化 */
 					this.paymentMoney = '0'
 					/* 隐藏收银栏 */
@@ -868,7 +1099,7 @@
 				let flag = this.validKeyboardInput()
 				this.isShowCashRegister = flag
 				/* 键盘音效 */
-				if(this.isKeyboardVoice === true){
+				if (this.isKeyboardVoice === true) {
 					// 键盘播报
 					this.startKeyboardAudio()
 				}
@@ -893,9 +1124,9 @@
 					// console.log(res.errMsg)
 					// console.log(res.errCode)
 					uni.showToast({
-						title:res.errMsg,
-						icon:'none'
-				
+						title: res.errMsg,
+						icon: 'none'
+
 					})
 				})
 				setTimeout(() => {
@@ -905,11 +1136,11 @@
 				}, 100)
 			},
 			// 键盘显示的回调，返回键盘节点信息
-			keyShow(h){
+			keyShow(h) {
 				// console.log(h)
 			},
 			// 隐藏键盘时触发
-			keyHide(){
+			keyHide() {
 				/* 关闭键盘 */
 				this.isNumberKeyboard = false
 				this.closeNumbeKeyboard()
@@ -917,7 +1148,7 @@
 			/* ~键盘组件回调函数 */
 			/* 收款码跳转 */
 			jumpPaymentCode() {
-				if(parseFloat(this.paymentMoney) === 0){
+				if (parseFloat(this.paymentMoney) === 0) {
 					uni.showToast({
 						title: '请输入正确金额',
 						icon: 'none'
@@ -926,9 +1157,22 @@
 				}
 				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
 				if (!nowStoreDetail.storeId) {
-					uni.showToast({
+					/* uni.showToast({
 						title: '请选择门店',
 						icon: 'none'
+					}) */
+					uni.showModal({
+						title: '提示',
+						content: '请选择门店',
+						showCancel: true,
+						// confirmText: '请选择门店',
+						success: (res) => {
+							// console.log('确定', res.confirm)
+							if (res.confirm) {
+								this.storeSelect()
+
+							}
+						}
 					})
 					return
 				}
@@ -936,7 +1180,8 @@
 				// this.onPayWayShow(1)
 				let that = this
 				uni.navigateTo({
-					url: '/pages/home/cashRegisterCode/cashRegisterCode?paymentMoney='+that.paymentMoney+'&payWay='+that.payWay + '&storeId=' + storeId,
+					url: '/pages/home/cashRegisterCode/cashRegisterCode?paymentMoney=' + that.paymentMoney + '&payWay=' + that.payWay +
+						'&storeId=' + storeId,
 					complete() {
 						/* 金额初始化 */
 						that.paymentMoney = '0'
@@ -950,10 +1195,14 @@
 				})
 			},
 			/* 客流统计 */
-			customerCount () {
+			customerCount() {
 				// console.log('客流统计'
 				let customerInfo = uni.getStorageSync('customerCount')
-				let { serviceId, servicePhone, token } = customerInfo
+				let {
+					serviceId,
+					servicePhone,
+					token
+				} = customerInfo
 				// console.log('customerInfo', customerInfo)
 				if (!serviceId) {
 					uni.showToast({
@@ -978,7 +1227,7 @@
 				}
 				let storeId = '';
 				let nowStoreDetail = uni.getStorageSync('nowStoreDetail')
-				if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail){
+				if (nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail) {
 					storeId = nowStoreDetail.storeId
 				}
 				// console.log('storeId', storeId)
@@ -987,7 +1236,7 @@
 			},
 			/* 扫码退款 */
 			showRefund() {
-				
+
 				uni.scanCode({
 					onlyFromCamera: true,
 					success: (res) => {
@@ -999,7 +1248,7 @@
 							getOrderDetails(res.result).then(res => {
 								// console.log('uuuuuuuuuu', res)
 								uni.navigateTo({
-									url: '/pages/order/orderDetails/orderDetails?orderNumber='+ res.obj.orderNumber
+									url: '/pages/order/orderDetails/orderDetails?orderNumber=' + res.obj.orderNumber
 								})
 							}).catch(err => {
 								console.log('yyyyyyyyyyyyyyy', err)
@@ -1011,8 +1260,154 @@
 					}
 				});
 			},
-			/* 扫码收款 */
-			cashierScan() {
+			// 手机pos付款
+
+			shouJiPosPay() {
+				/* uni.showModal({
+							content: `人脸验证失败（代码：）。`,
+							showCancel: false
+						}) */
+				// console.log('ssssssssssssssssssssssssssssssssss')
+				if (parseFloat(this.paymentMoney) < 10) {
+					uni.showToast({
+						title: '手机POS交易金额不能小于10元',
+						icon: 'none'
+					})
+					return
+				}
+				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
+				if (!nowStoreDetail.storeId) {
+					uni.showModal({
+						title: '提示',
+						content: '请选择门店',
+						showCancel: true,
+						// confirmText: '请选择门店',
+						success: (res) => {
+							// console.log('确定', res.confirm)
+							if (res.confirm) {
+								this.storeSelect()
+
+							}
+						}
+					})
+
+					/* uni.showToast({
+						title: '请选择门店',
+						icon: 'none'
+					}) */
+					return
+				}
+
+				let userId = uni.getStorageSync('userId') || ''
+				let merchantId = uni.getStorageSync('merchantId') || ''
+				// let merchantId = '123213123213'
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				// console.log('customerInfo==============',customerInfo)
+				let totalPrice = this.paymentMoney //this.paymentMoney || '0.01'
+				/* let payWay = 8
+				let payChannel = 17
+				let bankCardId = '1342280548032446464' */
+
+
+
+				let storeId = '';
+
+				let equipmentId = uni.getStorageSync('equipmentId') || ''
+				let token = uni.getStorageSync('token');
+				// console.log('token===============',token)
+				if (nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail) {
+					storeId = nowStoreDetail.storeId
+				}
+				let posDataObj = {
+					userId,
+					merchantId,
+					storeId,
+					serviceId,
+					totalPrice
+				}
+				let posDataObjStr = JSON.stringify(posDataObj);
+				// console.log('posDataObjStr=========================',posDataObjStr)
+				posModule.pos(posDataObjStr)
+			},
+			shopJump() {
+				location.href = 'https://alitong.vip/ydh5/index.html?i=1#/yidu_tc/pages/tabbar/index'
+			},
+			quickPayJump() {
+				if (parseFloat(this.paymentMoney) === 0) {
+					uni.showToast({
+						title: '请输入正确金额',
+						icon: 'none'
+					})
+					return
+				}
+				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
+				if (!nowStoreDetail.storeId) {
+					uni.showModal({
+						title: '提示',
+						content: '请选择门店',
+						showCancel: true,
+						// confirmText: '请选择门店',
+						success: (res) => {
+							// console.log('确定', res.confirm)
+							if (res.confirm) {
+								this.storeSelect()
+
+							}
+						}
+					})
+					// this.storeSelect()
+					/* uni.showToast({
+						title: '请选择门店',
+						icon: 'none'
+					}) */
+					return
+				}
+				uni.navigateTo({
+					url: '/pages/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=18'
+				})
+				/* let storeId = nowStoreDetail.storeId
+				let userId = uni.getStorageSync('userId') || ''
+				let merchantId = uni.getStorageSync('merchantId') || ''
+				// let merchantId = '123213123213'
+				let customerInfo = uni.getStorageSync('customerCount')
+				let serviceId = customerInfo.serviceId
+				// console.log('customerInfo==============',customerInfo)
+				let totalPrice = this.paymentMoney //this.paymentMoney || '0.01'
+				let token = uni.getStorageSync('token');
+				var obj = {merchantId,storeId,serviceId,userId,token}
+				var objStr = JSON.stringify(obj)
+				// console.log(objStr)
+				posModule.quickPay(objStr);
+				// posModule.gotoNativePage(); */
+			},
+			/* shuaLianCallback(ret){
+				uni.showToast({
+					title: ret,
+					icon: 'none'
+				})
+				uni.navigateTo({
+					url: '/pages/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
+				})
+			},
+			shuaLianAsyncFunc() {
+				uni.showToast({
+					title: 'shuaLianModule7777777777777777777'+shuaLianModule,
+					icon: 'none'
+				})
+				let obj = {
+						Name: '韩治涛',
+						Number: '130582198612181613',
+						Count:4
+					};
+					let objStr = JSON.stringify(obj)
+				shuaLianModule.shuaLianAuth(objStr,
+					(ret) => {
+						this.shuaLianCallback(ret)
+					})
+				
+			}, */
+			/* shuaLianSimple(){
 				if(parseFloat(this.paymentMoney) === 0){
 					uni.showToast({
 						title: '请输入正确金额',
@@ -1022,17 +1417,128 @@
 				}
 				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
 				if (!nowStoreDetail.storeId) {
+					uni.showModal({
+						title: '提示',
+						content: '请选择门店',
+						showCancel: true,
+						// confirmText: '请选择门店',
+						success: (res) => {
+							// console.log('确定', res.confirm)
+							if (res.confirm) {
+								this.storeSelect()
+								
+							}
+						}
+					})
+					return
+				}
+				uni.navigateTo({
+					url: '/pages/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
+				})
+			}, */
+			shuaLian() {
+				if (parseFloat(this.paymentMoney) === 0) {
 					uni.showToast({
-						title: '请选择门店',
+						title: '请输入正确金额',
 						icon: 'none'
 					})
 					return
 				}
+				let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
+				if (!nowStoreDetail.storeId) {
+					uni.showModal({
+						title: '提示',
+						content: '请选择门店',
+						showCancel: true,
+						// confirmText: '请选择门店',
+						success: (res) => {
+							// console.log('确定', res.confirm)
+							if (res.confirm) {
+								this.storeSelect()
+
+							}
+						}
+					})
+					return
+				}
+				uni.navigateTo({
+					url: '/pages/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=20'
+				})
+				this.shuaLianAsyncFunc()
+
+
+			},
+			/* sjPosJump() {
+				
+				// 调取摄像头传给sdk的,暂时没用
+				// var obj = {
+				// 	"memberCode": "C070820120351304",
+				// 	"tranAmount": "1100",
+				// 	"txnDate": "20201231",
+				// 	"txnTime": "104857",
+				// 	"systrace": "023920",
+				// 	"orderCode": "202012151348574454",
+				// 	"netCode": "9",
+				// 	"manufacturer": "小米",
+				// 	"deviceType": "MI 9",
+				// 	"serialNum": "52882189691967929917",
+				// 	"location": "116.455746,39.954022",
+				// 	"ip": "125.33.28.50",										
+				// 	"additionalInfo": "TUK9z3tXUT5A176QygmTPR5intwPMmHrYh2nl9z/8xRja2t17+zeWlJde2HMQuqvp1NGUJ8HVxI="					
+				// }
+				if(parseFloat(this.paymentMoney) < 10){
+					uni.showToast({
+						title: '手机POS交易金额不能小于10元',
+						icon: 'none'
+					})
+					return
+				}
+				var obj = {userName:'15803196620',password:'123456',merchantId:'111'}
+				var objStr = JSON.stringify(obj)
+				// posModule.gotoNativePage()
+				// posModule.toast()
+				// console.log('posModule=========',posModule)
+				// console.log('posModulePay=========',posModule.pay)
+				posModule.pay(objStr);
+				// posModule.gotoNativePage();
+			}, */
+
+			/* 扫码收款 */
+			cashierScan() {
+				if (parseFloat(this.paymentMoney) === 0) {
+					uni.showToast({
+						title: '请输入正确金额',
+						icon: 'none'
+					})
+					return
+				}
+
 				// console.log(nowStoreDetail.storeId)
 				let that = this
 				// console.log('哈哈哈哈', that.scanPayMoney, that.paymentMoney)
 				that.scanPayMoney = that.paymentMoney
 				// 聚合通道
+				/*if(android != null){
+					let storeId = '';
+					let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
+					let equipmentId = uni.getStorageSync('equipmentId') || ''
+					let token = uni.getStorageSync('token');
+					// console.log('token===============',token)
+					if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail){
+						storeId = nowStoreDetail.storeId
+					}
+					android.saoMaShouKuan(that.scanPayMoney, 0,storeId, equipmentId, token)
+					// 金额初始化
+					that.paymentMoney = '0'
+					that.scanPayMoney = '0'
+					// 关闭键盘
+					that.$refs.keyb._keyHide()
+					that.isNumberKeyboard = false
+					that.closeNumbeKeyboard()
+				}else{
+					console.log('没有扫码设备')
+				} */
+
 				uni.scanCode({
 					onlyFromCamera: true,
 					success: (res) => {
@@ -1043,15 +1549,19 @@
 						// 临时注释
 						let storeId = '';
 						let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
-						if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail){
+						console.log('nowStoreDetail', nowStoreDetail)
+						if (nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail) {
 							storeId = nowStoreDetail.storeId
 						}
-						scanPay(that.scanPayMoney, 0, res.result, storeId).then(res => {
-							// console.log(666, res)
+						let equipmentId = uni.getStorageSync('equipmentId') || ''
+						// console.log('that.scanPayMoney',that.scanPayMoney)
+						// console.log(55555555555555,that.scanPayMoney, 0, res.result, storeId, equipmentId)
+						scanPay(that.scanPayMoney, 0, res.result, storeId, equipmentId).then(res => {
+							// console.log(6666666666666666666666666666, res)
 							uni.navigateTo({
-								url:'../../home/paySuccess/paySuccess?orderNumber='+ res.obj.orderNumber
+								url: '../../home/paySuccess/paySuccess?orderNumber=' + res.obj.orderNumber
 							})
-							/* 金额初始化 */
+							金额初始化
 							that.paymentMoney = '0'
 							that.scanPayMoney = '0'
 							// 关闭键盘
@@ -1059,6 +1569,7 @@
 							that.isNumberKeyboard = false
 							that.closeNumbeKeyboard()
 						}).catch(err => {
+							// console.log(777777777777777777777777, err)
 							console.log(err)
 						})
 					}
@@ -1068,18 +1579,18 @@
 			queryNewOrder() {
 				// 轮询订单
 				setTimeout((count) => {
-						
+
 					if (LoginCache.state || this.pausePoll) {
 						// this.interval.pauseInterval()
 						return
 					}
-					
-					console.log('语音播放', count)
-				
+
+					// console.log('语音播放', count)
+
 					let beginTime = uni.getStorageSync("beginTime") || ''
 					let storeId = '';
 					let nowStoreDetail = uni.getStorageSync('nowStoreDetail');
-					if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail){
+					if (nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail) {
 						storeId = nowStoreDetail.storeId
 					}
 					// console.log('beginTime', beginTime)
@@ -1124,9 +1635,9 @@
 				}, 5000)
 			},
 			/* 语音队列播放 */
-			musicPlay(i, num, musicList){
+			musicPlay(i, num, musicList) {
 				//播放完毕
-				if(i >= num){		
+				if (i >= num) {
 					this.pausePoll = false
 					// this.interval.restartInterval()
 					this.queryNewOrder()
@@ -1144,13 +1655,13 @@
 				})
 				innerAudioContext.onError((res) => {
 					uni.showToast({
-						title:res.errMsg,
-						icon:'none'
+						title: res.errMsg,
+						icon: 'none'
 					})
 				})
 			},
 			/* 扫码核销卡券 */
-			checkCoupon(){
+			checkCoupon() {
 				// uni.showToast({
 				// 	title: "敬请期待",
 				// 	icon: "none"
@@ -1166,8 +1677,8 @@
 						checkCoupon(res.result).then(res => {
 							// console.log(res)
 							uni.showToast({
-								title:res.msg,
-								icon:"success"
+								title: res.msg,
+								icon: "success"
 							})
 						}).catch(err => {
 							console.log(err)
@@ -1192,7 +1703,11 @@
 						icon: 'none'
 					})
 					setTimeout(() => {
-						let { tag, orderNumber, order } = newOrder
+						let {
+							tag,
+							orderNumber,
+							order
+						} = newOrder
 						if (tag === 'update') {
 							this.updateOrder(order, orderNumber)
 						} else if (tag === 'delete') {
@@ -1215,7 +1730,7 @@
 					})
 					return
 				}
-				if(parseFloat(this.paymentMoney) === 0){
+				if (parseFloat(this.paymentMoney) === 0) {
 					uni.showToast({
 						title: '请输入正确金额',
 						icon: 'none'
@@ -1238,14 +1753,17 @@
 					uni.setStorageSync('newOrder', '')
 					if (res && res.obj) {
 						let order = res.obj
-						let { orderNumber } = order
+						let {
+							orderNumber
+						} = order
 						onFuiouBankPay(orderNumber, tmp, (referenceNo, date) => {
 							// console.log('onFuiouBankPay success')
 							if (date) {
 								order['transactionId'] = referenceNo
 								order['payTime'] = date
 								let dateObj = new Date()
-								let timeObj = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getDate() + ' ' + dateObj.getHours() + ':' + dateObj.getMinutes() + ':' + dateObj.getSeconds()
+								let timeObj = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getDate() + ' ' +
+									dateObj.getHours() + ':' + dateObj.getMinutes() + ':' + dateObj.getSeconds()
 								order['payTime'] = timeObj
 								// console.log('order', order)
 								uni.setStorageSync('newOrder', {
@@ -1353,9 +1871,9 @@
 				})
 			},
 			/* 跳转订单详情（附订单号） */
-			jumpOrderDetails (orderNumber) {
+			jumpOrderDetails(orderNumber) {
 				uni.navigateTo({
-					url: '/pages/order/orderDetails/orderDetails?orderNumber='+ orderNumber
+					url: '/pages/order/orderDetails/orderDetails?orderNumber=' + orderNumber
 				})
 				// 关闭键盘
 				that.$refs.keyb._keyHide()
@@ -1373,7 +1891,7 @@
 							// 过滤图片url为空的数据
 							tmp = tmp.filter((item) => {
 								return !!item.imageUrl
-							}) 
+							})
 							this.bannerData = tmp
 						} else {
 							this.bannerData = []
@@ -1416,7 +1934,7 @@
 					// 外部打开
 					try {
 						plus.runtime.openURL(obj[0].imageLink)
-					} catch(e) {
+					} catch (e) {
 						// nothing to do
 					}
 				}
@@ -1497,7 +2015,7 @@
 							// console.log(8888, plus.runtime)
 							// console.log(compareAppVersion(newVersion))
 							if (compareAppVersion(newVersion)) {
-								
+
 								uni.showModal({
 									title: '更新提示',
 									content: changelog,
@@ -1510,7 +2028,7 @@
 												plus.runtime.openURL(updateUrl, () => {
 													console.log('获取新版本失败')
 												})
-											} catch(e) {
+											} catch (e) {
 												// nothing to do
 											}
 										}
@@ -1536,16 +2054,16 @@
 			// 获取统计数据
 			getStatisticsDate() {
 				// 获取实时收入
-				
+
 				setTimeout((count) => {
-					
+
 					if (LoginCache.state || !this.isHomeSelf) {
 						// this.getRealInterval.pauseInterval()
 						return
 					}
-					
-					console.log('实时收入', count)
-					
+
+					// console.log('实时收入', count)
+
 					this.getStatistics()
 					this.getStatisticsDate()
 				}, 5000)
@@ -1553,17 +2071,17 @@
 			/**
 			 * 获取实时收入
 			 */
-			getStatistics () {
+			getStatistics() {
 				let userId = uni.getStorageSync('userId') || ''
 				let storeId = null
 				let nowStoreDetail = uni.getStorageSync('nowStoreDetail')
-				if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail) {
+				if (nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail) {
 					storeId = nowStoreDetail.storeId
 				}
 				if (!this.start_payTime || !this.end_payTime) {
 					this.getCurrentTime()
 				}
-								
+
 				getStatistics(this.start_payTime, this.end_payTime, storeId, userId).then(res => {
 					// console.log('实时刷新', res, storeId)
 					if (res && res.obj) {
@@ -1576,11 +2094,11 @@
 				})
 			},
 			// 获取最新数据
-			getLastOrder () {
+			getLastOrder() {
 				// 获取最后一笔订单
 				this.getLastOrderInterval = Interval((count) => {
 					// 退出登录时跳过后面代码
-					if(!uni.getStorageSync('token')) {
+					if (!uni.getStorageSync('token')) {
 						this.getLastOrderInterval.closeInterval()
 						return
 					}
@@ -1593,7 +2111,7 @@
 					}
 					let storeId = null
 					let nowStoreDetail = uni.getStorageSync('nowStoreDetail')
-					if(nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail) {
+					if (nowStoreDetail != null && nowStoreDetail != '' && nowStoreDetail) {
 						storeId = nowStoreDetail.storeId
 					}
 					getOrderList(1, 1, '', '', '', 2, storeId, '').then((res) => {
@@ -1640,39 +2158,48 @@
 			 */
 			payWayFilter(val) {
 				// console.log('xxxxxxxx', val)
-				switch(+val){
-					case 1:		//微信支付
+				switch (+val) {
+					case 1: //微信支付
 						return '微信'
 						break
-					case 2:		//支付宝支付
+					case 2: //支付宝支付
 						return '支付宝'
 						break
-					case 3:		//银行卡支付
+					case 3: //银行卡支付
 						return '银行卡'
 						break
-					case 4:		//会员卡支付
+					case 4: //会员卡支付
 						return '会员卡'
 						break
-					case 5:		//现金支付
+					case 5: //现金支付
 						return '现金';
 						break;
-					case 6:		//现金支付
+					case 6: //现金支付
 						return '会员+微信';
 						break;
-					case 7:		//现金支付
+					case 7: //现金支付
 						return '会员+支付宝';
 						break;
-					case 99:	//未知支付
+					case 8: //现金支付
+						return '手机pos';
+						break;
+					case 9: //现金支付
+						return '云闪付';
+						break;
+					case 10: //刷脸付 畅捷
+						return '刷脸付';
+						break;
+					case 99: //未知支付
 						return '未知方式'
 						break
 					default:
-						console.log("异常支付码："+val)
+						console.log("异常支付码：" + val)
 				}
 			},
 			/**
 			 * 创建时间过滤
 			 */
-			creatTimeFilter (time) {
+			creatTimeFilter(time) {
 				return time.slice(5, 10)
 			}
 		}
@@ -1680,11 +2207,11 @@
 </script>
 
 <style lang="scss">
-	
 	uni-page-body {
 		width: 100%;
 		height: 100%;
 	}
+
 	// uni-page-wrapper {
 	// 	width: 100%;
 	// 	height: 100%;
@@ -1695,21 +2222,25 @@
 	// 	height: 100%;
 	// 	background-color: #ff9e00;
 	// }
-	
+
 	.lf-cash-register {
-		position: absolute;
-		bottom: 0;
+		// position: absolute;
+		bottom: 50upx;
 		width: 750upx;
 		// width: 100%;
-		background-color: #F1F2F3;
+		// background-color: #F1F2F3;
 		z-index: 100;
-		margin-bottom: -194upx;
-		
+		// margin-bottom: -194upx;
+
 		image {
-			width: 320upx;
-			height: 130upx;
+			// 两个的尺寸
+			width: 240upx;
+			height: 100upx;
+			// 三个的尺寸
+			/* width: 190upx;
+			height: 80upx; */
 		}
-		
+
 		.image {
 			width: 320upx;
 			height: 130upx;
@@ -1723,11 +2254,58 @@
 			font-weight: 400;
 			color: #FFF;
 			margin-top: 20upx;
-			
+
 			&:active {
 				opacity: 0.8;
 			}
 		}
+		&__ml-90{
+			margin-left: 90upx;
+		}
+		
+	}
+
+	///*浮动收款样式开始 ***************** */
+	// .lf-cash-register {
+	// 	position: absolute;
+	// 	bottom: 50upx;
+	// 	width: 750upx;
+	// 	// width: 100%;
+	// 	background-color: #F1F2F3;
+	// 	z-index: 100;
+	// 	margin-bottom: -194upx;
+
+	// 	image {
+	// 		// 两个的尺寸
+	// 		/* width: 240upx;
+	// 		height: 100upx; */
+	// 		// 三个的尺寸
+	// 		width: 190upx;
+	// 		height: 80upx;
+	// 	}
+
+	// 	.image {
+	// 		width: 320upx;
+	// 		height: 130upx;
+	// 		background-color: #DDD;
+	// 		border: 2upx solid #FFF;
+	// 		display: flex;
+	// 		align-items: center;
+	// 		justify-content: center;
+	// 		border-radius: 20upx;
+	// 		font-size: 37upx;
+	// 		font-weight: 400;
+	// 		color: #FFF;
+	// 		margin-top: 20upx;
+
+	// 		&:active {
+	// 			opacity: 0.8;
+	// 		}
+	// 	}
+	// }
+	///*浮动收款样式结束 ***************** */
+	.lf-cash-register-bottom {
+		bottom: -70upx
 	}
 
 	.page-home-x {
@@ -1745,7 +2323,7 @@
 			height: 554upx;
 			position: relative;
 			box-sizing: border-box;
-			
+
 			.cover {
 				width: 100%;
 				height: 100%;
@@ -1755,18 +2333,18 @@
 				right: 0;
 				color: #FFF;
 				padding-top: 80upx;
-				
+
 				.title {
 					width: 100%;
 					font-size: 36upx;
 					font-weight: bold;
-					
+
 					image {
 						width: 26upx;
 						height: 26upx;
 					}
 				}
-				
+
 				.content {
 					// width: 650upx;
 					width: 100%;
@@ -1777,31 +2355,31 @@
 					font-size: 25upx;
 					font-weight: 500;
 					color: #666;
-					
+
 					.larger {
 						font-size: 67upx;
 					}
-					
+
 					.darker {
 						color: #333;
 					}
-					
+
 					.mark {
 						font-size: 29upx;
 					}
 				}
-				
+
 				.keyboard-box {
 					width: 100%;
 					height: 100upx;
 					border-radius: 10upx;
 					border: 2upx solid #FFF;
-					
+
 					text {
 						color: #FFF;
-						opacity:0.5;
+						opacity: 0.5;
 					}
-					
+
 					&__inner {
 						width: 200upx;
 						height: 100%;
@@ -1809,7 +2387,7 @@
 				}
 			}
 		}
-		
+
 		&__message {
 			width: 100%;
 			height: 120upx;
@@ -1817,23 +2395,23 @@
 			font-weight: 500;
 			color: #666;
 			background-color: #FFF;
-			
+
 			.icon {
 				width: 43upx;
 				height: 36upx;
 			}
-			
+
 			.arrow {
 				width: 14upx;
 				height: 25upx;
 			}
-			
+
 			.darker {
 				color: #333;
 			}
-			
+
 			.circle {
-				
+
 				view {
 					width: 6upx;
 					height: 6upx;
@@ -1843,66 +2421,66 @@
 				}
 			}
 		}
-		
+
 		&__menu {
 			width: 100%;
 			font-size: 24upx;
 			color: #333;
 			font-weight: 500;
 			background-color: #FFF;
-			
+
 			.item {
 				width: 25%;
 				height: 90upx;
 				margin: 20upx 0;
-				
+
 				image {
 					width: 44upx;
 					height: 38upx;
 				}
-				
+
 				.img_0 {
 					width: 44upx;
 					height: 38upx;
 				}
-				
+
 				.img_1 {
 					width: 43upx;
 					height: 44upx;
 				}
-				
+
 				.img_2 {
 					width: 40upx;
 					height: 36upx;
 				}
-				
+
 				.img_3 {
 					width: 38upx;
 					height: 38upx;
 				}
-				
+
 				.img_4 {
 					width: 42upx;
 					height: 40upx;
 				}
-				
+
 				.img_5 {
 					width: 43upx;
 					height: 42upx;
 				}
-				
+
 				.img_6 {
 					width: 47upx;
 					height: 43upx;
 				}
-				
+
 				.img_7 {
 					width: 42upx;
 					height: 40upx;
 				}
 			}
 		}
-		
+
 		&__banner_x {
 			width: 750upx;
 			height: 220upx;
@@ -1911,13 +2489,13 @@
 			right: 0;
 			bottom: 0;
 			margin-bottom: var(--window-bottom);
-			
+
 			&.active {
 				position: relative;
 			}
 		}
 	}
-	
+
 	.icon-frog {
 		color: #FFF;
 		font-size: 40upx !important;

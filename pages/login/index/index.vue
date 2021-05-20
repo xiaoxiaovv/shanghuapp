@@ -30,6 +30,8 @@
 								class="iconfont icon-gou" 
 								v-if="isRememberPassword">
 							</view>
+							<!-- <i class="iconfont icon-gou" 
+								v-if="isRememberPassword"></i> -->
 						</view>
 						<view class="ml-20">
 							记住密码
@@ -156,14 +158,16 @@
 			/* 登录 */
 			login() {
 				/* 接口 */
+				// console.log('用户名==========',this.username,'密码=========',this.password)
 				if( this.username.trim() === '' || this.password.trim() === '' ) {
+					
 					uni.showToast({
 						title: '用户名或密码不能为空',
 						icon: 'none'
 					})
 					return
 				}
-				console.log(this.username, typeof this.username)
+				// console.log(this.username, typeof this.username)
 				if (!/^\d{5,15}$/.test(this.username)) {
 					return uni.showToast({
 						title: '用户名仅限5-15位数字',
@@ -172,8 +176,9 @@
 				}
 				this.btnLoading = true;
 				login( this.username.trim() , this.password.trim() ).then(res => {
-					// console.log(777, res)
+					console.log(444444444, res)
 					// console.log(JSON.stringify(res.obj))
+					// return
 					/* 记住账户/密码 */
 					if(this.isRememberPassword){
 						uni.setStorageSync('password', this.password);
@@ -208,8 +213,10 @@
 					}).catch(err => {
 						console.log(err)
 					})
+				},err => {
+					console.log(55555,err)
 				}).catch((err) => {	
-					console.log(err)
+					console.log('11111112222222',err)
 					this.btnLoading = false;
 				})
 			},

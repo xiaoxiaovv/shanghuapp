@@ -143,9 +143,10 @@
 					</view>
 				</view>
 				<view v-for="order in timeList.orders" :key="order.id" class="lf-orderList match-width align-left ptb-10" @click="jumpOrderDetails(order.orderNumber)">
-					<image :src="order.payWay === 1? '../../../static/order/icon_wechat_list.png': 
+					<!-- <image :src="order.payWay === 1? '../../../static/order/icon_wechat_list.png': 
 						order.payWay === 2?'../../../static/order/icon_zhifubao_list.png':
-						order.payWay === 3? '../../../static/order/icon_unionpay_list.png':'../../../static/order/icon_receive_money.png'"/>			
+						order.payWay === 3? '../../../static/order/icon_unionpay_list.png':order.payChannel === 17? '../../../static/order/icon_pos_list.png':order.payChannel === 18? '../../../static/order/icon_quick_pay_list.png':'../../../static/order/icon_receive_money.png'"/>		 -->				
+					<image :src="order | payWayImgFilters"/>		
 					<view class="match-left-space align-ver-left"> 			
 						<view class="match-width align-hor-bet">
 							<view>{{yenSymbol}} {{(order.actPayPrice)}}</view>
@@ -159,7 +160,7 @@
 							<text>{{
 								order.payTime[11]+order.payTime[12]+order.payTime[13]+order.payTime[14]+order.payTime[15]+order.payTime[16]+order.payTime[17]+order.payTime[18]
 							}}</text>
-							<text class=""><text class="text-sm">订单号：</text>{{order.orderNumber}}</text>
+							<!-- <text class=""><text class="text-sm">订单号：</text>{{order.orderNumber}}</text> -->
 						</view>
 					</view>
 				</view>
@@ -304,6 +305,18 @@
 						name:'会员+支付宝支付',
 						value:7
 					},
+					{
+						name:'手机pos和快捷支付',
+						value:8
+					},
+					{
+						name:'云闪付支付',
+						value:9
+					}/* ,
+					{
+						name:'刷脸支付',
+						value:10
+					} */
 				],
 				isMerchant:true,
 				totalSummary: {}
@@ -365,8 +378,28 @@
 			payTimeFilters(val) {
 				return val.split(' ')[1];
 			},
-			payWayFilters(val) {
-				switch(parseInt(val)){
+			payWayImgFilters(order) {
+				
+				if(parseInt(order.payWay)===1){
+					return '../../../static/order/icon_wechat_list.png';
+				}else if(parseInt(order.payWay)===2){
+					return '../../../static/order/icon_zhifubao_list.png';
+				}else if(parseInt(order.payWay)===3){
+					return '../../../static/order/icon_unionpay_list.png';
+				}else if(parseInt(order.payWay)===9){
+					return '../../../static/order/icon_yunshanfu_list.png';
+				}else if(parseInt(order.payWay)===10){
+					return '../../../static/order/icon_shualianfu_list.png';
+				}else if(parseInt(order.payChannel)===17){
+					return '../../../static/order/icon_pos_list.png';
+				}else if(parseInt(order.payChannel)===18){
+					return '../../../static/order/icon_quick_pay_list.png';
+				}else if(parseInt(order.payWay)===99){
+					return '../../../static/order/icon_receive_money.png';
+				}else{
+					console.log("异常支付码："+val)
+				}
+				/* switch(parseInt(val)){
 					case 1:		//微信支付
 						return '../../../static/order/icon_wechat_list.png';
 						break;
@@ -381,7 +414,7 @@
 						break;
 					default:
 						console.log("异常支付码："+val)
-				}
+				} */
 			},
 			// 金币保留两位小数
 			dealWithMoney(money) {

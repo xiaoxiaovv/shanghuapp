@@ -176,16 +176,22 @@
 			closePopup(){
 				this.isPopupShow = false
 			},
-			onConfirm () {
+			onConfirm () {				
+					uni.removeStorageSync('token')
+					uni.removeStorageSync('userId')
+					uni.removeStorageSync('userType')
+					uni.removeStorageSync('beginTime')
+					uni.setStorageSync('remember', true)
+					uni.setStorageSync('isLogin', true)				
 				uni.reLaunch({
 					url: '/pages/login/index/index',
 					success() {
-						uni.removeStorageSync('token')
+						/* uni.removeStorageSync('token')
 						uni.removeStorageSync('userId')
 						uni.removeStorageSync('userType')
 						uni.removeStorageSync('beginTime')
 						uni.setStorageSync('remember', true)
-						uni.setStorageSync('isLogin', true)
+						uni.setStorageSync('isLogin', true) */
 						// uni.setStorageSync('setVoice', uni.getStorageSync('setVoice'))
 						// uni.setStorageSync('setKeyboardVoice', uni.getStorageSync('setKeyboardVoice'))
 					}

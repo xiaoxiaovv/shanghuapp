@@ -217,7 +217,7 @@ export function getStoreDetails (id) {
 //name -门店名称, storeNo -门店编号, province -省, city -市, address -门店地址, 
 //phone -门店电话, paymentDesciption -支付凭证描述, status -门店状态, photoId -logoId
 //参数status：门店状态 1-启用 2-注销，必填
-export function addStore( name, storeNo, province, city, address, phone, paymentDesciption, status, photoId) {
+export function addStore( name, storeNo, province, city, address, phone, paymentDesciption,status, photoId) {
 	return fly.request( '/merchant/store/app/save', qs.stringify({
 		name,
 		storeNo,
@@ -236,7 +236,7 @@ export function addStore( name, storeNo, province, city, address, phone, payment
 //name -门店名称, storeNo -门店编号, province -省, city -市, address -门店地址, 
 //phone -门店电话, paymentDesciption -支付凭证描述, status -门店状态, photoId -图片Id, id -门店id
 //参数status：门店状态 1-启用 2-注销，必填
-export function changeStore( name, storeNo, province, city, address, phone, paymentDesciption, status, photoId, id) {
+export function changeStore( name, storeNo, province, city, address, phone, paymentDesciption, deviceSn,status, photoId, id) {
 	return fly.request( '/merchant/store/app/update', qs.stringify({
 		name,
 		storeNo,
@@ -245,6 +245,7 @@ export function changeStore( name, storeNo, province, city, address, phone, paym
 		address,
 		phone,
 		paymentDesciption,
+		deviceSn,
 		status,
 		photoId,
 		id

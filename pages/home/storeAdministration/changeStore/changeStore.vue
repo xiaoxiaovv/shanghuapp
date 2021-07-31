@@ -59,6 +59,17 @@
 				</view>
 			</view>
 			<uni-list-item title="门店状态" show-switch="true" show-arrow="false" @switchChange="switchChange" :switch-checked="storeDetails.status === 1? true:false"></uni-list-item>
+			<view class="lf-list">
+				<view class="lf-bottom-line" @click="showModal('deviceSn')">
+					<text class="text-lg">设备SN</text>
+					<view>
+						<view class="prod prod-height"></view>
+						<text class="meat text-lg text-grey">{{storeDetails.deviceSn ? storeDetails.deviceSn : '请输入'}}</text>
+						<text class="meat text-lllg icon-right"></text>
+					</view>
+				</view>
+			</view>
+			
 		</uni-list>
 		<neil-modal :show="modalShow" @close="closeModal" :title="modalType | modalTitleFilters" auto-close="false" @confirm="bindBtn('confirm')">
 			<view style="min-height: 90upx;padding: 32upx 24upx;">
@@ -66,6 +77,7 @@
 				<input class="lf-modal-input" type="text" v-model="modalInput" maxlength="18" v-if="modalType === 'name'">
 				<input class="lf-modal-input" type="number" v-model="modalInput" maxlength="11" v-if="modalType === 'phone'">
 				<input class="lf-modal-input" type="text" v-model="modalInput" maxlength="20" v-if="modalType === 'paymentDesciption'">
+				<input class="lf-modal-input" type="text" v-model="modalInput" maxlength="20" v-if="modalType === 'deviceSn'">
 				<view class="lf-modal-city" v-if="modalType === 'address'">
 					<view @click="showCityPicker">
 						<text class="text-lg">省市选择:</text>
@@ -109,6 +121,7 @@
 				modalInput: '',		//模态框输入
 				modalTitle: '',		//模态框标题
 				avatar: '',
+				deviceSn: '',
 				ispPhotoUpload: false,	//onShow检查true时，上传图片
 				/* mpvue-picker~ */
                 mulLinkageTwoPicker: cityData,
@@ -135,7 +148,7 @@
 				uni.hideLoading();
 				return
 			}
-			changeStore(this.storeDetails.name.trim(), this.storeDetails.storeNo, this.storeDetails.province, this.storeDetails.city, this.storeDetails.address, this.storeDetails.phone, this.storeDetails.paymentDesciption.trim(), this.storeDetails.status, this.storeDetails.photoId, this.storeDetails.id).then(res => {
+			changeStore(this.storeDetails.name.trim(), this.storeDetails.storeNo, this.storeDetails.province, this.storeDetails.city, this.storeDetails.address, this.storeDetails.phone, this.storeDetails.paymentDesciption.trim(), this.storeDetails.deviceSn,this.storeDetails.status, this.storeDetails.photoId, this.storeDetails.id).then(res => {
 				if (res.code === 200) {
 					uni.showToast({
 						title: '修改成功',
@@ -168,6 +181,8 @@
 						return "支付凭证描述"
 					case 'address':
 						return "门店地址"
+					case 'deviceSn':
+						return "设备SN"
 					default:
 						return "错误数值："+ val
 				}
@@ -234,6 +249,9 @@
 					case 'paymentDesciption':
 						this.modalInput = this.storeDetails.paymentDesciption
 						break
+					case 'deviceSn':
+						this.modalInput = this.storeDetails.deviceSn
+						break
 					case 'address':
 						this.modalInput = {
 							province:this.storeDetails.province,
@@ -260,6 +278,9 @@
 						case 'paymentDesciption':
 							this.storeDetails.paymentDesciption = this.modalInput
 							break
+							case 'deviceSn':
+								this.storeDetails.deviceSn = this.modalInput
+								break
 						case 'address':
 							this.storeDetails.province = this.modalInput.province;
 							this.storeDetails.city = this.modalInput.city;

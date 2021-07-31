@@ -61,6 +61,16 @@
 				</view>
 			</view>
 		</uni-list>
+		<view class="lf-list">
+			<view class="lf-bottom-line" @click="showModal('aliDeviceSn')">
+				<text class="text-lg">设备SN</text>
+				<view>
+					<view class="prod prod-height"></view>
+					<text class="meat text-lg text-grey">{{aliDeviceSn ? aliDeviceSn : '请输入'}}</text>
+					<text class="meat text-lllg icon-right"></text>
+				</view>
+			</view>
+		</view>
 		<view class="lf-btn-box">
 			<view class="bg-orange" @click="scanCode"><text class="text-lg text-white">扫码激活</text></view>
 			<view class="bg-orange text-orange" @click="systemSave"><text class="text-lg ">系统生成</text></view>
@@ -70,6 +80,7 @@
 				<input class="lf-modal-input" type="text" v-model="modalInput" maxlength="15" v-if="modalType === 'name'">
 				<input class="lf-modal-input" type="number" v-model="modalInput" maxlength="7" v-if="modalType === 'money'">
 				<input class="lf-modal-input" type="text" v-model="modalInput" maxlength="20" v-if="modalType === 'description'">
+				<input class="lf-modal-input" type="text" v-model="modalInput" maxlength="20" v-if="modalType === 'aliDeviceSn'">
 				<view class="lf-modal-num">
 					<text>{{modalInput.length}}/{{modalInputNum}}</text>
 				</view>
@@ -101,7 +112,8 @@
 				modalInput: '',		//模态框输入
 				modalTitle: '',		//模态框标题
 				modalInputNum: 15,	//模态框限定字符数
-				isMerchant: true
+				isMerchant: true,
+				aliDeviceSn:''//如意设备SN
 			}
 		},
 		filters:{
@@ -135,6 +147,9 @@
 					case 'description':
 						this.modalInput = this.description
 						break
+					case 'aliDeviceSn':
+						this.modalInput = this.aliDeviceSn
+						break
 				}
 				this.modalShow = true;
 			},
@@ -150,6 +165,9 @@
 							break
 						case 'description':
 							this.description = this.modalInput
+							break
+						case 'aliDeviceSn':
+							this.aliDeviceSn = this.modalInput
 							break
 					}
 				}
@@ -225,7 +243,7 @@
 			/* 新增二维码 */
 			addQR(flag) {
 				// console.log('新增二维码', this.name, this.storeId, this.userId, this.money, this.description, flag, this.blankQrCodeId)
-				addQRcode(this.name, this.storeId, this.userId, this.money, this.description, flag, this.blankQrCodeId).then(res => {
+				addQRcode(this.name, this.storeId, this.userId, this.money, this.description, flag, this.blankQrCodeId,this.aliDeviceSn).then(res => {
 					// console.log(res)
 					uni.showToast({
 						title:"添加成功",

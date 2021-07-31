@@ -385,7 +385,7 @@ export function getQRcodeList (pageNumber, pageSize, storeId, status, userId, na
 }
 
 /* 添加二维码 */
-export function addQRcode (name, storeId, userId, money, description, flag, blankQrCodeId) {
+export function addQRcode (name, storeId, userId, money, description, flag, blankQrCodeId,aliDeviceSn) {
 	return fly.request( '/merchant/qrcode/app/save', qs.stringify({
 		name,
 		storeId,
@@ -393,21 +393,23 @@ export function addQRcode (name, storeId, userId, money, description, flag, blan
 		money,
 		description,
 		flag,
-		blankQrCodeId
+		blankQrCodeId,
+		aliDeviceSn
 	}),{
 		method: 'post',
 	})
 }
 
 /* 修改二维码 */
-export function changeQRcode (name, storeId, userId, money, description, id) {
+export function changeQRcode (name, storeId, userId, money, description, id,aliDeviceSn) {
 	return fly.request( '/merchant/qrcode/app/update', qs.stringify({
 		name,
 		storeId,
 		userId,
 		money,
 		description,
-		id
+		id,
+		aliDeviceSn
 	}),{
 		method: 'post',
 	})

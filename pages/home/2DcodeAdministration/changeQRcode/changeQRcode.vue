@@ -61,11 +61,22 @@
 				</view>
 			</view>
 		</uni-list>
+		<view class="lf-list">
+			<view class="lf-bottom-line" @click="showModal('aliDeviceSn')">
+				<text class="text-lg">设备SN</text>
+				<view>
+					<view class="prod prod-height"></view>
+					<text class="meat text-lg text-grey">{{qrcodeDetails.aliDeviceSn ? qrcodeDetails.aliDeviceSn : '请输入'}}</text>
+					<text class="meat text-lllg icon-right"></text>
+				</view>
+			</view>
+		</view>
 		<neil-modal :show="modalShow" @close="closeModal" :title="modalType | modalTitleFilters" auto-close="false" @confirm="bindBtn('confirm')">
 			<view style="min-height: 90upx;padding: 32upx 24upx;">
 				<input class="lf-modal-input" type="text" v-model="modalInput" maxlength="15" v-if="modalType === 'name'">
 				<input class="lf-modal-input" type="number" v-model="modalInput" maxlength="7" v-if="modalType === 'money'">
 				<input class="lf-modal-input" type="text" v-model="modalInput" maxlength="20" v-if="modalType === 'description'">
+				<input class="lf-modal-input" type="text" v-model="modalInput" maxlength="20" v-if="modalType === 'aliDeviceSn'">
 			</view>
 		</neil-modal>
 	</view>
@@ -115,7 +126,7 @@
 				uni.hideLoading();
 				return
 			}
-			changeQRcode( this.qrcodeDetails.name.trim(), this.storeId, this.userId, this.qrcodeDetails.money, this.qrcodeDetails.description, this.qrcodeDetails.id).then(res => {
+			changeQRcode( this.qrcodeDetails.name.trim(), this.storeId, this.userId, this.qrcodeDetails.money, this.qrcodeDetails.description, this.qrcodeDetails.id,this.qrcodeDetails.aliDeviceSn).then(res => {
 				// console.log(res);
 				uni.showToast({
 					title: '修改成功',
@@ -171,6 +182,9 @@
 					case 'description':
 						this.modalInput = this.qrcodeDetails.description
 						break
+					case 'aliDeviceSn':
+						this.modalInput = this.qrcodeDetails.aliDeviceSn
+						break
 				}
 				this.modalShow = true;
 			},
@@ -186,6 +200,9 @@
 							break
 						case 'description':
 							this.qrcodeDetails.description = this.modalInput
+							break
+						case 'aliDeviceSn':
+							this.qrcodeDetails.aliDeviceSn = this.modalInput
 							break
 					}
 				}

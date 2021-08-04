@@ -321,7 +321,16 @@
 						break;
 					case 10:		//刷脸付
 						return '../../../static/order/icon_shualianfu.png';
-						break;			
+						break;
+					case 11://数字货币
+						return '../../../static/order/icon_shuzihuobi.png';
+						break;
+					case 12://翼支付
+						return '../../../static/order/icon_wing_pay.png';
+						break;
+					case 13://苏宁
+						return '../../../static/order/icon_suning.png';
+						break;
 					case 99:	//未知支付
 						return '../../../static/order/icon_receive_money.png';
 						break;
@@ -385,7 +394,9 @@
 					channel = '易生'
 				} else if (channel === 14) {
 					channel = '新大陆'
-				} else if (channel === 17) {
+				}else if (channel === 16) {
+					channel = '拉卡拉'
+				}else if (channel === 17) {
 					channel = '手机pos'
 				}else if (channel === 18) {
 					channel = '快捷支付'

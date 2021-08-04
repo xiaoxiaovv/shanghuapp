@@ -312,6 +312,22 @@
 					{
 						name:'云闪付支付',
 						value:9
+					},
+					{
+						name:'协议支付',
+						value:10
+					},
+					{
+						name:'数字货币',
+						value:11
+					},
+					{
+						name:'翼支付',
+						value:12
+					},
+					{
+						name:'苏宁',
+						value:13
 					}/* ,
 					{
 						name:'刷脸支付',
@@ -390,6 +406,12 @@
 					return '../../../static/order/icon_yunshanfu_list.png';
 				}else if(parseInt(order.payWay)===10){
 					return '../../../static/order/icon_shualianfu_list.png';
+				}else if(parseInt(order.payWay)===11){
+					return '../../../static/order/icon_shuzihuobi_list.png';
+				}else if(parseInt(order.payWay)===12){
+					return '../../../static/order/icon_wing_pay_list.png';
+				}else if(parseInt(order.payWay)===13){
+					return '../../../static/order/icon_suning_list.png';
 				}else if(parseInt(order.payChannel)===17){
 					return '../../../static/order/icon_pos_list.png';
 				}else if(parseInt(order.payChannel)===18){

@@ -61,7 +61,8 @@
                 "push" : {
                     "unipush" : {}
                 },
-                "oauth" : {}
+                "oauth" : {},
+                "ad" : {}
             },
             "icons" : {
                 "ios" : {

@@ -402,6 +402,8 @@
 					return '../../../static/order/icon_zhifubao_list.png';
 				}else if(parseInt(order.payWay)===3){
 					return '../../../static/order/icon_unionpay_list.png';
+				}else if(parseInt(order.payWay)===5){
+					return '../../../static/order/icon_quick_pay_list.png';
 				}else if(parseInt(order.payWay)===9){
 					return '../../../static/order/icon_yunshanfu_list.png';
 				}else if(parseInt(order.payWay)===10){

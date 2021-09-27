@@ -10,7 +10,7 @@ export const TITLE = uni.getStorageSync('merchantName') || ''
 export const TITLE_REFUND = uni.getStorageSync('merchantName') || ''
 
 /**
- * 订单状态过滤
+ * 订单状态过滤////
  */
 export const orderStatusFilters = (val) => {
 	switch(parseInt(val)){

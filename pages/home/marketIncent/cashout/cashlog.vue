@@ -50,7 +50,7 @@
 				const params = {
 					merchantId: uni.getStorageSync('merchantId'),
 					pageNumber: 1,
-					pageSize: 10,
+					pageSize: 100,
 					pageSort: '',
 					pageOrder: ''
 				}

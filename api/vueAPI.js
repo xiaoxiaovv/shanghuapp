@@ -1427,3 +1427,8 @@ export function getMarketConfig() {
 	
 	return fly.get('/pay/pay_config/find_cash_out_config')
 }
+
+/* 判断商户是否开通了营销激励*/
+export function isMarket(data) {
+  return fly.post('/merchant/market/is_market', qs.stringify(data))
+}

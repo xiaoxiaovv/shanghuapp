@@ -123,10 +123,16 @@
 				}
 				cashOut(params).then(res => {
 					if (res.code === 200) {
+						this.getMerchantTotal()
 						uni.showToast({
 							title: res.msg,
 							icon: 'success'
 						})
+						setTimeout(() => {
+							uni.navigateTo({
+								url: '/pages/home/marketIncent/cashout/cashlog'
+							})
+						},1000)
 					} else {
 						uni.showToast({
 							title: res.msg,

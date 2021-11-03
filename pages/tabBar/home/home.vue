@@ -276,7 +276,8 @@
 		bankCarkList,
 		bankCardInfo,
 		delBankCard,
-		orderSure
+		orderSure,
+		isMarket
 	} from '../../../api/vueAPI.js'
 	// 检查更新
 	import {
@@ -593,7 +594,7 @@
 			// console.log('我来到火星的世界x2', LoginCache)
 			// 轮询查询新订单
 			this.queryNewOrder()
-
+			this.isMarket()
 		},
 
 		onShow() {
@@ -656,6 +657,19 @@
 			}
 		},
 		methods: {
+			isMarket() {
+				const params = {
+				  merchantId: uni.getStorageSync('merchantId'),
+				}
+				 isMarket(params).then(res => {
+					 console.log(res)
+					 if(res.code === 200 && res.msg === 'true'){
+						 this.menuList.marketIncent.isShow = 1
+					 } else {
+						 this.menuList.marketIncent.isShow = 2
+					 }
+				 })
+			},
 			/**
 			 * addOrEditBankCark  添加和编辑银行卡
 			 * @param {Object} merchantId 商户ID

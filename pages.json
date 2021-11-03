@@ -71,6 +71,42 @@
 				}
 			}
         }
+		,{
+		    "path" : "pages/home/marketIncent/index/index",
+		    "style" : {
+				"navigationBarTitleText": "营销激励",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
+		    "path" : "pages/home/marketIncent/cashout/index",
+		    "style" : {
+				"navigationBarTitleText": "提现",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
+		    "path" : "pages/home/marketIncent/cashout/cashlog",
+		    "style" : {
+				"navigationBarTitleText": "提现记录",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
+		    "path" : "pages/home/marketIncent/bank/index",
+		    "style" : {
+				"navigationBarTitleText": "银行卡管理",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
         ,{
             "path" : "pages/home/storeAdministration/index/index",
             "style" : {

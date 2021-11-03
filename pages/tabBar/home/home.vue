@@ -452,6 +452,15 @@
 						iconWidth: 44,
 						iconHeight: 38
 					},
+					"marketIncent": {
+						src: '../../../static/homev2/jili.png',
+						name: '营销激励',
+						url: '/pages/home/marketIncent/index/index',
+						status: 1,
+						isShow: 1,
+						iconWidth: 44,
+						iconHeight: 38
+					},
 					/* ,
 										"depositManage":{
 											src: '../../../static/homev2/quickPay.png',
@@ -544,7 +553,7 @@
 				this.paddingTop = systemInfo['pixelRatio'] * systemInfo['statusBarHeight'] + 'px'
 			}
 			// 版本更新检测
-			// this.checkUpdate()
+			this.checkUpdate()
 			// 获取当前时间
 			// this.getCurrentTime()
 			// 登录者身份验证

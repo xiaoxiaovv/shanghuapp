@@ -1364,3 +1364,66 @@ export function ruyiSubmit(serviceId, merchantNo,alipayAccount,merchantId,device
 	}
 	return fly.post('/zfb/getOperationQrcode', qs.stringify(data))
 }
+
+/**
+ * merchantDayList  查询商户的奖励
+ * @param {Object} merchantId 商户ID
+ */
+export function merchantDayList(data) {
+	
+	return fly.get('/merchant/commission_day/app', qs.stringify(data))
+}
+
+/**
+ * getMerchantTotal  查询商户的奖励总额
+ * @param {Object} merchantId 商户ID
+ */
+export function getMerchantTotal(data) {
+	
+	return fly.get('/merchant/market_cash', qs.stringify(data))
+}
+
+/**
+ * cashOut  申请提现
+ * @param {Object} merchantId 商户ID
+ */
+export function cashOut(data) {
+	
+	return fly.post('/merchant/market_cashOut', data)
+}
+
+/**
+ * cashOutlog  提现记录
+ * @param {Object} merchantId 商户ID
+ */
+export function cashOutlog(data) {
+	
+	return fly.get('/merchant/market_cashOut', qs.stringify(data))
+}
+
+/**
+ * bindMarketCard  绑定商户的银行卡
+ * @param {Object} merchantId 商户ID
+ */
+export function bindMarketCard(data) {
+	
+	return fly.post('/merchant/market_card', data)
+}
+
+/**
+ * getMarketCard  查询商户的银行卡
+ * @param {Object} merchantId 商户ID
+ */
+export function getMarketCard(data) {
+	
+	return fly.get('/merchant/market_card', qs.stringify(data))
+}
+
+/**
+ * getMarketCard  查询商户的银行卡
+ * @param {Object} merchantId 商户ID
+ */
+export function getMarketConfig() {
+	
+	return fly.get('/pay/pay_config/find_cash_out_config')
+}

@@ -60,7 +60,7 @@
 						<text>笔</text>
 					</view>
 					<view class="shop-module-item-right-item">
-						<text>佣金：</text>
+						<text>奖励金：</text>
 						<text class="num-big-000">{{item.commission.toFixed(2)}}</text>
 						<text>元</text>
 					</view>

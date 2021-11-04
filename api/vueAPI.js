@@ -1432,3 +1432,8 @@ export function getMarketConfig() {
 export function isMarket(data) {
   return fly.post('/merchant/market/is_market', qs.stringify(data))
 }
+
+/* 获取appid*/
+export function getAppid(data) {
+  return fly.get('/order/callback/getAliAppId', qs.stringify(data))
+}

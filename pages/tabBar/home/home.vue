@@ -663,11 +663,11 @@
 				}
 				 isMarket(params).then(res => {
 					 console.log(res)
-					 if(res.code === 200 && res.msg === 'true'){
-						 this.menuList.marketIncent.isShow = 1
-					 } else {
-						 this.menuList.marketIncent.isShow = 2
-					 }
+					 // if(res.code === 200 && res.msg === 'true'){
+						//  this.menuList.marketIncent.isShow = 1
+					 // } else {
+						//  this.menuList.marketIncent.isShow = 2
+					 // }
 				 })
 			},
 			/**

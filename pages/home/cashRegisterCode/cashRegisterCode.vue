@@ -22,7 +22,7 @@
 
 <script>
 	import tkiQrcode from "tki-qrcode"
-	import {baseURL, getDomain, getUUID, getCallOrder} from "../../../api/vueAPI.js"
+	import {baseURL, getDomain, getUUID, getAppid, getCallOrder} from "../../../api/vueAPI.js"
 	import Qrcode from '../../../components/qrcode-master/js/qrcode/qrcode.js'
 	// wxapi
 	import { Interval, showToast } from '../../../common/wxapi.js'
@@ -70,6 +70,7 @@
 			
 			// 
 			this.getUUID().then(uuid => {
+				console.log('qqqqqqqqqqqqq', uuid)
 				this.uuid = uuid
 				this.getDomain().then(domain => {
 					this.domain = domain
@@ -133,10 +134,15 @@
 				let serviceId = customerInfo.serviceId
 				let merchantId = uni.getStorageSync('merchantId')
 				let equipmentId = uni.getStorageSync('equipmentId') || ''
-				// console.log('getDomain')
-				let val = this.domain + '/web/pay/index.html#/?totalPrice='+ this.paymentMoney +'&userId='+userId + '&storeId=' + storeId + '&equipmentId=' + equipmentId + '&uuid=' + this.uuid + '&fence=' + isOpen + '&serviceId=' + serviceId + '&merchantId=' + merchantId
-				// console.log(val)
-				this.qrcode.draw('myCanvas', val)
+				let aliAppId = ''
+				getAppid({serviceId}).then(res => {
+					if (res.code === 200) {
+						aliAppId = res.obj
+						let val = this.domain + '/web/pay/index.html#/?totalPrice='+ this.paymentMoney +'&userId='+userId + '&storeId=' + storeId + '&equipmentId=' + equipmentId + '&uuid=' + this.uuid + '&fence=' + isOpen + '&serviceId=' + serviceId + '&merchantId=' + merchantId + '&aliAppId=' + aliAppId
+						console.log('tttttttttttt',this.uuid)
+						this.qrcode.draw('myCanvas', val)
+					}
+				})
 				return Promise.resolve()
 			},
 			// 获取uuid

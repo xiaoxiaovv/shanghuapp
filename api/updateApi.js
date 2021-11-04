@@ -28,10 +28,10 @@ const type = ''
 // 检查更新
 function checkUpdate(id, bundleId, apiToken, type) {
 	// console.log('检查更新', id, bundleId, apiToken, type)
-	return fly.get(`http://api.fir.im/apps/latest/${id}`, qs.stringify({
-		bundle_id: bundleId,
+	return fly.get(`https://api.bq04.com/apps/latest/${id}`, qs.stringify({
+		//id: id,
 		api_token: apiToken,
-		type: type
+		//type: type
 	}))
 }
 

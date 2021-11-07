@@ -139,7 +139,6 @@
 					if (res.code === 200) {
 						aliAppId = res.obj
 						let val = this.domain + '/web/pay/index.html#/?totalPrice='+ this.paymentMoney +'&userId='+userId + '&storeId=' + storeId + '&equipmentId=' + equipmentId + '&uuid=' + this.uuid + '&fence=' + isOpen + '&serviceId=' + serviceId + '&merchantId=' + merchantId + '&aliAppId=' + aliAppId
-						console.log('tttttttttttt',this.uuid)
 						this.qrcode.draw('myCanvas', val)
 					}
 				})

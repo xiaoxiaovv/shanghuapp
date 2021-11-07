@@ -2,8 +2,8 @@
     "name" : "笑脸付",
     "appid" : "__UNI__0603D07",
     "description" : "",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionName" : "2.0.0",
+    "versionCode" : 200,
     "transformPx" : false,
     "app-plus" : {
         "compatible" : {

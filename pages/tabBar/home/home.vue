@@ -282,6 +282,8 @@
 	// 检查更新
 	import {
 		checkApp,
+		getToken,
+		ID,
 		VERSION,
 		compareAppVersion
 	} from '../../../api/updateApi.js'
@@ -554,7 +556,9 @@
 				this.paddingTop = systemInfo['pixelRatio'] * systemInfo['statusBarHeight'] + 'px'
 			}
 			// 版本更新检测
+			//#ifdef APP-PLUS
 			this.checkUpdate()
+			//#endif
 			// 获取当前时间
 			// this.getCurrentTime()
 			// 登录者身份验证
@@ -2034,9 +2038,6 @@
 							let newVersion = res.data.versionShort
 							let updateUrl = res.data.update_url
 							let changelog = (!!res.data.changelog) ? res.data.changelog : '有新版本可用'
-							// console.log(77777, res.data.update_url)
-							// console.log(8888, plus.runtime)
-							// console.log(compareAppVersion(newVersion))
 							if (compareAppVersion(newVersion)) {
 
 								uni.showModal({
@@ -2048,9 +2049,12 @@
 										// console.log('确定', res.confirm)
 										if (res.confirm) {
 											try {
-												plus.runtime.openURL(updateUrl, () => {
-													console.log('获取新版本失败')
+												getToken().then(resp => {
+													plus.runtime.openURL('https://download.bq04.com/apps/'+ ID+'/install?download_token='+ resp.data.download_token, () => {
+														console.log('获取新版本失败')
+													})
 												})
+												
 											} catch (e) {
 												// nothing to do
 											}

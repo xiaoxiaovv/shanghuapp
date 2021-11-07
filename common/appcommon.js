@@ -25,8 +25,11 @@ function getFirToken() {
 }
 
 function getVersion() {
-	return getAppMetaData('VER')
-	
+	let version = ''
+	//#ifdef APP-PLUS
+	version = plus.runtime.version
+	//#endif
+	return 	version
 }
 
 function getPackageName(packageName) {

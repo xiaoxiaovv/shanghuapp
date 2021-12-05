@@ -69,7 +69,7 @@
 			<view class="empty-box" v-if="list.length == 0">暂无数据~</view>
 		</view>
 		<view style="background-color: #fff;color: red;text-align: center;" v-if="list.length != 0">（此交易数据仅作为参考，最终结算以月协作费账单为准）</view>
-		<mx-date-picker :show="showPicker" :type="'rangedate'" :value="showPickerdata" :show-tips="true" :begin-text="'开始'" :end-text="'结束'" :show-seconds="true" color="#4BA8FF" @confirm="onSelected" @cancel="onSelected"/>
+		<mx-date-picker :show="showPicker" :type="'rangedate'" :value="showPickerdata" :show-tips="true" :begin-text="'开始'" :end-text="'结束'" :show-seconds="true" color="#4BA8FF" @confirm="onSelected" @cancel="onCanceled"/>
 	</view>
 </template>
 
@@ -93,6 +93,19 @@
 			
 		},
 		onLoad() {
+			//获取当前日期
+			let myDate = new Date();
+			let nowY = myDate.getFullYear();
+			let nowM = myDate.getMonth()+1;
+			let nowD = myDate.getDate();
+			this.end_payTime = nowY+"-"+(nowM<10 ? "0" + nowM : nowM)+"-"+(nowD<10 ? "0"+ nowD : nowD);//当前日期
+	
+			//获取31天前日期
+			let lw = new Date(myDate - 1000 * 60 * 60 * 24 * 31);//最后一个数字31可改，31天的意思
+			let lastY = lw.getFullYear();
+			let lastM = lw.getMonth()+1;
+			let lastD = lw.getDate();
+			this.start_payTime = lastY+"-"+(lastM<10 ? "0" + lastM : lastM)+"-"+(lastD<10 ? "0"+ lastD : lastD);//三十天之前日期
 			this.getMerchantTotal()
 			this.merchantDayList()
 		},
@@ -130,22 +143,46 @@
 			onShowDatePicker() {
 				this.showPicker = true
 			},
+			onCanceled() {
+				this.showPicker = false;
+			},
 			onSelected(e) {//选择
-			    this.showPicker = false;
 			    if(e) {
 			        //选择的值
 			        console.log( e.value);
-					let start_payTime = e.value[0].replace(/\//g,'-');
-					let end_payTime = e.value[1].replace(/\//g,'-');
-					this.start_payTime = start_payTime
-					this.end_payTime = end_payTime
-					this.merchantDayList()
+					const days = this.getDaysBetween(e.value[0],e.value[1])
+					if(days>31){
+						uni.showToast({
+							title:"请选择小于31天的范围",
+							icon: 'error'
+						})
+						return
+					} else {
+						this.showPicker = false;
+						let start_payTime = e.value[0].replace(/\//g,'-');
+						let end_payTime = e.value[1].replace(/\//g,'-');
+						this.start_payTime = start_payTime
+						this.end_payTime = end_payTime
+						this.merchantDayList()
+					}
 			    }
 			},
 			goCashout () {
 				uni.navigateTo({
 					url: '/pages/home/marketIncent/cashout/index'
 				})
+			},
+			getDaysBetween(dateString1,dateString2){
+			    var  startDate = Date.parse(dateString1);
+			    var  endDate = Date.parse(dateString2);
+			    if (startDate > endDate){
+			        return 0;
+			    }
+			    if (startDate == endDate){
+			        return 1;
+			    }
+			    var days = (endDate - startDate)/(1*24*60*60*1000) + 1;
+			    return days;
 			}
 		}
 	}

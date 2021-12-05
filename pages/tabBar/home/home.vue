@@ -313,10 +313,10 @@
 	import {
 		LoginCache
 	} from '../../../utils/cache/index.js'
-
+	// #ifdef APP-PLUS
 	var posModule = uni.requireNativePlugin('DCloud-PosMoudle')
 	// var shuaLianModule = uni.requireNativePlugin('DCloud-ShuaLianMoudle')
-
+	// #endif
 	export default {
 		components: {
 			tkiFloatKeyboard
@@ -474,16 +474,15 @@
 											iconWidth: 44,
 											iconHeight: 38
 										} */
-					/* ,
-										"depositManage":{
-											src: '../../../static/homev2/shop.png',
-											name: '商城',
-											url: 'shop',
-											status: 1,
-											isShow: 1,
-											iconWidth: 200,
-											iconHeight: 200
-										} */
+					"depositManage":{
+						src: '../../../static/homev2/shop.png',
+						name: '商城',
+						url: '/pages/home/shop/shop',
+						status: 1,
+						isShow: 1,
+						iconWidth: 200,
+						iconHeight: 200
+					},
 					/* ,
 										"depositManage":{
 											src: '../../../static/homev2/dm.png',
@@ -711,6 +710,7 @@
 
 				})
 				// 调用异步方法
+				// #ifdef APP-PLUS
 				posModule.postest({
 						'name': 'unimp',
 						'age': 1
@@ -722,6 +722,7 @@
 
 						})
 					})
+				// #endif
 			},
 			posTest() {
 				// 下单
@@ -970,11 +971,6 @@
 				/* 扫码核销卡券 */
 				if (url === 'couponCancel') {
 					this.checkCoupon();
-					return
-				}
-				// 商城
-				if (url === 'shop') {
-					this.shopJump();
 					return
 				}
 				// 网联，快捷支付
@@ -1290,6 +1286,7 @@
 			// 手机pos付款
 
 			shouJiPosPay() {
+				// #ifdef APP-PLUS
 				/* uni.showModal({
 							content: `人脸验证失败（代码：）。`,
 							showCancel: false
@@ -1356,6 +1353,13 @@
 				let posDataObjStr = JSON.stringify(posDataObj);
 				// console.log('posDataObjStr=========================',posDataObjStr)
 				posModule.pos(posDataObjStr)
+				// #endif
+				// #ifndef APP-PLUS
+				uni.showToast({
+					title: '正在开发中，敬请期待~',
+					icon: 'none'
+				})
+				// #endif
 			},
 			shopJump() {
 				location.href = 'https://alitong.vip/ydh5/index.html?i=1#/yidu_tc/pages/tabbar/index'

@@ -8,7 +8,7 @@
 		</view>
 		<view class="cash-card">
 			<view class="cash-card-1">提现金额</view>
-			<view class="cash-card-2"><text>¥</text><input class="lf-modal-input" type="number" v-model="cashNumber" maxlength="15"></view>
+			<view class="cash-card-2"><text>¥</text><input class="lf-modal-input" type="number" v-model="cashNumber" maxlength="15"/></view>
 			<view class="line"></view>
 			<view class="cash-card-3">
 				<view>可提现金额：<text style="color: #F43F3B;font-weight: bold;">{{merchantTotal?merchantTotal.canCommission.toFixed(2):'0.00'}}</text>元</view>
@@ -173,6 +173,7 @@
 		align-items: center;
 		.lf-modal-input {
 			font-size: 90upx;
+			height: 35px;
 		}
 	}
 	.cash-card-3 {

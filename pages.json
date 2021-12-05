@@ -42,9 +42,9 @@
 			}
         }
 		,{
-		    "path" : "pages/tabBar/shop/shop",
+		    "path" : "pages/tabBar/message/message",
 		    "style" : {
-				"navigationBarTitleText": "商城",
+				"navigationBarTitleText": "消息",
 				"onReachBottomDistance" : 100,		//mescroll
 				"app-plus": {
 					"bounce": "none",
@@ -62,6 +62,17 @@
 				}
 			}
         }
+		,{
+		    "path" : "pages/home/shop/shop",
+		    "style" : {
+				"navigationBarTitleText": "商城",
+				"onReachBottomDistance" : 100,		//mescroll
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": true
+				}
+			}
+		}
         ,{
             "path" : "pages/home/memberCenter/index/index",
             "style" : {
@@ -736,7 +747,6 @@
             "path" : "pages/home/couponCancel/couponCancel",
             "style" : {
             	"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "white",
 				"navigationBarTextStyle": "black",
 				"app-plus": {
 					"bounce": "none",
@@ -970,10 +980,10 @@
 		        "text" : "订单"
 		    },
 		    {
-		        "pagePath" : "pages/tabBar/shop/shop",
-		        "iconPath" : "static/tabBar/btn_shop.png",
-		        "selectedIconPath" : "static/tabBar/btn_shop_click.png",
-		        "text" : "商城"
+		        "pagePath" : "pages/tabBar/message/message",
+		        "iconPath" : "static/tabBar/btn_message.png",
+		        "selectedIconPath" : "static/tabBar/btn_message_click.png",
+		        "text" : "消息"
 		    },
 		    {
 		        "pagePath" : "pages/tabBar/user/user",

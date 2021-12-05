@@ -52,7 +52,9 @@
 	// 后台接口
 	import {webPay,transactionSure} from '../../../api/vueAPI.js'
 	import {showLoading} from '../../../common/wxapi.js'
+	// #ifdef APP-PLUS
 	var shuaLianModule = uni.requireNativePlugin('DCloud-ShuaLianMoudle')
+	// #endif
 	export default {
 		data(){
 			return {
@@ -166,11 +168,12 @@ similarity	String	相似度 1~100 (当validate_result>0时，本值才有效(相
 			 			Count:1
 			 		};
 			 		let objStr = JSON.stringify(obj)
+					// #ifdef APP-PLUS
 			 	shuaLianModule.shuaLianAuth(objStr,
 			 		(ret) => {
 			 			this.shuaLianCallback(ret)
 			 		})
-			 	
+			 	// #endif
 			 },
 			 jumpCardList(){
 				 uni.navigateTo({

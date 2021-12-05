@@ -44,6 +44,12 @@
 			</view>
 		</view>
 		<view class="lf-mat"></view>
+		<!-- #ifdef MP-WEIXIN || MP-ALIPAY -->
+		<view style="display: flex;justify-content: space-between;padding: 10px 10px 10px 30px;background-color: #fff;">
+			<input v-model="name" @input="nameInput" placeholder="搜索" style="width: 80%;border-radius: 20px;border: 1px solid #D9D9D9;height: 30px;padding: 0 10px;"/>
+			<button type="primary" @click="addQRcode" size="mini">新增</button>
+		</view>
+		<!-- #endif -->
 		<!-- 二维码详情 -->
 		<mescroll-uni @down="downCallback" :up="mescrollUp" @up="upCallback" @init="mescrollInit">
 			<view v-for="(qrcode, key) in qrcodeList">
@@ -180,6 +186,15 @@
 			this.mescroll && this.mescroll.onPageScroll(e);
 		},
 		methods:{
+			nameInput() {
+				this.qrcodeList = []// 在这里手动置空列表,可显示加载中的请求进度
+				this.mescroll.resetUpScroll()// 刷新列表数据
+			},
+			addQRcode() {
+				uni.navigateTo({
+					url: '../addQRcode/addQRcode'
+				})
+			},
 			/* 获取员工列表 */
 			getstaffListSelectItem() {
 				getstaffListSelectItem ().then((res) => {
@@ -326,10 +341,18 @@
 	}
 	.lf-nav{
 		position: fixed;
+		top: 43px;
+		left: 0;
+		z-index: 100;
+	}
+	/* #ifdef MP-WEIXIN || MP-ALIPAY */
+	.lf-nav{
+		position: fixed;
 		top: 0;
 		left: 0;
 		z-index: 100;
 	}
+	/* #endif */
 	.lf-screen{
 		width: 750upx;
 		height: 80upx;

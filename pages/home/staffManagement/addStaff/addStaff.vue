@@ -81,6 +81,7 @@
 		<uni-list>
 			<uni-list-item title="状态" show-switch="true" show-arrow="false" switch-checked="true" @switchChange="switchChange"></uni-list-item>
 		</uni-list>
+		<button class="saveBtn" type="primary" size="mini" @click="addStaff">保存</button>
 		<!-- picker-职位 -->
 		<wzp-picker ref="wzpPicker" :mode="mode" :pickerList="pickerList" :defaultIndex="defaultIndex"  @onConfirm="onConfirm"></wzp-picker>
 		<!-- picker-性别 -->
@@ -441,5 +442,10 @@
 		border: 1upx solid #DDDDDD;
 		border-radius: 10upx;
 		padding: 0 20upx;
+	}
+	.saveBtn {
+		display: block!important;
+		width: 40%;
+		margin: 40upx auto;
 	}
 </style>

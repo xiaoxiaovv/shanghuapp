@@ -1420,6 +1420,15 @@ export function getMarketCard(data) {
 }
 
 /**
+ *  getwxEwm  查询商户的微信认证二维码
+ * @param {Object} merchantId 商户ID serviceId 代理商id
+ */
+export function getwxEwm(data) {
+	
+	return fly.get('/auth/code_auth/wx_auth_url', qs.stringify(data))
+}
+
+/**
  * getMarketCard  查询商户的银行卡
  * @param {Object} merchantId 商户ID
  */

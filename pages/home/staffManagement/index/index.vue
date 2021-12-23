@@ -365,7 +365,7 @@
 		left: 0;
 		z-index: 100;
 	}
-	/* #ifdef MP-WEIXIN || MP-ALIPAY */
+	/* #ifndef H5 */
 	.lf-nav{
 		position: fixed;
 		top: 0;

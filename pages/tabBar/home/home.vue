@@ -313,6 +313,8 @@
 	import {
 		LoginCache
 	} from '../../../utils/cache/index.js'
+	import mqtt from 'mqtt'
+	let client = ''
 	// #ifdef APP-PLUS
 	var posModule = uni.requireNativePlugin('DCloud-PosMoudle')
 	// var shuaLianModule = uni.requireNativePlugin('DCloud-ShuaLianMoudle')
@@ -464,6 +466,16 @@
 						iconWidth: 44,
 						iconHeight: 38
 					},
+					"wxEwm": {
+						src: '../../../static/homev2/wxsign.png',
+						name: '微信认证',
+						url: '/pages/home/wxEwm/index/index',
+						status: 1,
+						isShow: 1,
+						iconWidth: 44,
+						iconHeight: 38
+					},
+					
 					/* ,
 										"depositManage":{
 											src: '../../../static/homev2/quickPay.png',
@@ -606,7 +618,41 @@
 			// 轮询实时收入金额
 			this.getStatistics()
 			this.getStatisticsDate()
-
+			// let options = {
+			//       connectTimeout: 40000,
+			//       clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
+			//       username: `user1`,
+			//       password: `123456`,
+			//       // path: '',
+			//       // clean: true,
+			//       useSSL: true/false,
+			//        port: '1885',
+			//        topic: '通信'
+			//     }
+			//     client = mqtt.connect(`tcp://mamipay.com`, options)
+			//     client.on('connect', () => {
+			// 		client.subscribe(`通信`, { qos: 0 }, (error) => {
+			// 		  if (!error) {
+			// 			console.log('success')
+			// 		  } else {
+			// 			console.log('fail')
+			// 		  }
+			// 		})
+			// 	  })
+			// 	  // 接收消息处理
+			// 	  client.on('message', (topic, message) => {
+			// 		let msg = message.toString()
+			// 		if (msg && JSON.parse(msg).content === 'ok') {
+			// 		   console.log('信息成功')
+			// 		}
+			// 	  })
+			// 	  client.on('reconnect', (error) => {
+			// 		console.log('正在重连:', error)
+			// 	  })
+			// 	  // 链接异常处理
+			// 	  client.on('error', (error) => {
+			// 		console.log('连接失败:', error)
+			// 	  })
 			// 获取门店名称
 			let storeDetail = uni.getStorageSync("nowStoreDetail")
 			if (storeDetail != '' && storeDetail != null && storeDetail != undefined && storeDetail) {

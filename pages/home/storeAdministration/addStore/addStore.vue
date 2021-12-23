@@ -60,6 +60,7 @@
 			</view>
 			<uni-list-item title="门店状态" show-switch="true" show-arrow="false" switch-checked="true" @switchChange="switchChange"></uni-list-item>
 		</uni-list>
+		<button class="saveBtn" type="primary" size="mini" @click="saveBtn">保存</button>
 		<neil-modal :show="modalShow" @close="closeModal" :title="modalType | modalTitleFilters" auto-close="false" @confirm="bindBtn('confirm')">
 			<view style="min-height: 90upx;padding: 32upx 24upx;">
 				<input class="lf-modal-input" type="number" v-model="modalInput" maxlength="10" v-if="modalType === 'storeNo'">
@@ -129,35 +130,7 @@
 			}
 		},
 		onNavigationBarButtonTap() {
-			// console.log('点击到按钮-保存')
-			if(this.name.trim() === '' || this.storeNo === '' || this.province === '' || this.city === '' || this.address === '' || this.phone === '' || this.status === ''){
-				uni.showModal({
-					content: '不能有空',
-					showCancel: false
-				});
-				uni.hideLoading();
-				return
-			}
-			addStore(this.name.trim(), this.storeNo, this.province, this.city, this.address, this.phone, this.paymentDesciption.trim(), this.status, this.photoId).then(res => {
-				// console.log(777, res);
-				if (res.code === 200) {
-					uni.showToast({
-						title: "保存成功",
-						icon: 'success',
-						duration: 3000
-					})
-				}
-				setTimeout(() => {
-					uni.navigateBack()
-				}, 1000)
-			}).catch(err => {
-				console.log(888, err)
-				uni.showModal({
-					content: "保存失败",
-					showCancel: false
-				})
-				uni.hideLoading()
-			})
+			this.saveBtn()
 		},
 		filters:{
 			modalTitleFilters(val) {
@@ -178,6 +151,37 @@
 			}
 		},
 		methods: {
+			saveBtn(){
+				// console.log('点击到按钮-保存')
+				if(this.name.trim() === '' || this.storeNo === '' || this.province === '' || this.city === '' || this.address === '' || this.phone === '' || this.status === ''){
+					uni.showModal({
+						content: '不能有空',
+						showCancel: false
+					});
+					uni.hideLoading();
+					return
+				}
+				addStore(this.name.trim(), this.storeNo, this.province, this.city, this.address, this.phone, this.paymentDesciption.trim(), this.status, this.photoId).then(res => {
+					// console.log(777, res);
+					if (res.code === 200) {
+						uni.showToast({
+							title: "保存成功",
+							icon: 'success',
+							duration: 3000
+						})
+					}
+					setTimeout(() => {
+						uni.navigateBack()
+					}, 1000)
+				}).catch(err => {
+					console.log(888, err)
+					uni.showModal({
+						content: "保存失败",
+						showCancel: false
+					})
+					uni.hideLoading()
+				})
+			},
 			/* 打开模态框类型 */
 			showModal(type) {
 				this.modalType = type;
@@ -419,5 +423,10 @@
 	.lf-city-input{
 		border-bottom: 1upx solid #DDDDDD;
 		padding: 0 20upx;
+	}
+	.saveBtn {
+		display: block!important;
+		width: 40%;
+		margin: 40upx auto;
 	}
 </style>

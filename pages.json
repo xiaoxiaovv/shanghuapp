@@ -118,6 +118,15 @@
 				}
 			}
 		}
+		,{
+		    "path" : "pages/home/wxEwm/index/index",
+		    "style" : {
+				"navigationBarTitleText": "微信认证二维码",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
         ,{
             "path" : "pages/home/storeAdministration/index/index",
             "style" : {

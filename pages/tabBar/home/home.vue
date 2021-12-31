@@ -313,8 +313,65 @@
 	import {
 		LoginCache
 	} from '../../../utils/cache/index.js'
-	import mqtt from 'mqtt'
-	let client = ''
+	// import Paho from '../../../common/mqttws31.js'
+	//let Paho = require('../../../common/mqttws31.js')
+	// import Paho from 'paho-mqtt'
+	// console.log(Paho)
+	// let client = ''
+	// let option = {
+	// 	  "ServerUri": '49.233.16.161',
+	// 	  "ServerPort": 15674,
+	// 	  "path": '',
+	// 	  "UserName": `yt`,
+	// 	  "Password": `yt666888.`,
+	// 	  "ClientId": "huidsshi",
+	// 	  "TimeOut": 5,
+	// 	  "KeepAlive": 60,
+	// 	  "CleanSession": true,
+	// 	  "SSL": false,
+	// }
+	// client = new Paho.Client(option.ServerUri, Number(option.ServerPort),'/ws', option.ClientId)
+	// client.onConnectionLost = onConnectionLost;//绑定连接断开事件
+	// client.onMessageArrived = onMessageArrived;//绑定接收消息事件
+	// //连接服务端
+	// client.connect({
+	// 	invocationContext: {
+	// 		host: option.ServerUri,//IP地址
+	// 		port: option.ServerPort,//端口号
+	// 		path: '',
+	// 		clientId: option.ClientId//标识
+	// 	},
+	// 	timeout: option.TimeOut,//连接超时时间
+	// 	keepAliveInterval: option.KeepAlive,//心跳间隔
+	// 	cleanSession: option.CleanSession,//是否清理Session
+	// 	useSSL: option.SSL,//是否启用SSL
+	// 	userName: option.UserName,  //用户名
+	// 	password: option.Password,  //密码
+	// 	onSuccess: onConnect,//连接成功回调事件
+	// 	onFailure: onError//连接失败回调事件
+	// })
+	// //连接成功回调事件
+	// function onConnect() {
+	// 	console.log("连接成功！")
+		
+	// }
+	// //连接失败回调事件
+	// function onError(e) {
+	// 	console.log("连接失败：" + JSON.stringify(e))
+		
+	// }
+	// //连接断开事件
+	// function onConnectionLost(e) {
+	// 	if (e.errorCode !== 0) {
+	// 		console.log("连接异常断开:" + e.errorMessage);
+		
+	// 	}
+	// }
+	// //接收消息事件
+	// function onMessageArrived(data) {
+	// 	console.log("收到消息：" + data.payloadString);
+	// }
+	import WebSocket from '@/common/websocket-uni.js';
 	// #ifdef APP-PLUS
 	var posModule = uni.requireNativePlugin('DCloud-PosMoudle')
 	// var shuaLianModule = uni.requireNativePlugin('DCloud-ShuaLianMoudle')
@@ -590,11 +647,34 @@
 
 			// 轮询最新一笔订单
 			// this.getLastOrder()
-
+			// #ifdef APP-PLUS
 			let uuid = plus.device.uuid
 			console.log('uuid', uuid)
+			// #endif
 			// showModal('uuid:'+ uuid)
-
+			WebSocket.init().then(client => {
+			    console.log('call-----------',client)
+				client.subscribe('1234088345290047488.7aICtSTa28f1JMFZjorbtQ2222228', (res) => {
+					console.log('收到消息a：',res)
+				}, (err) => {
+					console.log(err)
+				})
+				client.subscribe('1234088345290047488.5GBNU20lOABi0KVeB0fnaA', (res) => {
+					console.log('收到消息b：',res)
+				}, (err) => {
+					console.log(err)
+				})
+				client.subscribe('123.C', (res) => {
+					console.log('收到消息c：',res)
+				}, (err) => {
+					console.log(err)
+				})
+				client.subscribe('123.D', (res) => {
+					console.log('收到消息d：',res)
+				}, (err) => {
+					console.log(err)
+				})
+			})
 			// 重置开始时间
 			uni.setStorageSync("beginTime", '')
 			// this.interval.startInterval()
@@ -618,41 +698,25 @@
 			// 轮询实时收入金额
 			this.getStatistics()
 			this.getStatisticsDate()
-			// let options = {
-			//       connectTimeout: 40000,
-			//       clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
-			//       username: `user1`,
-			//       password: `123456`,
-			//       // path: '',
-			//       // clean: true,
-			//       useSSL: true/false,
-			//        port: '1885',
-			//        topic: '通信'
-			//     }
-			//     client = mqtt.connect(`tcp://mamipay.com`, options)
-			//     client.on('connect', () => {
-			// 		client.subscribe(`通信`, { qos: 0 }, (error) => {
-			// 		  if (!error) {
-			// 			console.log('success')
-			// 		  } else {
-			// 			console.log('fail')
-			// 		  }
-			// 		})
-			// 	  })
-			// 	  // 接收消息处理
-			// 	  client.on('message', (topic, message) => {
-			// 		let msg = message.toString()
-			// 		if (msg && JSON.parse(msg).content === 'ok') {
-			// 		   console.log('信息成功')
-			// 		}
-			// 	  })
-			// 	  client.on('reconnect', (error) => {
-			// 		console.log('正在重连:', error)
-			// 	  })
-			// 	  // 链接异常处理
-			// 	  client.on('error', (error) => {
-			// 		console.log('连接失败:', error)
-			// 	  })
+			// var socketTask = uni.connectSocket({
+			//   url: 'ws://49.233.16.161:15674',
+			//   header: {
+			// 	  'content-type': 'application/json'
+			//   },
+			//   success: (res)=> {
+			// 	  console.log('eeeeeeeeeeeeeeee',res)
+			//   }
+			// });
+			// uni.onSocketOpen(function (res) {
+			//   console.log('uni----WebSocket连接已打开！');
+			  
+			// });
+			// uni.onSocketError(function (res) {
+			//   console.log('uni----WebSocket连接打开失败，请检查！');
+			// });
+			// uni.onSocketMessage(function (res) {
+			//   console.log('收到服务器内容：' + res.data);
+			// })
 			// 获取门店名称
 			let storeDetail = uni.getStorageSync("nowStoreDetail")
 			if (storeDetail != '' && storeDetail != null && storeDetail != undefined && storeDetail) {
@@ -711,7 +775,6 @@
 				  merchantId: uni.getStorageSync('merchantId'),
 				}
 				 isMarket(params).then(res => {
-					 console.log(res)
 					 // if(res.code === 200 && res.msg === 'true'){
 						//  this.menuList.marketIncent.isShow = 1
 					 // } else {

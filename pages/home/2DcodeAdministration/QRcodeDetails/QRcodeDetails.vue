@@ -132,7 +132,8 @@
 		width: 350upx;
 		height: 350upx;
 		position: relative;
-		top:-560upx;
+		top:-626upx;
+		left: 4upx;
 	}
 	.lf-staff-head .qrImg-box{
 		

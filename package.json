@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "@dcloudio/uni-ui": "0.0.7",
     "@red-bean/red-bean": "^0.1.7",
     "flyio": "^0.6.14",

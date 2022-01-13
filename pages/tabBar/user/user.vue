@@ -77,6 +77,12 @@
 						remarks: '',
 						url: '/pages/user/classReplace/index/index'
 					},
+					'location':{
+						image: '../../../static//tabBar/location.png',
+						name: '定位',
+						remarks: '',
+						url: '/pages/user/location/index/index'
+					},
 					'about':{
 						image: '../../../static/tabBar/icon_about.png',
 						name: '关于',

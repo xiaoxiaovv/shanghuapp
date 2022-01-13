@@ -1,18 +1,18 @@
+import fly from '../common/flyioRequest'
 let socketOpen = false;
 let socketMsgQueue = [];
-
+let WebSocketUrl = fly.config.baseURL.replace('https://', '')
 export default {
     client: null,
-    baseURL: 'ws://49.233.16.161:15674/ws',
+    baseURL: 'ws://' + WebSocketUrl + ':15674/ws',
     header:{
-        login: 'yt',
-        passcode: 'yt666888.'
+        login: 'app',
+        passcode: '123456'
     },
     init() {
         if (this.client) {
             return Promise.resolve(this.client);
         }
-
         return new Promise((resolve, reject) => {
             const ws = {
                 send: this.sendMessage,
@@ -33,7 +33,7 @@ export default {
                     ws.send(socketMsgQueue[i]);
                 }
                 socketMsgQueue = [];
-
+				
                 ws.onopen && ws.onopen();
             });
 
@@ -41,8 +41,10 @@ export default {
                 ws.onmessage && ws.onmessage(res);
             });
 
-            uni.onSocketError(function(res) {
+            uni.onSocketError((res) => {
                 console.log('WebSocket 错误！正在重连...', res);
+				this.client = null;
+				socketOpen = false;
 				this.init()
             });
 
@@ -62,11 +64,13 @@ export default {
                 return clearInterval(id);
             };
 
-            const client = this.client = Stomp.over(ws);
+            let client = this.client = Stomp.over(ws);
             client.connect(this.header, (res) => {
                 console.log('stomp connected', res);
                 resolve(client);
-            });
+            }, (err) => {
+				this.init()
+			});
         });
     },
     disconnect() {
@@ -83,5 +87,8 @@ export default {
     },
     closeSocket() {
         console.log('closeSocket');
+		
+		this.client = null;
+		socketOpen = false;
     },
 };

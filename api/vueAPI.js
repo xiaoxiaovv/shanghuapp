@@ -1449,3 +1449,24 @@ export function getNoticeList(data) {
 export function getAppid(data) {
   return fly.get('/order/callback/getAliAppId', qs.stringify(data))
 }
+/**
+* 匹配消息队列接口
+* @param {*} params
+*/
+export function audioCast(data) {
+  return fly.get('/merchant/mq/audio_cast/in', qs.stringify(data))
+}
+/**
+* 获取高德秘钥
+* @param {*} params
+*/
+export function getGaoDeKey(data) {
+  return fly.get('/auth/gaode_map_config', qs.stringify(data))
+}
+/**
+* 更新商户信息接口
+* @param {*} params
+*/
+export function updateLocation(data) {
+  return fly.post('/merchant/merchant/update', qs.stringify(data))
+}

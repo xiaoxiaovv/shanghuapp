@@ -385,7 +385,7 @@
                 headers = {};
             }
             if (!headers.id) {
-                headers.id = "sub-" + this.counter++;
+                headers.id = "sub-0";
             }
             headers.destination = destination;
             this.subscriptions[headers.id] = callback;

@@ -284,6 +284,15 @@
 			}
 		}
 		,{
+		    "path" : "pages/user/location/index/index",
+			"style" : {
+				"navigationBarTitleText": "定位",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+		,{
 		    "path" : "pages/user/classReplace/details/index",
 			"style" : {
 				"navigationBarTitleText": "交接班记录详情",

@@ -112,7 +112,7 @@
 					<view></view>
 				</view>
 				<view class='match-left-space align-ver-left ml-30'>
-					<view>{{lastOrder.createTime | creatTimeFilter}}</view>
+					<view>{{lastOrder.createTime}}</view>
 					<view class='darker mt-10'>{{lastOrder.payWay | payWayFilter}}收款{{lastOrder.actPayPrice | dealWithMoneyFilter}}元</view>
 				</view>
 				<view class="arrow">
@@ -277,7 +277,8 @@
 		bankCardInfo,
 		delBankCard,
 		orderSure,
-		isMarket
+		isMarket,
+		audioCast
 	} from '../../../api/vueAPI.js'
 	// 检查更新
 	import {
@@ -313,6 +314,7 @@
 	import {
 		LoginCache
 	} from '../../../utils/cache/index.js'
+	import Voice from '@/js_sdk/QuShe-baiduYY/QS-baiduyy/QS-baiduyy.js'
 	// import Paho from '../../../common/mqttws31.js'
 	//let Paho = require('../../../common/mqttws31.js')
 	// import Paho from 'paho-mqtt'
@@ -382,6 +384,8 @@
 		},
 		data() {
 			return {
+				client: null,
+				topocSrc: null,
 				/* msg: {
 					header: {
 						connection: keep - alive
@@ -605,7 +609,8 @@
 				maxPaymentMoney: 100000000,
 				isShow: false,
 				isHomeSelf: true,
-				pausePoll: false
+				pausePoll: false,
+				notFirstInit: false
 			};
 		},
 
@@ -652,34 +657,8 @@
 			console.log('uuid', uuid)
 			// #endif
 			// showModal('uuid:'+ uuid)
-			WebSocket.init().then(client => {
-			    console.log('call-----------',client)
-				client.subscribe('1234088345290047488.7aICtSTa28f1JMFZjorbtQ2222228', (res) => {
-					console.log('收到消息a：',res)
-				}, (err) => {
-					console.log(err)
-				})
-				client.subscribe('1234088345290047488.5GBNU20lOABi0KVeB0fnaA', (res) => {
-					console.log('收到消息b：',res)
-				}, (err) => {
-					console.log(err)
-				})
-				client.subscribe('123.C', (res) => {
-					console.log('收到消息c：',res)
-				}, (err) => {
-					console.log(err)
-				})
-				client.subscribe('123.D', (res) => {
-					console.log('收到消息d：',res)
-				}, (err) => {
-					console.log(err)
-				})
-			})
 			// 重置开始时间
 			uni.setStorageSync("beginTime", '')
-			// this.interval.startInterval()
-
-
 		},
 
 		onReady() {
@@ -688,67 +667,39 @@
 			LoginCache.state = false
 			// console.log('我来到火星的世界x2', LoginCache)
 			// 轮询查询新订单
-			this.queryNewOrder()
+			//this.queryNewOrder()
 			this.isMarket()
 		},
 
 		onShow() {
-
+			if (this.client) {
+				this.client.unsubscribe('sub-0')
+				this.client.unsubscribe('sub-1')
+			}
 			this.isHomeSelf = true
-			// 轮询实时收入金额
+			// 实时收入金额
 			this.getStatistics()
-			this.getStatisticsDate()
-			// var socketTask = uni.connectSocket({
-			//   url: 'ws://49.233.16.161:15674',
-			//   header: {
-			// 	  'content-type': 'application/json'
-			//   },
-			//   success: (res)=> {
-			// 	  console.log('eeeeeeeeeeeeeeee',res)
-			//   }
-			// });
-			// uni.onSocketOpen(function (res) {
-			//   console.log('uni----WebSocket连接已打开！');
-			  
-			// });
-			// uni.onSocketError(function (res) {
-			//   console.log('uni----WebSocket连接打开失败，请检查！');
-			// });
-			// uni.onSocketMessage(function (res) {
-			//   console.log('收到服务器内容：' + res.data);
-			// })
+			//this.getStatisticsDate()
 			// 获取门店名称
 			let storeDetail = uni.getStorageSync("nowStoreDetail")
 			if (storeDetail != '' && storeDetail != null && storeDetail != undefined && storeDetail) {
 				this.storeName = storeDetail.storeName
 			}
+			if (this.notFirstInit) {
+				this.concactWebSocket()
+			}
+			this.notFirstInit = true
 			// 检查音效设置
 			let isKeyboardVoice = parseInt(uni.getStorageSync("setKeyboardVoice"))
 			if (isKeyboardVoice === 1) {
-				this.isKeyboardVoice = true
+				this.isKeyboardVoice = true 
 			} else {
 				this.isKeyboardVoice = false
 			}
-
-			// 启动定时器
-			// this.getLastOrderInterval.openInterval()
-
-			// 启动定时器
-			// this.getLastOrderInterval.startInterval()
-			// this.getRealInterval.startInterval()
-
-			// this.getRealInterval.closeInterval()
-			// this.interval.closeInterval()
-
-			// this.getRealInterval.pauseInterval()
-			// this.getRealInterval.restartInterval()
-			// this.interval.restartInterval()sss
 		},
 
 		onHide() {
-
 			this.isHomeSelf = false
-
 			// 失焦关闭键盘
 			// this.$refs.keyb._keyHide()
 			// this.isShow = false
@@ -770,6 +721,94 @@
 			}
 		},
 		methods: {
+			concactWebSocket() {
+				
+				WebSocket.init().then(client => {
+					const params = {
+						id: uni.getStorageSync('userType') == 1?uni.getStorageSync('merchantId'):uni.getStorageSync('nowStoreDetail').storeId,
+						type: uni.getStorageSync('userType') == 1 ? 1 : 2,
+					}
+					audioCast(params).then(resp => {
+						console.log(resp)
+						let topocSrcArr = resp.obj.split(',')
+						this.client = client
+						client.subscribe(topocSrcArr[0], (res) => {
+							const resObj = JSON.parse(JSON.parse(res.body))
+							if (uni.getStorageSync('userType') == 1) {
+								if (resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+									//播报
+									console.log('我会执行a：',resObj.msg)
+									let voiceText = resObj.msg							
+									Voice({
+										voiceSet: {
+											tex: voiceText,
+											vol: 15,
+											per: 0
+										  }
+									})
+									// 页面喇叭站位
+									this.lastOrder = resObj
+								}
+							} else if (uni.getStorageSync('userType') == 2){
+								if (resObj.userType == 2 && resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+									//播报
+									console.log('我会执行a：',resObj.msg)
+									let voiceText = resObj.msg
+									Voice({
+										voiceSet: {
+											tex: voiceText,
+											vol: 15,
+											per: 0
+										  }
+									})
+									// 页面喇叭站位
+									this.lastOrder = resObj
+								}
+							} else {
+								if (resObj.userType == 3 && resObj.username == uni.getStorageSync('username') && resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+									//播报
+									console.log('我会执行a：',resObj.msg)
+									let voiceText = resObj.msg
+									Voice({
+										voiceSet: {
+											tex: voiceText,
+											vol: 15,
+											per: 0
+										  }
+									})
+									// 页面喇叭站位
+									this.lastOrder = resObj
+								}
+							}
+							
+						}, {
+							id: 'sub-0'
+						})
+						client.subscribe(topocSrcArr[1], (res) => {
+							const dataObj = JSON.parse(JSON.parse(res.body))
+							if (uni.getStorageSync('userType') == 1) {
+								if (dataObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+									console.log('我会执行b：',dataObj)
+									this.realOrder = dataObj
+								}
+							} else if (uni.getStorageSync('userType') == 2){
+								if (dataObj.userType == 2 && dataObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+									console.log('我会执行b：',dataObj)
+									this.realOrder = dataObj
+								}
+							} else {
+								if (dataObj.userType == 3 && dataObj.username == uni.getStorageSync('username') && dataObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+									console.log('我会执行b：',dataObj)
+									this.realOrder = dataObj
+								}
+							}
+						}, {
+							id: 'sub-1'
+						})
+					})
+					
+				})
+			},
 			isMarket() {
 				const params = {
 				  merchantId: uni.getStorageSync('merchantId'),
@@ -981,21 +1020,7 @@
 							status: false
 						})
 					}
-					/* if(!res.obj.storeId){
-						this.storeName = res.obj.merchantName
-						this.storeId = ''
-						return
-					}
-					this.storeName = res.obj.storeName
-					this.storeId = res.obj.storeId
-					uni.setStorageSync('nowStoreDetail',{
-						storeId: this.storeId,
-						storeName: this.storeName,
-						status: false
-					}) */
-
-
-
+					this.concactWebSocket()
 				}).catch(err => {
 					// console.log(err)
 				})

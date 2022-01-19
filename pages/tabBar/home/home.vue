@@ -250,6 +250,7 @@
 </template>
 
 <script>
+	import fly from '@/common/flyioRequest'
 	// import signature from '@/components/signature/signature.vue'
 	import tkiFloatKeyboard from '@/components/tki-float-keyboard/tki-float-keyboard.vue'
 	// 后台接口
@@ -315,65 +316,8 @@
 		LoginCache
 	} from '../../../utils/cache/index.js'
 	import Voice from '@/js_sdk/QuShe-baiduYY/QS-baiduyy/QS-baiduyy.js'
-	// import Paho from '../../../common/mqttws31.js'
-	//let Paho = require('../../../common/mqttws31.js')
-	// import Paho from 'paho-mqtt'
-	// console.log(Paho)
-	// let client = ''
-	// let option = {
-	// 	  "ServerUri": '49.233.16.161',
-	// 	  "ServerPort": 15674,
-	// 	  "path": '',
-	// 	  "UserName": `yt`,
-	// 	  "Password": `yt666888.`,
-	// 	  "ClientId": "huidsshi",
-	// 	  "TimeOut": 5,
-	// 	  "KeepAlive": 60,
-	// 	  "CleanSession": true,
-	// 	  "SSL": false,
-	// }
-	// client = new Paho.Client(option.ServerUri, Number(option.ServerPort),'/ws', option.ClientId)
-	// client.onConnectionLost = onConnectionLost;//绑定连接断开事件
-	// client.onMessageArrived = onMessageArrived;//绑定接收消息事件
-	// //连接服务端
-	// client.connect({
-	// 	invocationContext: {
-	// 		host: option.ServerUri,//IP地址
-	// 		port: option.ServerPort,//端口号
-	// 		path: '',
-	// 		clientId: option.ClientId//标识
-	// 	},
-	// 	timeout: option.TimeOut,//连接超时时间
-	// 	keepAliveInterval: option.KeepAlive,//心跳间隔
-	// 	cleanSession: option.CleanSession,//是否清理Session
-	// 	useSSL: option.SSL,//是否启用SSL
-	// 	userName: option.UserName,  //用户名
-	// 	password: option.Password,  //密码
-	// 	onSuccess: onConnect,//连接成功回调事件
-	// 	onFailure: onError//连接失败回调事件
-	// })
-	// //连接成功回调事件
-	// function onConnect() {
-	// 	console.log("连接成功！")
-		
-	// }
-	// //连接失败回调事件
-	// function onError(e) {
-	// 	console.log("连接失败：" + JSON.stringify(e))
-		
-	// }
-	// //连接断开事件
-	// function onConnectionLost(e) {
-	// 	if (e.errorCode !== 0) {
-	// 		console.log("连接异常断开:" + e.errorMessage);
-		
-	// 	}
-	// }
-	// //接收消息事件
-	// function onMessageArrived(data) {
-	// 	console.log("收到消息：" + data.payloadString);
-	// }
-	import WebSocket from '@/common/websocket-uni.js';
+	// import mqtt from "mqtt"
+	var mqtt = require('mqtt/dist/mqtt.js')
 	// #ifdef APP-PLUS
 	var posModule = uni.requireNativePlugin('DCloud-PosMoudle')
 	// var shuaLianModule = uni.requireNativePlugin('DCloud-ShuaLianMoudle')
@@ -385,6 +329,7 @@
 		data() {
 			return {
 				client: null,
+				topocSrcArr: [],
 				topocSrc: null,
 				/* msg: {
 					header: {
@@ -420,7 +365,7 @@
 					"memberCenter": {
 						src: '../../../static/homev2/hy.png',
 						name: '会员中心',
-						url: '/pages/home/memberCenter/index/index',
+						url: '/pagesA/home/memberCenter/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -438,7 +383,7 @@
 					"statistics": {
 						src: '../../../static/homev2/tj.png',
 						name: '统计',
-						url: '/pages/home/statistics/index/index',
+						url: '/pagesA/home/statistics/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 40,
@@ -447,7 +392,7 @@
 					"QRcodeAdministration": {
 						src: '../../../static/homev2/ewm.png',
 						name: '二维码管理',
-						url: '/pages/home/2DcodeAdministration/index/index',
+						url: '/pagesA/home/2DcodeAdministration/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 38,
@@ -456,7 +401,7 @@
 					"storeAdministration": {
 						src: '../../../static/homev2/md.png',
 						name: '门店管理',
-						url: '/pages/home/storeAdministration/index/index',
+						url: '/pagesA/home/storeAdministration/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 42,
@@ -465,7 +410,7 @@
 					"staffManagement": {
 						src: '../../../static/homev2/yg.png',
 						name: '员工管理',
-						url: '/pages/home/staffManagement/index/index',
+						url: '/pagesA/home/staffManagement/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 43,
@@ -475,7 +420,7 @@
 						src: '../../../static/homev2/kq.png',
 						name: '卡券核销',
 						url: 'couponCancel',
-						// url: '/pages/home/couponCancel/couponCancel',
+						// url: '/pagesA/home/couponCancel/couponCancel',
 						status: 1,
 						isShow: 1,
 						iconWidth: 47,
@@ -484,7 +429,7 @@
 					"consumerAnalysis": {
 						src: '../../../static/homev2/xfz.png',
 						name: '客流统计',
-						// url: '/pages/home/consumerAnalysis/index/index',
+						// url: '/pagesA/home/consumerAnalysis/index/index',
 						url: 'consumerAnalysis',
 						status: 1,
 						isShow: 0,
@@ -494,7 +439,7 @@
 					"classExchange": {
 						src: '../../../static/homev2/workinfo.png',
 						name: '交接班',
-						url: '/pages/home/classExchange/index/index',
+						url: '/pagesA/home/classExchange/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -503,7 +448,7 @@
 					"depositManage": {
 						src: '../../../static/homev2/dm.png',
 						name: '押金管理',
-						url: '/pages/home/depositManage/index/index',
+						url: '/pagesA/home/depositManage/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -512,7 +457,7 @@
 					"ruyi": {
 						src: '../../../static/homev2/zfb.png',
 						name: '如意设备',
-						url: '/pages/home/ruyi/ruyi',
+						url: '/pagesA/home/ruyi/ruyi',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -521,7 +466,7 @@
 					"marketIncent": {
 						src: '../../../static/homev2/jili.png',
 						name: '营销激励',
-						url: '/pages/home/marketIncent/index/index',
+						url: '/pagesA/home/marketIncent/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -530,7 +475,7 @@
 					"wxEwm": {
 						src: '../../../static/homev2/wxsign.png',
 						name: '微信认证',
-						url: '/pages/home/wxEwm/index/index',
+						url: '/pagesA/home/wxEwm/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -550,7 +495,7 @@
 					"depositManage":{
 						src: '../../../static/homev2/shop.png',
 						name: '商城',
-						url: '/pages/home/shop/shop',
+						url: '/pagesA/home/shop/shop',
 						status: 1,
 						isShow: 1,
 						iconWidth: 200,
@@ -673,8 +618,8 @@
 
 		onShow() {
 			if (this.client) {
-				this.client.unsubscribe('sub-0')
-				this.client.unsubscribe('sub-1')
+				//this.client.unsubscribe(this.topocSrcArr)
+				this.client.end(true)
 			}
 			this.isHomeSelf = true
 			// 实时收入金额
@@ -689,6 +634,7 @@
 				this.concactWebSocket()
 			}
 			this.notFirstInit = true
+			/////
 			// 检查音效设置
 			let isKeyboardVoice = parseInt(uni.getStorageSync("setKeyboardVoice"))
 			if (isKeyboardVoice === 1) {
@@ -722,91 +668,116 @@
 		},
 		methods: {
 			concactWebSocket() {
-				
-				WebSocket.init().then(client => {
+				let option = {
+					  "port": 15675,
+					  "path": '/ws',
+				      "clean": true, // Can also be false
+					  "username": `app`,
+					  "password": `123456`,
+					  "clientId": new Date().getTime(),
+					  "keepalive": 1,
+					  "SSL": false,
+				}
+				let WebSocketUrl = fly.config.baseURL.replace('https://', '')
+				// #ifdef H5
+				var client = mqtt.connect('ws://' + WebSocketUrl, option)
+				// #endif
+				// #ifdef MP-WEIXIN||APP-PLUS
+				var client = mqtt.connect('wx://' + WebSocketUrl, option)
+				// #endif
+				this.client = client
+				client.on('error', function(e) {
+					console.log('on error')
+				}).on('end', function(e) {
+					console.log('on end')
+				})
+				client.on('connect', () => {
+					console.log("连接成功！")
 					const params = {
 						id: uni.getStorageSync('userType') == 1?uni.getStorageSync('merchantId'):uni.getStorageSync('nowStoreDetail').storeId,
 						type: uni.getStorageSync('userType') == 1 ? 1 : 2,
 					}
 					audioCast(params).then(resp => {
-						console.log(resp)
 						let topocSrcArr = resp.obj.split(',')
-						this.client = client
-						client.subscribe(topocSrcArr[0], (res) => {
-							const resObj = JSON.parse(JSON.parse(res.body))
-							if (uni.getStorageSync('userType') == 1) {
-								if (resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
-									//播报
-									console.log('我会执行a：',resObj.msg)
-									let voiceText = resObj.msg							
-									Voice({
-										voiceSet: {
-											tex: voiceText,
-											vol: 15,
-											per: 0
-										  }
-									})
-									// 页面喇叭站位
-									this.lastOrder = resObj
-								}
-							} else if (uni.getStorageSync('userType') == 2){
-								if (resObj.userType == 2 && resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
-									//播报
-									console.log('我会执行a：',resObj.msg)
-									let voiceText = resObj.msg
-									Voice({
-										voiceSet: {
-											tex: voiceText,
-											vol: 15,
-											per: 0
-										  }
-									})
-									// 页面喇叭站位
-									this.lastOrder = resObj
-								}
-							} else {
-								if (resObj.userType == 3 && resObj.username == uni.getStorageSync('username') && resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
-									//播报
-									console.log('我会执行a：',resObj.msg)
-									let voiceText = resObj.msg
-									Voice({
-										voiceSet: {
-											tex: voiceText,
-											vol: 15,
-											per: 0
-										  }
-									})
-									// 页面喇叭站位
-									this.lastOrder = resObj
-								}
-							}
-							
-						}, {
-							id: 'sub-0'
+						this.topocSrcArr = topocSrcArr
+						client.subscribe(topocSrcArr[0], function(err) {
+							console.log('订阅'+topocSrcArr[0]+'成功!')
 						})
-						client.subscribe(topocSrcArr[1], (res) => {
-							const dataObj = JSON.parse(JSON.parse(res.body))
-							if (uni.getStorageSync('userType') == 1) {
-								if (dataObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
-									console.log('我会执行b：',dataObj)
-									this.realOrder = dataObj
-								}
-							} else if (uni.getStorageSync('userType') == 2){
-								if (dataObj.userType == 2 && dataObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
-									console.log('我会执行b：',dataObj)
-									this.realOrder = dataObj
-								}
-							} else {
-								if (dataObj.userType == 3 && dataObj.username == uni.getStorageSync('username') && dataObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
-									console.log('我会执行b：',dataObj)
-									this.realOrder = dataObj
-								}
-							}
-						}, {
-							id: 'sub-1'
+						client.subscribe(topocSrcArr[1], function(err) {
+							console.log('订阅'+topocSrcArr[1]+'成功!')
 						})
 					})
-					
+				});
+				client.on('message',(topic, message) => {
+					let _this = this
+					const resObj = JSON.parse(JSON.parse(message.toString()))
+					console.log('收到消息：',resObj)
+					if (resObj.type == 'voiceMsg') {
+						if (uni.getStorageSync('userType') == 1) {
+							if (resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+								//播报
+								console.log('我会播报：',resObj.msg)
+								let voiceText = resObj.msg							
+								Voice({
+									voiceSet: {
+										tex: voiceText,
+										vol: 15,
+										per: 0
+									  }
+								})
+								// 页面喇叭站位
+								_this.lastOrder = resObj
+							}
+						} else if (uni.getStorageSync('userType') == 2){
+							if (resObj.userType == 2 && resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+								//播报
+								console.log('我会播报：',resObj.msg)
+								let voiceText = resObj.msg
+								Voice({
+									voiceSet: {
+										tex: voiceText,
+										vol: 15,
+										per: 0
+									  }
+								})
+								// 页面喇叭站位
+								_this.lastOrder = resObj
+							}
+						} else {
+							if (resObj.userType == 3 && resObj.username == uni.getStorageSync('username') && resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+								//播报
+								console.log('我会播报：',resObj.msg)
+								let voiceText = resObj.msg
+								Voice({
+									voiceSet: {
+										tex: voiceText,
+										vol: 15,
+										per: 0
+									  }
+								})
+								// 页面喇叭站位
+								_this.lastOrder = resObj
+							}
+						}
+					}
+					if (resObj.type == 'payInfo') {
+						if (uni.getStorageSync('userType') == 1) {
+							if (resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+								console.log('我会更新数据：',resObj)
+								_this.realOrder = resObj
+							}
+						} else if (uni.getStorageSync('userType') == 2){
+							if (resObj.userType == 2 && resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+								console.log('我会更新数据：',resObj)
+								_this.realOrder = resObj
+							}
+						} else {
+							if (resObj.userType == 3 && resObj.username == uni.getStorageSync('username') && resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+								console.log('我会更新数据：',resObj)
+								_this.realOrder = resObj
+							}
+						}
+					}
 				})
 			},
 			isMarket() {
@@ -979,7 +950,7 @@
 				if (url) {
 					// console.log("广告跳转啦~",url)
 					uni.navigateTo({
-						url: '/pages/home/advertisement/advertisement?id=' + id + '&url=' + url
+						url: '/pagesA/home/advertisement/advertisement?id=' + id + '&url=' + url
 					})
 				} else {
 					console.log("没有url")
@@ -1078,7 +1049,7 @@
 			storeSelect() {
 				// console.log("选择门店")
 				uni.navigateTo({
-					url: '/pages/home/storeSelect/index/index?ishome=1'
+					url: '/pagesA/home/storeSelect/index/index?ishome=1'
 				})
 			},
 			/* 菜单功能跳转 */
@@ -1337,7 +1308,7 @@
 				// this.onPayWayShow(1)
 				let that = this
 				uni.navigateTo({
-					url: '/pages/home/cashRegisterCode/cashRegisterCode?paymentMoney=' + that.paymentMoney + '&payWay=' + that.payWay +
+					url: '/pagesA/home/cashRegisterCode/cashRegisterCode?paymentMoney=' + that.paymentMoney + '&payWay=' + that.payWay +
 						'&storeId=' + storeId,
 					complete() {
 						/* 金额初始化 */
@@ -1393,7 +1364,6 @@
 			},
 			/* 扫码退款 */
 			showRefund() {
-
 				uni.scanCode({
 					onlyFromCamera: true,
 					success: (res) => {
@@ -1529,7 +1499,7 @@
 					return
 				}
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=18'
+					url: '/pagesA/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=18'
 				})
 				/* let storeId = nowStoreDetail.storeId
 				let userId = uni.getStorageSync('userId') || ''
@@ -1552,7 +1522,7 @@
 					icon: 'none'
 				})
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
+					url: '/pagesA/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
 				})
 			},
 			shuaLianAsyncFunc() {
@@ -1598,7 +1568,7 @@
 					return
 				}
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
+					url: '/pagesA/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
 				})
 			}, */
 			shuaLian() {
@@ -1627,7 +1597,7 @@
 					return
 				}
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=20'
+					url: '/pagesA/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=20'
 				})
 				this.shuaLianAsyncFunc()
 

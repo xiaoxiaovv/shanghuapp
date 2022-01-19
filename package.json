@@ -16,10 +16,8 @@
     "js-base64": "^2.5.1",
     "mescroll-uni": "1.0.3",
     "mp-html": "^2.2.0",
-    "mqtt": "^4.2.8",
-    "paho-mqtt": "^1.1.0",
+    "mqtt": "^3.0.0",
     "qs": "^6.7.0",
-    "rsa-js-java": "^1.0.4",
-    "tki-qrcode": "^0.1.6"
+    "rsa-js-java": "^1.0.4"
   }
 }

@@ -16,6 +16,9 @@
             "autoclose" : true,
             "delay" : 0
         },
+        "optimization" : {
+            "subPackages" : true
+        },
         "modules" : {
             "Bluetooth" : {},
             "Push" : {},
@@ -149,6 +152,9 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         "appid" : "wx2614e4c9b7eb7eee",
+        "optimization" : {
+            "subPackages" : true
+        },
         "setting" : {
             "urlCheck" : false
         },

@@ -14,7 +14,9 @@
 
 <script>
 	import { getGaoDeKey, updateLocation } from '../../../../api/vueAPI.js'
+	//#ifndef MP-WEIXIN
 	import AMapLoader from '@amap/amap-jsapi-loader';
+	//#endif
 	export default {				
 		data() {
 			return {
@@ -48,6 +50,7 @@
 				})
 			},
 			initMap(){
+				//#ifndef MP-WEIXIN
 				AMapLoader.load({
 					"key":this.gdWebKey,
 					"version": "1.4.15",   // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
@@ -72,6 +75,7 @@
 					uni.hideLoading()
 					console.log(e);
 				})
+				//#endif
 			},
 			getPosition() {
 				this.geolocation.getCurrentPosition((status, result) => {

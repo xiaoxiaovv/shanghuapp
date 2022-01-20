@@ -237,7 +237,7 @@
 				if (obj[0].isJump === 0) {
 					// 内部打开
 					uni.navigateTo({
-						url: ('/pages/home/advertisement/advertisement?url=' + obj[0].imageLink)
+						url: ('/pagesA/home/advertisement/advertisement?url=' + obj[0].imageLink)
 					})
 				} else {
 					// 外部打开

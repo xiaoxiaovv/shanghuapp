@@ -89,7 +89,7 @@ export default {
 		/* 跳转选择门店页面 */
 		jumpStoreSelect() {
 			uni.navigateTo({
-				url: '/pages/home/storeSelect/index/index'
+				url: '/pagesA/home/storeSelect/index/index'
 			})
 		},
 		

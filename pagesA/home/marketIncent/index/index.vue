@@ -169,7 +169,7 @@
 			},
 			goCashout () {
 				uni.navigateTo({
-					url: '/pages/home/marketIncent/cashout/index'
+					url: '/pagesA/home/marketIncent/cashout/index'
 				})
 			},
 			getDaysBetween(dateString1,dateString2){

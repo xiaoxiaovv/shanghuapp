@@ -122,7 +122,7 @@
 		onNavigationBarButtonTap() {
 			// console.log('点击到按钮，按钮信息：')
 			uni.navigateTo({
-				url: '/pages/home/storeAdministration/addStore/addStore'
+				url: '/pagesA/home/storeAdministration/addStore/addStore'
 			})
 		},
 		/* 搜索栏事件，文本变化触发 */
@@ -146,13 +146,13 @@
 			},
 			addQRcode() {
 				uni.navigateTo({
-					url: '/pages/home/storeAdministration/addStore/addStore'
+					url: '/pagesA/home/storeAdministration/addStore/addStore'
 				})
 			},
 			/* 跳转门店详情（附门店号） */
 			jumpStoreDetails (storeId) {
 				uni.navigateTo({
-					url: '/pages/home/storeAdministration/storeDetails/storeDetails?id='+ storeId
+					url: '/pagesA/home/storeAdministration/storeDetails/storeDetails?id='+ storeId
 				})
 			},
 			/* 图片回显 过滤器 */

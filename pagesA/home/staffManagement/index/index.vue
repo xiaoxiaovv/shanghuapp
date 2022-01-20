@@ -191,13 +191,13 @@
 			/* 跳转选择门店 */
 			jumpStoreSelect() {
 				uni.navigateTo({
-					url: '/pages/home/storeSelect/index/index'
+					url: '/pagesA/home/storeSelect/index/index'
 				})
 			},
 			/* 跳转员工详情（附员工号） */
 			jumpstaffDetails (id) {
 				uni.navigateTo({
-					url: '/pages/home/staffManagement/staffDetails/staffDetails?id='+ id
+					url: '/pagesA/home/staffManagement/staffDetails/staffDetails?id='+ id
 				})
 			},
 			// mescroll组件初始化的回调,可获取到mescroll对象

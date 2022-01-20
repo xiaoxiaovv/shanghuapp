@@ -520,7 +520,7 @@
 			/* 跳转选择门店页面 */
 			jumpStoreSelect() {
 				uni.navigateTo({
-					url: '/pages/home/storeSelect/index/index'
+					url: '/pagesA/home/storeSelect/index/index'
 				})
 			},
 			/* 显示导航栏-搜索框 */

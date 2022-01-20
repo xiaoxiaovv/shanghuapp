@@ -41,25 +41,25 @@
 						image: '../../../../static/home/icon_member_manager.png',
 						name: '会员管理',
 						remarks: '增/删/改/查会员信息',
-						url: '/pages/home/memberCenter/memberManage/index/index'
+						url: '/pagesA/home/memberCenter/memberManage/index/index'
 					},
 					{
 						image: '../../../../static/home/icon_integral_rule.png',
 						name: '积分商城',
 						remarks: '会员积分兑换商品/服务',
-						url: '/pages/home/memberCenter/SHOP/index/index'
+						url: '/pagesA/home/memberCenter/SHOP/index/index'
 					},
 					{
 						image: '../../../../static/home/icon_member_analysis.png',
 						name: '会员分析',
 						remarks: '会员量/活跃积分',
-						url: '/pages/home/memberCenter/memberAnalysis/memberAnalysis'
+						url: '/pagesA/home/memberCenter/memberAnalysis/memberAnalysis'
 					},
 					{
 						image: '../../../../static/home/icon_member_consumption.png',
 						name: '会员消费记录',
 						remarks: '统计会员消费的交易流水',
-						url: '/pages/home/memberCenter/membershipConsumptionRecords/membershipConsumptionRecords'
+						url: '/pagesA/home/memberCenter/membershipConsumptionRecords/membershipConsumptionRecords'
 					},
 				]
 			};

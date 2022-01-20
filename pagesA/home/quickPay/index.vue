@@ -177,7 +177,7 @@ similarity	String	相似度 1~100 (当validate_result>0时，本值才有效(相
 			 },
 			 jumpCardList(){
 				 uni.navigateTo({
-				 	url: `/pages/home/quickPay/selectCard?fromPayChannel=${this.fromPayChannel}`
+				 	url: `/pagesA/home/quickPay/selectCard?fromPayChannel=${this.fromPayChannel}`
 				 })
 			 },
 			 shuaLianTransaction(){
@@ -206,7 +206,7 @@ similarity	String	相似度 1~100 (当validate_result>0时，本值才有效(相
 			 		this.chMerCode = data.chMerCode;
 			 		this.orderCode = data.orderCode;
 					uni.navigateTo({
-						url: '/pages/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=1'
+						url: '/pagesA/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=1'
 					})
 			 		// this.showSubmitVerificationCodeModel()
 			 		// console.log('sucess==========',JSON.stringify(res))}
@@ -214,7 +214,7 @@ similarity	String	相似度 1~100 (当validate_result>0时，本值才有效(相
 			 		},err=>{
 					// console.log('8888888888888888888888888888888',err)
 					uni.navigateTo({
-						url: '/pages/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=0'+'&failMsg='+err.msg
+						url: '/pagesA/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=0'+'&failMsg='+err.msg
 					})
 				})
 			 },
@@ -268,12 +268,12 @@ similarity	String	相似度 1~100 (当validate_result>0时，本值才有效(相
 				transactionSure(this.chSerialNo,this.verificationCodeModelContent,serviceId,this.chMerCode,this.orderCode).then(res=>{
 					showLoading(false)
 					uni.navigateTo({
-						url: '/pages/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=1'
+						url: '/pagesA/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=1'
 					})
 				},err=>{
 					// console.log('8888888888888888888888888888888',err)
 					uni.navigateTo({
-						url: '/pages/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=0'+'&failMsg='+err.msg
+						url: '/pagesA/home/quickPay/result?price='+this.paymentMoney+'&resultFlag=0'+'&failMsg='+err.msg
 					})
 				})
 			},

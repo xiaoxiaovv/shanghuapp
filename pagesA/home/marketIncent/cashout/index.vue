@@ -96,12 +96,12 @@
 			},
 			goBank() {
 				uni.navigateTo({
-					url: '/pages/home/marketIncent/bank/index'
+					url: '/pagesA/home/marketIncent/bank/index'
 				})
 			},
 			goLog() {
 				uni.navigateTo({
-					url: '/pages/home/marketIncent/cashout/cashlog'
+					url: '/pagesA/home/marketIncent/cashout/cashlog'
 				})
 			},
 			getMarketCard () {
@@ -130,7 +130,7 @@
 						})
 						setTimeout(() => {
 							uni.navigateTo({
-								url: '/pages/home/marketIncent/cashout/cashlog'
+								url: '/pagesA/home/marketIncent/cashout/cashlog'
 							})
 						},1000)
 					} else {

@@ -725,7 +725,7 @@
 			onModalConfirm(type) {
 				if (type === 1) {
 					uni.navigateTo({
-						url: '/pages/home/storeSelect/index/index'
+						url: '/pagesA/home/storeSelect/index/index'
 					})
 					return
 				} else if (type === 3) {

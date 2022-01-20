@@ -78,7 +78,7 @@
 			// console.log("点击导航栏btn-添加会员")
 			// console.log(obj)
 			uni.navigateTo({
-				url: '/pages/home/memberCenter/memberManage/registeredMember/registeredMember'
+				url: '/pagesA/home/memberCenter/memberManage/registeredMember/registeredMember'
 			}) 
 		},
 		/* 搜索栏事件，文本变化触发 */
@@ -104,7 +104,7 @@
 			/* 会员详情跳转，附id */
 			memberJump (id) {
 				uni.navigateTo({
-					url: '/pages/home/memberCenter/memberManage/membershipDetails/membershipDetails?id='+id
+					url: '/pagesA/home/memberCenter/memberManage/membershipDetails/membershipDetails?id='+id
 				})
 			},
 			/* 获取会员列表 */

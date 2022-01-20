@@ -85,12 +85,12 @@
 			},
 			jumpAddOrEditCard() {
 				uni.navigateTo({
-					url: '/pages/home/quickPay/addOrEditCard'
+					url: '/pagesA/home/quickPay/addOrEditCard'
 				})
 			},
 			jumpManageCard() {
 				uni.navigateTo({
-					url: '/pages/home/quickPay/manageCard'
+					url: '/pagesA/home/quickPay/manageCard'
 				})
 
 			}

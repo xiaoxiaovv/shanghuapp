@@ -230,15 +230,19 @@
 			},
 			/* 系统生成 */
 			systemSave() {
+				uni.showToast({
+					title:"请用扫码绑定~",
+					icon: "none"
+				})
 				// console.log(this.name, this.storeId, this.userId)
-				if(this.name.trim() === '' || this.storeId === '' || this.userId === ''){
-					uni.showModal({
-						content: '名称/门店/员工不能有空',
-						showCancel: false
-					});
-					return
-				}
-				this.addQR(2)
+				// if(this.name.trim() === '' || this.storeId === '' || this.userId === ''){
+				// 	uni.showModal({
+				// 		content: '名称/门店/员工不能有空',
+				// 		showCancel: false
+				// 	});
+				// 	return
+				// }
+				// this.addQR(2)
 			},
 			/* 新增二维码 */
 			addQR(flag) {

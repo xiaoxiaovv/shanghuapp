@@ -327,8 +327,8 @@
 			return {
 				connectInfo: {
 					clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
-					username: 'yt',
-					password: 'yt666888.',
+					username: 'user',
+					password: 'user',
 					clean: true,
 					connectTimeout: 10000,
 					cleanSession: false,

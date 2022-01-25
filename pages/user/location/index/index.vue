@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<web-view :src='url + "/#/location?merId=" + merId'></web-view>
+		<web-view :src='url + "/web/h5/index.html#/location?merId=" + merId'></web-view>
 	</view>
 </template>
 

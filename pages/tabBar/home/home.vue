@@ -316,11 +316,8 @@
 		LoginCache
 	} from '../../../utils/cache/index.js'
 	import Voice from '@/js_sdk/QuShe-baiduYY/QS-baiduyy/QS-baiduyy.js'
-	// import mqtt from "mqtt"
-	var mqtt = require('mqtt/dist/mqtt.js')
 	// #ifdef APP-PLUS
 	var posModule = uni.requireNativePlugin('DCloud-PosMoudle')
-	// var shuaLianModule = uni.requireNativePlugin('DCloud-ShuaLianMoudle')
 	// #endif
 	export default {
 		components: {
@@ -328,9 +325,20 @@
 		},
 		data() {
 			return {
-				client: null,
+				connectInfo: {
+					clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
+					username: 'yt',
+					password: 'yt666888.',
+					clean: true,
+					connectTimeout: 10000,
+					cleanSession: false,
+					keepalive: 30
+				},
+				subscribeInfo: {
+					qos: 1,
+				},
+				isBuffer: false,
 				topocSrcArr: [],
-				topocSrc: null,
 				/* msg: {
 					header: {
 						connection: keep - alive
@@ -617,10 +625,6 @@
 		},
 
 		onShow() {
-			if (this.client) {
-				//this.client.unsubscribe(this.topocSrcArr)
-				this.client.end(true)
-			}
 			this.isHomeSelf = true
 			// 实时收入金额
 			this.getStatistics()
@@ -631,7 +635,7 @@
 				this.storeName = storeDetail.storeName
 			}
 			if (this.notFirstInit) {
-				this.concactWebSocket()
+				this.startSubscribe()
 			}
 			this.notFirstInit = true
 			/////
@@ -667,49 +671,41 @@
 			}
 		},
 		methods: {
-			concactWebSocket() {
-				let option = {
-					  "port": 15675,
-					  "path": '/ws',
-				      "clean": true, // Can also be false
-					  "username": `app`,
-					  "password": `123456`,
-					  "clientId": new Date().getTime(),
-					  "keepalive": 1,
-					  "SSL": false,
-				}
+			/* 连接 */
+			async startConnect(){
+				var _this = this
 				let WebSocketUrl = fly.config.baseURL.replace('https://', '')
 				// #ifdef H5
-				var client = mqtt.connect('ws://' + WebSocketUrl, option)
+				var clientUrl = 'ws://' + WebSocketUrl + ':15675/ws'
 				// #endif
 				// #ifdef MP-WEIXIN||APP-PLUS
-				var client = mqtt.connect('wx://' + WebSocketUrl, option)
+				var clientUrl = 'wx://' + WebSocketUrl + ':15675/ws'
 				// #endif
-				this.client = client
-				client.on('error', function(e) {
-					console.log('on error')
-				}).on('end', function(e) {
-					console.log('on end')
+				let opts = {
+					url: clientUrl,
+					clientId: this.connectInfo.clientId,
+					username: this.connectInfo.username,
+					password: this.connectInfo.password,
+					clean: this.connectInfo.clean,
+					connectTimeout: this.connectInfo.connectTimeout,
+					cleanSession: this.connectInfo.cleanSession,
+					keepalive: this.connectInfo.keepalive,
+				}
+				getApp().globalData.client = await this.$mqttTool.connect(opts);
+				getApp().globalData.client.on('connect', function(res) {
+					console.log('连接成功')
 				})
-				client.on('connect', () => {
-					console.log("连接成功！")
-					const params = {
-						id: uni.getStorageSync('userType') == 1?uni.getStorageSync('merchantId'):uni.getStorageSync('nowStoreDetail').storeId,
-						type: uni.getStorageSync('userType') == 1 ? 1 : 2,
-					}
-					audioCast(params).then(resp => {
-						let topocSrcArr = resp.obj.split(',')
-						this.topocSrcArr = topocSrcArr
-						client.subscribe(topocSrcArr[0], function(err) {
-							console.log('订阅'+topocSrcArr[0]+'成功!')
-						})
-						client.subscribe(topocSrcArr[1], function(err) {
-							console.log('订阅'+topocSrcArr[1]+'成功!')
-						})
-					})
-				});
-				client.on('message',(topic, message) => {
-					let _this = this
+				getApp().globalData.client.on('reconnect', function(res) {
+					console.log('重新连接')
+				})
+				getApp().globalData.client.on('error', function(res) {
+					console.log('连接错误')
+				})
+				getApp().globalData.client.on('close', function(res) {
+					console.log('关闭成功')
+				})
+				_this.startSubscribe()
+				getApp().globalData.client.on('message', function(topic, message, buffer) {
 					const resObj = JSON.parse(JSON.parse(message.toString()))
 					console.log('收到消息：',resObj)
 					if (resObj.type == 'voiceMsg') {
@@ -780,6 +776,62 @@
 					}
 				})
 			},
+			/* 终止连接 */
+			endConnect(){
+				var _this = this
+				this.$mqttTool.end().then(res =>{
+					console.log('终止')
+				})
+			},
+			/* 重新连接 */
+			reConnect(){
+				var _this = this
+				this.$mqttTool.reconnect().then(res =>{
+					console.log('重新连接')
+				})
+			},
+			/* 更改Qos */
+			changeQos(){
+				var _this = this
+				if(this.subscribeInfo.qos >= 2){
+					this.subscribeInfo.qos = 0
+					console.log('Qos：',this.subscribeInfo.qos)
+					this.startSubscribe();
+				}else{
+					this.subscribeInfo.qos += 1
+					console.log('Qos：',this.subscribeInfo.qos)
+					this.startSubscribe();
+				}
+			},
+			/* 订阅 */
+			startSubscribe(){
+				var _this = this
+				if (this.topocSrcArr.length != 0) {
+					this.$mqttTool.unsubscribe({topic:this.topocSrcArr}).then(res =>{
+						console.log('取消订阅：', this.topocSrcArr)
+					})
+				}			
+				const params = {
+					id: uni.getStorageSync('userType') == 1?uni.getStorageSync('merchantId'):uni.getStorageSync('nowStoreDetail').storeId,
+					type: uni.getStorageSync('userType') == 1 ? 1 : 2,
+				}
+				audioCast(params).then(resp => {
+					let topocSrcArr = resp.obj.split(',')
+					this.topocSrcArr = topocSrcArr	
+					this.$mqttTool.subscribe({
+						topic: topocSrcArr[0],
+						qos: this.subscribeInfo.qos,
+					}).then(res =>{
+						console.log('订阅'+topocSrcArr[0]+'成功!')
+					})
+					this.$mqttTool.subscribe({
+						topic: topocSrcArr[1],
+						qos: this.subscribeInfo.qos,
+					}).then(res =>{
+						console.log('订阅'+topocSrcArr[0]+'成功!')
+					})
+				})
+			},	
 			isMarket() {
 				const params = {
 				  merchantId: uni.getStorageSync('merchantId'),
@@ -991,7 +1043,7 @@
 							status: false
 						})
 					}
-					this.concactWebSocket()
+					this.startConnect()
 				}).catch(err => {
 					// console.log(err)
 				})

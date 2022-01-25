@@ -1,5 +1,8 @@
 <script>
 	export default {
+		globalData: {
+			client: null,
+		},
 		onLaunch: function () {
 			console.log('App Launch')
 		},
@@ -31,8 +34,8 @@
 			var Context = plus.android.importClass("android.content.Context");  
 			var PowerManager = plus.android.importClass("android.os.PowerManager");  
 			var pm = main.getSystemService(Context.POWER_SERVICE);  
-			g_wakelock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ANY_NAME");  
-			g_wakelock.acquire(); 
+			g_wakelock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ANY_NAME");
+			g_wakelock.acquire();
 			//#endif
 			uni.setStorageSync('isAppShow', true)
 		},

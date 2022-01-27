@@ -329,10 +329,10 @@
 					clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
 					username: 'user',
 					password: 'user',
-					clean: true,
+					clean: false,
 					connectTimeout: 10000,
 					cleanSession: false,
-					keepalive: 30
+					keepalive: 3
 				},
 				subscribeInfo: {
 					qos: 1,
@@ -706,7 +706,7 @@
 				})
 				_this.startSubscribe()
 				getApp().globalData.client.on('message', function(topic, message, buffer) {
-					const resObj = JSON.parse(JSON.parse(message.toString()))
+					const resObj = JSON.parse(message.toString())
 					console.log('收到消息：',resObj)
 					if (resObj.type == 'voiceMsg') {
 						if (uni.getStorageSync('userType') == 1) {

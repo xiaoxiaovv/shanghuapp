@@ -309,7 +309,7 @@
 					// 切换门店模态框
 					// console.log('confirm')
 					uni.navigateTo({
-						url: '/pages/home/storeSelect/index/index'
+						url: '/pagesA/home/storeSelect/index/index'
 					})
 				} else if (type === 3) {
 					// 添加打印机

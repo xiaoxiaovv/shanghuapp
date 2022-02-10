@@ -8,7 +8,7 @@ fly.config.timeout = 10000
 
 // TODO
 
-const VERSION = getVersion() || '1.0.0'
+const VERSION = getVersion() || '2.0.0'
 
 // const API_TOKEN = getFirToken() || 'bf6322d6ccc3a74c123c1b61c31dc96e'
 
@@ -28,18 +28,29 @@ const type = ''
 // 检查更新
 function checkUpdate(id, bundleId, apiToken, type) {
 	// console.log('检查更新', id, bundleId, apiToken, type)
-	return fly.get(`http://api.fir.im/apps/latest/${id}`, qs.stringify({
-		bundle_id: bundleId,
+	return fly.get(`https://api.bq04.com/apps/latest/${id}`, qs.stringify({
+		//id: id,
 		api_token: apiToken,
-		type: type
+		//type: type
 	}))
 }
-
+// 获取download_token
+function getDownloadToken(id, bundleId, apiToken, type) {
+	// console.log('检查更新', id, bundleId, apiToken, type)
+	return fly.get(`https://api.bq04.com/apps/${id}/download_token`, qs.stringify({
+		//id: id,
+		api_token: apiToken,
+		//type: type
+	}))
+}
 // android检查更新
 function checkApp() {
 	return checkUpdate(ID, '', API_TOKEN, '')
 }
-
+// android获取token
+function getToken() {
+	return getDownloadToken(ID, '', API_TOKEN, '')
+}
 // 比较版本号
 function compareVersion(v1, v2) {
 	v1 = v1.split('.')
@@ -74,6 +85,8 @@ function compareAppVersion(newVersion) {
 export {
 	VERSION,
 	checkApp,
+	getToken,
+	ID,
 	compareVersion,
 	compareAppVersion
 }

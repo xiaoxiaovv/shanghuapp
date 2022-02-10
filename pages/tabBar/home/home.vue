@@ -112,7 +112,7 @@
 					<view></view>
 				</view>
 				<view class='match-left-space align-ver-left ml-30'>
-					<view>{{lastOrder.createTime | creatTimeFilter}}</view>
+					<view>{{lastOrder.createTime}}</view>
 					<view class='darker mt-10'>{{lastOrder.payWay | payWayFilter}}收款{{lastOrder.actPayPrice | dealWithMoneyFilter}}元</view>
 				</view>
 				<view class="arrow">
@@ -250,6 +250,7 @@
 </template>
 
 <script>
+	import fly from '@/common/flyioRequest'
 	// import signature from '@/components/signature/signature.vue'
 	import tkiFloatKeyboard from '@/components/tki-float-keyboard/tki-float-keyboard.vue'
 	// 后台接口
@@ -276,11 +277,15 @@
 		bankCarkList,
 		bankCardInfo,
 		delBankCard,
-		orderSure
+		orderSure,
+		isMarket,
+		audioCast
 	} from '../../../api/vueAPI.js'
 	// 检查更新
 	import {
 		checkApp,
+		getToken,
+		ID,
 		VERSION,
 		compareAppVersion
 	} from '../../../api/updateApi.js'
@@ -310,16 +315,30 @@
 	import {
 		LoginCache
 	} from '../../../utils/cache/index.js'
-
+	import Voice from '@/js_sdk/QuShe-baiduYY/QS-baiduyy/QS-baiduyy.js'
+	// #ifdef APP-PLUS
 	var posModule = uni.requireNativePlugin('DCloud-PosMoudle')
-	// var shuaLianModule = uni.requireNativePlugin('DCloud-ShuaLianMoudle')
-
+	// #endif
 	export default {
 		components: {
 			tkiFloatKeyboard
 		},
 		data() {
 			return {
+				connectInfo: {
+					clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
+					username: 'user',
+					password: 'user',
+					clean: false,
+					connectTimeout: 10000,
+					cleanSession: false,
+					keepalive: 3
+				},
+				subscribeInfo: {
+					qos: 1,
+				},
+				isBuffer: false,
+				topocSrcArr: [],
 				/* msg: {
 					header: {
 						connection: keep - alive
@@ -354,7 +373,7 @@
 					"memberCenter": {
 						src: '../../../static/homev2/hy.png',
 						name: '会员中心',
-						url: '/pages/home/memberCenter/index/index',
+						url: '/pagesA/home/memberCenter/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -372,7 +391,7 @@
 					"statistics": {
 						src: '../../../static/homev2/tj.png',
 						name: '统计',
-						url: '/pages/home/statistics/index/index',
+						url: '/pagesA/home/statistics/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 40,
@@ -381,7 +400,7 @@
 					"QRcodeAdministration": {
 						src: '../../../static/homev2/ewm.png',
 						name: '二维码管理',
-						url: '/pages/home/2DcodeAdministration/index/index',
+						url: '/pagesA/home/2DcodeAdministration/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 38,
@@ -390,7 +409,7 @@
 					"storeAdministration": {
 						src: '../../../static/homev2/md.png',
 						name: '门店管理',
-						url: '/pages/home/storeAdministration/index/index',
+						url: '/pagesA/home/storeAdministration/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 42,
@@ -399,7 +418,7 @@
 					"staffManagement": {
 						src: '../../../static/homev2/yg.png',
 						name: '员工管理',
-						url: '/pages/home/staffManagement/index/index',
+						url: '/pagesA/home/staffManagement/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 43,
@@ -409,7 +428,7 @@
 						src: '../../../static/homev2/kq.png',
 						name: '卡券核销',
 						url: 'couponCancel',
-						// url: '/pages/home/couponCancel/couponCancel',
+						// url: '/pagesA/home/couponCancel/couponCancel',
 						status: 1,
 						isShow: 1,
 						iconWidth: 47,
@@ -418,7 +437,7 @@
 					"consumerAnalysis": {
 						src: '../../../static/homev2/xfz.png',
 						name: '客流统计',
-						// url: '/pages/home/consumerAnalysis/index/index',
+						// url: '/pagesA/home/consumerAnalysis/index/index',
 						url: 'consumerAnalysis',
 						status: 1,
 						isShow: 0,
@@ -428,7 +447,7 @@
 					"classExchange": {
 						src: '../../../static/homev2/workinfo.png',
 						name: '交接班',
-						url: '/pages/home/classExchange/index/index',
+						url: '/pagesA/home/classExchange/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -437,7 +456,7 @@
 					"depositManage": {
 						src: '../../../static/homev2/dm.png',
 						name: '押金管理',
-						url: '/pages/home/depositManage/index/index',
+						url: '/pagesA/home/depositManage/index/index',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
@@ -446,12 +465,31 @@
 					"ruyi": {
 						src: '../../../static/homev2/zfb.png',
 						name: '如意设备',
-						url: '/pages/home/ruyi/ruyi',
+						url: '/pagesA/home/ruyi/ruyi',
 						status: 1,
 						isShow: 1,
 						iconWidth: 44,
 						iconHeight: 38
 					},
+					"marketIncent": {
+						src: '../../../static/homev2/jili.png',
+						name: '营销激励',
+						url: '/pagesA/home/marketIncent/index/index',
+						status: 1,
+						isShow: 1,
+						iconWidth: 44,
+						iconHeight: 38
+					},
+					"wxEwm": {
+						src: '../../../static/homev2/wxsign.png',
+						name: '微信认证',
+						url: '/pagesA/home/wxEwm/index/index',
+						status: 1,
+						isShow: 1,
+						iconWidth: 44,
+						iconHeight: 38
+					},
+					
 					/* ,
 										"depositManage":{
 											src: '../../../static/homev2/quickPay.png',
@@ -462,16 +500,15 @@
 											iconWidth: 44,
 											iconHeight: 38
 										} */
-					/* ,
-										"depositManage":{
-											src: '../../../static/homev2/shop.png',
-											name: '商城',
-											url: 'shop',
-											status: 1,
-											isShow: 1,
-											iconWidth: 200,
-											iconHeight: 200
-										} */
+					"depositManage":{
+						src: '../../../static/homev2/shop.png',
+						name: '商城',
+						url: '/pagesA/home/shop/shop',
+						status: 1,
+						isShow: 1,
+						iconWidth: 200,
+						iconHeight: 200
+					},
 					/* ,
 										"depositManage":{
 											src: '../../../static/homev2/dm.png',
@@ -525,7 +562,8 @@
 				maxPaymentMoney: 100000000,
 				isShow: false,
 				isHomeSelf: true,
-				pausePoll: false
+				pausePoll: false,
+				notFirstInit: false
 			};
 		},
 
@@ -544,7 +582,9 @@
 				this.paddingTop = systemInfo['pixelRatio'] * systemInfo['statusBarHeight'] + 'px'
 			}
 			// 版本更新检测
-			// this.checkUpdate()
+			//#ifdef APP-PLUS
+			this.checkUpdate()
+			//#endif
 			// 获取当前时间
 			// this.getCurrentTime()
 			// 登录者身份验证
@@ -565,16 +605,13 @@
 
 			// 轮询最新一笔订单
 			// this.getLastOrder()
-
+			// #ifdef APP-PLUS
 			let uuid = plus.device.uuid
 			console.log('uuid', uuid)
+			// #endif
 			// showModal('uuid:'+ uuid)
-
 			// 重置开始时间
 			uni.setStorageSync("beginTime", '')
-			// this.interval.startInterval()
-
-
 		},
 
 		onReady() {
@@ -583,49 +620,36 @@
 			LoginCache.state = false
 			// console.log('我来到火星的世界x2', LoginCache)
 			// 轮询查询新订单
-			this.queryNewOrder()
-
+			//this.queryNewOrder()
+			this.isMarket()
 		},
 
 		onShow() {
-
 			this.isHomeSelf = true
-			// 轮询实时收入金额
+			// 实时收入金额
 			this.getStatistics()
-			this.getStatisticsDate()
-
+			//this.getStatisticsDate()
 			// 获取门店名称
 			let storeDetail = uni.getStorageSync("nowStoreDetail")
 			if (storeDetail != '' && storeDetail != null && storeDetail != undefined && storeDetail) {
 				this.storeName = storeDetail.storeName
 			}
+			if (this.notFirstInit) {
+				this.startSubscribe()
+			}
+			this.notFirstInit = true
+			/////
 			// 检查音效设置
 			let isKeyboardVoice = parseInt(uni.getStorageSync("setKeyboardVoice"))
 			if (isKeyboardVoice === 1) {
-				this.isKeyboardVoice = true
+				this.isKeyboardVoice = true 
 			} else {
 				this.isKeyboardVoice = false
 			}
-
-			// 启动定时器
-			// this.getLastOrderInterval.openInterval()
-
-			// 启动定时器
-			// this.getLastOrderInterval.startInterval()
-			// this.getRealInterval.startInterval()
-
-			// this.getRealInterval.closeInterval()
-			// this.interval.closeInterval()
-
-			// this.getRealInterval.pauseInterval()
-			// this.getRealInterval.restartInterval()
-			// this.interval.restartInterval()sss
 		},
 
 		onHide() {
-
 			this.isHomeSelf = false
-
 			// 失焦关闭键盘
 			// this.$refs.keyb._keyHide()
 			// this.isShow = false
@@ -647,6 +671,179 @@
 			}
 		},
 		methods: {
+			/* 连接 */
+			async startConnect(){
+				var _this = this
+				let WebSocketUrl = fly.config.baseURL.replace('https://', '')
+				// #ifdef H5
+				var clientUrl = 'ws://' + WebSocketUrl + ':15675/ws'
+				// #endif
+				// #ifdef MP-WEIXIN||APP-PLUS
+				var clientUrl = 'wx://' + WebSocketUrl + ':15675/ws'
+				// #endif
+				let opts = {
+					url: clientUrl,
+					clientId: this.connectInfo.clientId,
+					username: this.connectInfo.username,
+					password: this.connectInfo.password,
+					clean: this.connectInfo.clean,
+					connectTimeout: this.connectInfo.connectTimeout,
+					cleanSession: this.connectInfo.cleanSession,
+					keepalive: this.connectInfo.keepalive,
+				}
+				getApp().globalData.client = await this.$mqttTool.connect(opts);
+				getApp().globalData.client.on('connect', function(res) {
+					console.log('连接成功')
+				})
+				getApp().globalData.client.on('reconnect', function(res) {
+					console.log('重新连接')
+				})
+				getApp().globalData.client.on('error', function(res) {
+					console.log('连接错误')
+				})
+				getApp().globalData.client.on('close', function(res) {
+					console.log('关闭成功')
+				})
+				_this.startSubscribe()
+				getApp().globalData.client.on('message', function(topic, message, buffer) {
+					const resObj = JSON.parse(message.toString())
+					console.log('收到消息：',resObj)
+					if (resObj.type == 'voiceMsg') {
+						if (uni.getStorageSync('userType') == 1) {
+							if (resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+								//播报
+								console.log('我会播报：',resObj.msg)
+								let voiceText = resObj.msg							
+								Voice({
+									voiceSet: {
+										tex: voiceText,
+										vol: 15,
+										per: 0
+									  }
+								})
+								// 页面喇叭站位
+								_this.lastOrder = resObj
+							}
+						} else if (uni.getStorageSync('userType') == 2){
+							if (resObj.userType == 2 && resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+								//播报
+								console.log('我会播报：',resObj.msg)
+								let voiceText = resObj.msg
+								Voice({
+									voiceSet: {
+										tex: voiceText,
+										vol: 15,
+										per: 0
+									  }
+								})
+								// 页面喇叭站位
+								_this.lastOrder = resObj
+							}
+						} else {
+							if (resObj.userType == 3 && resObj.username == uni.getStorageSync('username') && resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+								//播报
+								console.log('我会播报：',resObj.msg)
+								let voiceText = resObj.msg
+								Voice({
+									voiceSet: {
+										tex: voiceText,
+										vol: 15,
+										per: 0
+									  }
+								})
+								// 页面喇叭站位
+								_this.lastOrder = resObj
+							}
+						}
+					}
+					if (resObj.type == 'payInfo') {
+						if (uni.getStorageSync('userType') == 1) {
+							if (resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+								console.log('我会更新数据：',resObj)
+								_this.realOrder = resObj
+							}
+						} else if (uni.getStorageSync('userType') == 2){
+							if (resObj.userType == 2 && resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+								console.log('我会更新数据：',resObj)
+								_this.realOrder = resObj
+							}
+						} else {
+							if (resObj.userType == 3 && resObj.username == uni.getStorageSync('username') && resObj.storeId == uni.getStorageSync('nowStoreDetail').storeId) {
+								console.log('我会更新数据：',resObj)
+								_this.realOrder = resObj
+							}
+						}
+					}
+				})
+			},
+			/* 终止连接 */
+			endConnect(){
+				var _this = this
+				this.$mqttTool.end().then(res =>{
+					console.log('终止')
+				})
+			},
+			/* 重新连接 */
+			reConnect(){
+				var _this = this
+				this.$mqttTool.reconnect().then(res =>{
+					console.log('重新连接')
+				})
+			},
+			/* 更改Qos */
+			changeQos(){
+				var _this = this
+				if(this.subscribeInfo.qos >= 2){
+					this.subscribeInfo.qos = 0
+					console.log('Qos：',this.subscribeInfo.qos)
+					this.startSubscribe();
+				}else{
+					this.subscribeInfo.qos += 1
+					console.log('Qos：',this.subscribeInfo.qos)
+					this.startSubscribe();
+				}
+			},
+			/* 订阅 */
+			startSubscribe(){
+				var _this = this
+				if (this.topocSrcArr.length != 0) {
+					this.$mqttTool.unsubscribe({topic:this.topocSrcArr}).then(res =>{
+						console.log('取消订阅：', this.topocSrcArr)
+					})
+				}			
+				const params = {
+					id: uni.getStorageSync('userType') == 1?uni.getStorageSync('merchantId'):uni.getStorageSync('nowStoreDetail').storeId,
+					type: uni.getStorageSync('userType') == 1 ? 1 : 2,
+				}
+				audioCast(params).then(resp => {
+					let topocSrcArr = resp.obj.split(',')
+					this.topocSrcArr = topocSrcArr	
+					this.$mqttTool.subscribe({
+						topic: topocSrcArr[0],
+						qos: this.subscribeInfo.qos,
+					}).then(res =>{
+						console.log('订阅'+topocSrcArr[0]+'成功!')
+					})
+					this.$mqttTool.subscribe({
+						topic: topocSrcArr[1],
+						qos: this.subscribeInfo.qos,
+					}).then(res =>{
+						console.log('订阅'+topocSrcArr[0]+'成功!')
+					})
+				})
+			},	
+			isMarket() {
+				const params = {
+				  merchantId: uni.getStorageSync('merchantId'),
+				}
+				 isMarket(params).then(res => {
+					 // if(res.code === 200 && res.msg === 'true'){
+						//  this.menuList.marketIncent.isShow = 1
+					 // } else {
+						//  this.menuList.marketIncent.isShow = 2
+					 // }
+				 })
+			},
 			/**
 			 * addOrEditBankCark  添加和编辑银行卡
 			 * @param {Object} merchantId 商户ID
@@ -684,6 +881,7 @@
 
 				})
 				// 调用异步方法
+				// #ifdef APP-PLUS
 				posModule.postest({
 						'name': 'unimp',
 						'age': 1
@@ -695,6 +893,7 @@
 
 						})
 					})
+				// #endif
 			},
 			posTest() {
 				// 下单
@@ -803,7 +1002,7 @@
 				if (url) {
 					// console.log("广告跳转啦~",url)
 					uni.navigateTo({
-						url: '/pages/home/advertisement/advertisement?id=' + id + '&url=' + url
+						url: '/pagesA/home/advertisement/advertisement?id=' + id + '&url=' + url
 					})
 				} else {
 					console.log("没有url")
@@ -844,21 +1043,7 @@
 							status: false
 						})
 					}
-					/* if(!res.obj.storeId){
-						this.storeName = res.obj.merchantName
-						this.storeId = ''
-						return
-					}
-					this.storeName = res.obj.storeName
-					this.storeId = res.obj.storeId
-					uni.setStorageSync('nowStoreDetail',{
-						storeId: this.storeId,
-						storeName: this.storeName,
-						status: false
-					}) */
-
-
-
+					this.startConnect()
 				}).catch(err => {
 					// console.log(err)
 				})
@@ -916,7 +1101,7 @@
 			storeSelect() {
 				// console.log("选择门店")
 				uni.navigateTo({
-					url: '/pages/home/storeSelect/index/index?ishome=1'
+					url: '/pagesA/home/storeSelect/index/index?ishome=1'
 				})
 			},
 			/* 菜单功能跳转 */
@@ -943,11 +1128,6 @@
 				/* 扫码核销卡券 */
 				if (url === 'couponCancel') {
 					this.checkCoupon();
-					return
-				}
-				// 商城
-				if (url === 'shop') {
-					this.shopJump();
 					return
 				}
 				// 网联，快捷支付
@@ -1180,7 +1360,7 @@
 				// this.onPayWayShow(1)
 				let that = this
 				uni.navigateTo({
-					url: '/pages/home/cashRegisterCode/cashRegisterCode?paymentMoney=' + that.paymentMoney + '&payWay=' + that.payWay +
+					url: '/pagesA/home/cashRegisterCode/cashRegisterCode?paymentMoney=' + that.paymentMoney + '&payWay=' + that.payWay +
 						'&storeId=' + storeId,
 					complete() {
 						/* 金额初始化 */
@@ -1236,7 +1416,6 @@
 			},
 			/* 扫码退款 */
 			showRefund() {
-
 				uni.scanCode({
 					onlyFromCamera: true,
 					success: (res) => {
@@ -1263,6 +1442,7 @@
 			// 手机pos付款
 
 			shouJiPosPay() {
+				// #ifdef APP-PLUS
 				/* uni.showModal({
 							content: `人脸验证失败（代码：）。`,
 							showCancel: false
@@ -1329,6 +1509,13 @@
 				let posDataObjStr = JSON.stringify(posDataObj);
 				// console.log('posDataObjStr=========================',posDataObjStr)
 				posModule.pos(posDataObjStr)
+				// #endif
+				// #ifndef APP-PLUS
+				uni.showToast({
+					title: '正在开发中，敬请期待~',
+					icon: 'none'
+				})
+				// #endif
 			},
 			shopJump() {
 				location.href = 'https://alitong.vip/ydh5/index.html?i=1#/yidu_tc/pages/tabbar/index'
@@ -1364,7 +1551,7 @@
 					return
 				}
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=18'
+					url: '/pagesA/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=18'
 				})
 				/* let storeId = nowStoreDetail.storeId
 				let userId = uni.getStorageSync('userId') || ''
@@ -1387,7 +1574,7 @@
 					icon: 'none'
 				})
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
+					url: '/pagesA/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
 				})
 			},
 			shuaLianAsyncFunc() {
@@ -1433,7 +1620,7 @@
 					return
 				}
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
+					url: '/pagesA/home/quickPay/index?paymentMoney='+this.paymentMoney+'&fromPayChannel=20'
 				})
 			}, */
 			shuaLian() {
@@ -1462,7 +1649,7 @@
 					return
 				}
 				uni.navigateTo({
-					url: '/pages/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=20'
+					url: '/pagesA/home/quickPay/index?paymentMoney=' + this.paymentMoney + '&fromPayChannel=20'
 				})
 				this.shuaLianAsyncFunc()
 
@@ -2011,9 +2198,6 @@
 							let newVersion = res.data.versionShort
 							let updateUrl = res.data.update_url
 							let changelog = (!!res.data.changelog) ? res.data.changelog : '有新版本可用'
-							// console.log(77777, res.data.update_url)
-							// console.log(8888, plus.runtime)
-							// console.log(compareAppVersion(newVersion))
 							if (compareAppVersion(newVersion)) {
 
 								uni.showModal({
@@ -2025,9 +2209,12 @@
 										// console.log('确定', res.confirm)
 										if (res.confirm) {
 											try {
-												plus.runtime.openURL(updateUrl, () => {
-													console.log('获取新版本失败')
+												getToken().then(resp => {
+													plus.runtime.openURL('https://download.bq04.com/apps/'+ ID+'/install?download_token='+ resp.data.download_token, () => {
+														console.log('获取新版本失败')
+													})
 												})
+												
 											} catch (e) {
 												// nothing to do
 											}

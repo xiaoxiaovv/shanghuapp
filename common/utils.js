@@ -60,6 +60,15 @@ export const payWayFilters = (val) => {
 					case 10:		//刷脸付 畅捷
 						return '刷脸付';
 						break;	
+					case 11://数字货币
+						return '数字货币';
+						break;		
+					case 12://翼支付
+						return '翼支付';
+						break;	
+					case 13://苏宁
+						return '苏宁';
+						break;	
 					case 99:	//未知支付
 						return '未知支付';
 						break;

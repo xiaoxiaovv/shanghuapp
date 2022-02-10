@@ -217,7 +217,7 @@ export function getStoreDetails (id) {
 //name -门店名称, storeNo -门店编号, province -省, city -市, address -门店地址, 
 //phone -门店电话, paymentDesciption -支付凭证描述, status -门店状态, photoId -logoId
 //参数status：门店状态 1-启用 2-注销，必填
-export function addStore( name, storeNo, province, city, address, phone, paymentDesciption, status, photoId) {
+export function addStore( name, storeNo, province, city, address, phone, paymentDesciption,status, photoId) {
 	return fly.request( '/merchant/store/app/save', qs.stringify({
 		name,
 		storeNo,
@@ -236,7 +236,7 @@ export function addStore( name, storeNo, province, city, address, phone, payment
 //name -门店名称, storeNo -门店编号, province -省, city -市, address -门店地址, 
 //phone -门店电话, paymentDesciption -支付凭证描述, status -门店状态, photoId -图片Id, id -门店id
 //参数status：门店状态 1-启用 2-注销，必填
-export function changeStore( name, storeNo, province, city, address, phone, paymentDesciption, status, photoId, id) {
+export function changeStore( name, storeNo, province, city, address, phone, paymentDesciption, deviceSn,status, photoId, id) {
 	return fly.request( '/merchant/store/app/update', qs.stringify({
 		name,
 		storeNo,
@@ -245,6 +245,7 @@ export function changeStore( name, storeNo, province, city, address, phone, paym
 		address,
 		phone,
 		paymentDesciption,
+		deviceSn,
 		status,
 		photoId,
 		id
@@ -385,7 +386,7 @@ export function getQRcodeList (pageNumber, pageSize, storeId, status, userId, na
 }
 
 /* 添加二维码 */
-export function addQRcode (name, storeId, userId, money, description, flag, blankQrCodeId) {
+export function addQRcode (name, storeId, userId, money, description, flag, blankQrCodeId,aliDeviceSn) {
 	return fly.request( '/merchant/qrcode/app/save', qs.stringify({
 		name,
 		storeId,
@@ -393,21 +394,23 @@ export function addQRcode (name, storeId, userId, money, description, flag, blan
 		money,
 		description,
 		flag,
-		blankQrCodeId
+		blankQrCodeId,
+		aliDeviceSn
 	}),{
 		method: 'post',
 	})
 }
 
 /* 修改二维码 */
-export function changeQRcode (name, storeId, userId, money, description, id) {
+export function changeQRcode (name, storeId, userId, money, description, id,aliDeviceSn) {
 	return fly.request( '/merchant/qrcode/app/update', qs.stringify({
 		name,
 		storeId,
 		userId,
 		money,
 		description,
-		id
+		id,
+		aliDeviceSn
 	}),{
 		method: 'post',
 	})
@@ -1360,4 +1363,110 @@ export function ruyiSubmit(serviceId, merchantNo,alipayAccount,merchantId,device
 		deviceSn
 	}
 	return fly.post('/zfb/getOperationQrcode', qs.stringify(data))
+}
+
+/**
+ * merchantDayList  查询商户的奖励
+ * @param {Object} merchantId 商户ID
+ */
+export function merchantDayList(data) {
+	
+	return fly.get('/merchant/commission_day/app', qs.stringify(data))
+}
+
+/**
+ * getMerchantTotal  查询商户的奖励总额
+ * @param {Object} merchantId 商户ID
+ */
+export function getMerchantTotal(data) {
+	
+	return fly.get('/merchant/market_cash', qs.stringify(data))
+}
+
+/**
+ * cashOut  申请提现
+ * @param {Object} merchantId 商户ID
+ */
+export function cashOut(data) {
+	
+	return fly.post('/merchant/market_cashOut', data)
+}
+
+/**
+ * cashOutlog  提现记录
+ * @param {Object} merchantId 商户ID
+ */
+export function cashOutlog(data) {
+	
+	return fly.get('/merchant/market_cashOut', qs.stringify(data))
+}
+
+/**
+ * bindMarketCard  绑定商户的银行卡
+ * @param {Object} merchantId 商户ID
+ */
+export function bindMarketCard(data) {
+	
+	return fly.post('/merchant/market_card', data)
+}
+
+/**
+ * getMarketCard  查询商户的银行卡
+ * @param {Object} merchantId 商户ID
+ */
+export function getMarketCard(data) {
+	
+	return fly.get('/merchant/market_card', qs.stringify(data))
+}
+
+/**
+ *  getwxEwm  查询商户的微信认证二维码
+ * @param {Object} merchantId 商户ID serviceId 代理商id
+ */
+export function getwxEwm(data) {
+	
+	return fly.get('/auth/code_auth/wx_auth_url', qs.stringify(data))
+}
+
+/**
+ * getMarketCard  查询商户的银行卡
+ * @param {Object} merchantId 商户ID
+ */
+export function getMarketConfig() {
+	
+	return fly.get('/pay/pay_config/find_cash_out_config')
+}
+
+/* 判断商户是否开通了营销激励*/
+export function isMarket(data) {
+  return fly.post('/merchant/market/is_market', qs.stringify(data))
+}
+/* 公告*/
+export function getNoticeList(data) {
+  return fly.get('/merchant/notice', qs.stringify(data))
+}
+/* 获取appid*/
+export function getAppid(data) {
+  return fly.get('/order/callback/getAliAppId', qs.stringify(data))
+}
+/**
+* 匹配消息队列接口
+* @param {*} params
+*/
+export function audioCast(data) {
+  return fly.get('/merchant/mq/audio_cast/in', qs.stringify(data))
+}
+/**
+* 获取高德秘钥
+* @param {*} params
+*/
+export function getGaoDeKey(data) {
+  return fly.get('/auth/gaode_map_config', qs.stringify(data))
+}
+/**
+* 更新商户信息接口
+* @param {*} params
+*/
+export function updateLocation(data) {
+  return fly.post('/merchant/merchant/update', qs.stringify(data))
 }

@@ -293,13 +293,13 @@
 			payWayImgFilters(val) {
 				switch(parseInt(val)){
 					case 1:		//微信支付
-						return '../../../static/order/icon_wechat.png';
+						return '../../../static/order/icon_wechat_list.png';
 						break;
 					case 2:		//支付宝支付
-						return '../../../static/order/icon_zhifubao.png';
+						return '../../../static/order/icon_zhifubao_list.png';
 						break;
 					case 3:		//银行卡支付
-						return '../../../static/order/icon_unionpay_little.png';
+						return '../../../static/order/icon_unionpay_list.png';
 						break;
 					case 4:		//会员卡支付
 						return '../../../static/home/icon_king.png';
@@ -314,14 +314,23 @@
 						return '../../../static/home/icon_king.png';
 						break;
 					case 8:		//手机pos和快捷支付（网联）
-						return '../../../static/order/icon_pos.png';
+						return '../../../static/order/icon_pos_list.png';
 						break;
 					case 9:		//云闪付
-						return '../../../static/order/icon_yunshanfu.png';
+						return '../../../static/order/icon_yunshanfu_list.png';
 						break;
 					case 10:		//刷脸付
-						return '../../../static/order/icon_shualianfu.png';
-						break;			
+						return '../../../static/order/icon_shualianfu_list.png';
+						break;
+					case 11://数字货币
+						return '../../../static/order/icon_shuzihuobi_list.png';
+						break;
+					case 12://翼支付
+						return '../../../static/order/icon_wing_pay_list.png';
+						break;
+					case 13://苏宁
+						return '../../../static/order/icon_suning_list.png';
+						break;
 					case 99:	//未知支付
 						return '../../../static/order/icon_receive_money.png';
 						break;
@@ -385,7 +394,9 @@
 					channel = '易生'
 				} else if (channel === 14) {
 					channel = '新大陆'
-				} else if (channel === 17) {
+				}else if (channel === 16) {
+					channel = '拉卡拉'
+				}else if (channel === 17) {
 					channel = '手机pos'
 				}else if (channel === 18) {
 					channel = '快捷支付'
@@ -872,7 +883,7 @@
 					// 切换门店模态框
 					console.log('confirm')
 					uni.navigateTo({
-						url: '/pages/home/storeSelect/index/index'
+						url: '/pagesA/home/storeSelect/index/index'
 					})
 				} else if (type === 3 || type === 4) {
 					// 添加打印机
